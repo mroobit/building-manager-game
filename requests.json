@@ -1,0 +1,48 @@
+[
+{
+	"title": "Sink not draining",
+	"description": "The bathroom sink is clogged. It takes 2 hours to drain.",
+	"location": "unit",
+	"urgent": false,
+	"solutions": [
+		[ "Call a plumber", 200, 10 ],
+		[ "Use a plunger and drano", 40, 8 ],
+		[ "Just use drano", 15, 5 ],
+		[ "Improvise", 0, -1 ],
+		[ "Tell tenant to use drano", 0, 3 ]
+	]
+},
+{
+	"title": "Tub handle broken",
+	"description": "The hot water handle on the tub has broken off. It can still be turned, but it is difficult due to the lack of a handle. Could you please put a new handle on the tub?",
+	"location": "unit",
+	"urgent": false,
+	"solutions": [
+		[ "Replace the entire tub spout", 75, 10 ],
+		[ "Improvise", 0, -1 ]
+	]
+},
+{
+	"title": "Window is not sealed",
+	"description": "The window pane has come out of the frame and is open by about 2 inches at the widest point. Bugs and pests can easily come in.",
+	"location": "unit",
+	"urgent": true,
+	"solutions": [
+		[ "Hire a contractor to replace the window", 1000, 10 ],
+		[ "Replace the window", 500, 6 ],
+		[ "Remove the window from the sill and use caulk to put the pane back in place", 30, 4 ],
+		[ "Improvise", 0, -1 ]
+	]
+},
+{
+	"title": "Washing machine is broken",
+	"description": "The leftmost washing machine is broken. You can select settings and insert coins, but when you start it it just fills with water but doesn't spin.",
+	"location": "basement",
+	"urgent": false,
+	"solutions": [
+		[ "Call HappyWash to service the machine", 0, 8 ],
+		[ "Put an \"Out of Order\" sign on the machine", 0, -1 ],
+		[ "Tell tenant to call HappyWash to service the machine", 0, 1 ]
+	]
+}
+]

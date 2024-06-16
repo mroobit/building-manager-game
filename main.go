@@ -2,7 +2,6 @@ package main
 
 import (
 	"embed"
-	"fmt"
 	"image/color"
 	"log"
 	"strconv"
@@ -13,6 +12,7 @@ import (
 )
 
 var (
+	load         = true
 	hover        = ""
 	play         = false
 	infoControls = false
@@ -21,6 +21,7 @@ var (
 	rentIncrease = 3 // percentage increase at renewal
 
 	//go:embed images
+	//go:embed requests.json
 	FileSystem embed.FS
 )
 
@@ -31,9 +32,6 @@ func main() {
 	ebiten.SetWindowTitle("Ebitengine Game Jam '24")
 
 	loadAssets()
-	initializeClickables()
-	initializeTenants(tenants)
-	initializeBuilding()
 
 	game := &Game{
 		Width:  gameWidth,
@@ -42,23 +40,19 @@ func main() {
 			Money:      1000,
 			Reputation: 7,
 		},
-		Complex: building,
-		Tenants: tenants,
 	}
 
 	if err := ebiten.RunGame(game); err != nil {
 		log.Fatal(err)
 	}
-
-	fmt.Println("vim-go")
 }
 
 type Game struct {
-	Width   int
-	Height  int
-	Player  *Player
-	Complex *Building
-	Tenants []*Tenant
+	Width       int
+	Height      int
+	Player      *Player
+	Complex     *Building
+	RequestPool []*Request
 }
 
 func (g *Game) Layout(outsideWidth int, outsideHeight int) (screenWidth int, screenHeight int) {
@@ -68,10 +62,19 @@ func (g *Game) Layout(outsideWidth int, outsideHeight int) (screenWidth int, scr
 func (g *Game) Update() error {
 	cursor[0], cursor[1] = ebiten.CursorPosition()
 
-	if play {
+	if load {
+		initializeClickables()
+		initializeTenants(tenants)
+		g.initializeBuilding()
+		g.initializeRequestPool(FileSystem)
+		load = false
+	} else if play {
 		if tprint {
 			g.Complex.ListTenants()
 			tprint = false
+		}
+		if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
+			g.Complex.GenerateRequest(g.RequestPool)
 		}
 		// TODO
 		// logic for interacting with Maintenance Portal
@@ -104,10 +107,16 @@ func (g *Game) Update() error {
 
 func (g *Game) Draw(screen *ebiten.Image) {
 	if play {
+		op := &ebiten.DrawImageOptions{}
+		op.GeoM.Scale(0.4, 0.4)
+		screen.DrawImage(portalBackground, op)
 		ebitenutil.DebugPrint(screen, "Game")
-		ebitenutil.DebugPrintAt(screen, strconv.Itoa(len(g.Tenants)), 0, 30)
-		// TODO
-		// logic for displaying Maintenance Portal
+		ebitenutil.DebugPrintAt(screen, strconv.Itoa(len(g.Complex.Tenants)), 0, 30)
+		y := 0
+		for _, r := range g.Complex.Requests {
+			ebitenutil.DebugPrintAt(screen, r.Title, 40, y)
+			y += 20
+		}
 	} else {
 		op := &ebiten.DrawImageOptions{}
 		op.GeoM.Scale(0.4, 0.4)
@@ -123,10 +132,6 @@ func (g *Game) Draw(screen *ebiten.Image) {
 				color.Black,
 			)
 		}
-		// TODO
-		// logic to display Building Art
-		// logic to display "Play" button
-		// Later:	logic to display "Controls" menu button
 	}
 	ebitenutil.DebugPrintAt(screen, "Cursor X: "+strconv.Itoa(cursor[0]), 30, 45)
 	ebitenutil.DebugPrintAt(screen, "Cursor Y: "+strconv.Itoa(cursor[1]), 30, 65)

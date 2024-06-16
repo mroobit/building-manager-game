@@ -1,15 +1,18 @@
 package main
 
-var (
-	requests []*Request
+import (
+	"embed"
+	"encoding/json"
+	"log"
 )
 
 type Request struct {
-	Title             string
-	Description       string
-	Location          string
-	Tenant            *Tenant
-	Urgent            bool
+	Title       string
+	Description string
+	Location    string
+	Tenant      *Tenant
+	Urgent      bool
+	//	Options           []*Solutions
 	DaysOpen          int  // this increments regularly
 	Closed            bool // requests can be closed without resolving
 	Resolved          bool // was the problem actually fixed
@@ -35,7 +38,27 @@ func (r *Request) Close() {
 }
 
 func (r *Request) Resolve(quality int) {
+	// TODO: implement Options []*Solution in Request struct
+	// then add logic for assigning resolution quality to request when resolving based on chosen option
 	r.Resolved = true
 	r.ResolutionQuality = quality
 	r.Closed = true
 }
+
+func (g *Game) initializeRequestPool(fs embed.FS) {
+	var rawRequestPool []*Request
+	requestData, err := fs.ReadFile("requests.json")
+	if err != nil {
+		log.Fatal("Error when opening file: ", err)
+	}
+
+	err = json.Unmarshal(requestData, &rawRequestPool)
+	if err != nil {
+		log.Fatal("Error when unmarshalling: ", err)
+	}
+
+	g.RequestPool = rawRequestPool
+}
+
+// TODO unmarshal JSON into array of all possible requests
+// TODO second JSON for consequences/escalations?

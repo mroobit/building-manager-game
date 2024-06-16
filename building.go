@@ -2,11 +2,11 @@ package main
 
 import (
 	"fmt"
+	"math/rand/v2"
 	"strconv"
 )
 
 var (
-	building            *Building
 	inspectionCycle     = 12 // frequency of inspections in months
 	monthlyBuildingCost = 1000
 )
@@ -18,10 +18,10 @@ type Building struct {
 	Inspection  int // months until next inspection
 }
 
-func initializeBuilding() {
+func (g *Game) initializeBuilding() {
 	r := make([]*Request, 0, 30)
 
-	building = &Building{
+	g.Complex = &Building{
 		Tenants:     tenants,
 		Requests:    r,
 		Maintenance: monthlyBuildingCost,
@@ -40,10 +40,30 @@ func (b *Building) ListTenants() {
 	}
 }
 
-func (b *Building) GenerateRequest() {
-	// get request details from requests json/similar
-	// select a tenant to assign
-	// r := NewRequest( // use grabbed details for this
+func (b *Building) GenerateRequest(pool []*Request) {
+	t := b.Tenants[rand.IntN(len(b.Tenants))]
+	r := pool[rand.IntN(len(pool))]
+	if r.Location == "unit" {
+		r.Location = t.Unit
+	}
+	r.Tenant = t
+	b.AddRequest(r)
+}
+
+func (b *Building) AddRequest(request *Request) {
+	b.Requests = append(b.Requests, request)
+}
+
+func (b *Building) ReviveRequests() {
+	for _, r := range b.Requests {
+		if !r.Resolved {
+			r.Closed = false
+			r.Urgent = true
+			r.Tenant.ReduceSatisfaction()
+		}
+		// TODO: Reduce quality of resolution on poor-solution requests until must reopen
+		// Have some such requests actually get fully-resolved
+	}
 }
 
 // TODO: func (b *Building)Vacancies {} -- reports which units are vacant

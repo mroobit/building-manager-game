@@ -9,13 +9,14 @@ import (
 )
 
 var (
-	titleBackground *ebiten.Image
+	titleBackground  *ebiten.Image
+	portalBackground *ebiten.Image
 )
 
 func loadAssets() {
-	// TODO
 	loadImages()
 
+	// TODO
 	// loadSounds()
 	// loadFonts()
 }
@@ -23,6 +24,7 @@ func loadAssets() {
 func loadImages() {
 	log.Printf("Loading images...")
 	titleBackground = loadImage(FileSystem, "images/title-background.png")
+	portalBackground = loadImage(FileSystem, "images/maintenance-portal.png")
 }
 
 // This is taken directly from https://github.com/mroobit/untitled-sidescroller/blob/main/helper.go#L120
