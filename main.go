@@ -31,6 +31,7 @@ func main() {
 	ebiten.SetWindowTitle("Ebitengine Game Jam '24")
 
 	loadAssets()
+	initializeClickables()
 	initializeTenants(tenants)
 	initializeBuilding()
 
@@ -80,10 +81,9 @@ func (g *Game) Update() error {
 		}
 	} else {
 		switch {
-		// TODO: create Hover/Clickable objects with low/high coordinates, context active, hover/click behavior
-		case CursorCheck(cursor, 100, 300, 400, 360):
+		case titleClickable["play"].Hover(cursor):
 			hover = "play"
-		case CursorCheck(cursor, 100, 400, 400, 465):
+		case titleClickable["controls"].Hover(cursor):
 			hover = "controls"
 		default:
 			hover = ""
@@ -136,8 +136,4 @@ type Player struct {
 	// Name       string	// maybe include later the option to enter name
 	Money      int
 	Reputation int
-}
-
-func CursorCheck(cursor [2]int, lowX int, lowY int, highX int, highY int) bool {
-	return (cursor[0] >= lowX && cursor[0] <= highX) && (cursor[1] >= lowY && cursor[1] <= highY)
 }
