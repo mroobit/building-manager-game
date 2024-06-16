@@ -3,6 +3,7 @@ package main
 import (
 	"embed"
 	"fmt"
+	"image/color"
 	"log"
 	"strconv"
 
@@ -12,7 +13,10 @@ import (
 )
 
 var (
+	hover        = ""
 	play         = false
+	infoControls = false
+	cursor       [2]int
 	tprint       = true
 	rentIncrease = 3 // percentage increase at renewal
 
@@ -61,6 +65,8 @@ func (g *Game) Layout(outsideWidth int, outsideHeight int) (screenWidth int, scr
 }
 
 func (g *Game) Update() error {
+	cursor[0], cursor[1] = ebiten.CursorPosition()
+
 	if play {
 		if tprint {
 			g.Complex.ListTenants()
@@ -68,13 +74,29 @@ func (g *Game) Update() error {
 		}
 		// TODO
 		// logic for interacting with Maintenance Portal
+	} else if infoControls {
+		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
+			infoControls = false
+		}
 	} else {
-		if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
-			play = true
+		switch {
+		// TODO: create Hover/Clickable objects with low/high coordinates, context active, hover/click behavior
+		case CursorCheck(cursor, 100, 300, 400, 360):
+			hover = "play"
+		case CursorCheck(cursor, 100, 400, 400, 465):
+			hover = "controls"
+		default:
+			hover = ""
+		}
+		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
+			switch hover {
+			case "play":
+				play = true
+			case "controls":
+				infoControls = true
+			}
 		}
 		// TODO
-		// if keyboard input == Enter, play = true
-		//	Later: logic to interact with menu
 		// set a count-down to display transition
 	}
 	return nil
@@ -91,15 +113,31 @@ func (g *Game) Draw(screen *ebiten.Image) {
 		op.GeoM.Scale(0.4, 0.4)
 		screen.DrawImage(titleBackground, op)
 		ebitenutil.DebugPrint(screen, "Menu - Press Enter to Play")
+		if infoControls == true {
+			ebitenutil.DrawRect(
+				screen,
+				400,
+				350,
+				480,
+				260,
+				color.Black,
+			)
+		}
 		// TODO
 		// logic to display Building Art
 		// logic to display "Play" button
 		// Later:	logic to display "Controls" menu button
 	}
+	ebitenutil.DebugPrintAt(screen, "Cursor X: "+strconv.Itoa(cursor[0]), 30, 45)
+	ebitenutil.DebugPrintAt(screen, "Cursor Y: "+strconv.Itoa(cursor[1]), 30, 65)
 }
 
 type Player struct {
 	// Name       string	// maybe include later the option to enter name
 	Money      int
 	Reputation int
+}
+
+func CursorCheck(cursor [2]int, lowX int, lowY int, highX int, highY int) bool {
+	return (cursor[0] >= lowX && cursor[0] <= highX) && (cursor[1] >= lowY && cursor[1] <= highY)
 }
