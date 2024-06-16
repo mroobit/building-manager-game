@@ -9,6 +9,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
+	"github.com/tinne26/etxt"
 )
 
 var (
@@ -21,6 +22,7 @@ var (
 	rentIncrease = 3 // percentage increase at renewal
 
 	//go:embed images
+	//go:embed fonts
 	//go:embed requests.json
 	FileSystem embed.FS
 )
@@ -29,7 +31,7 @@ func main() {
 	gameWidth, gameHeight := 1280, 960
 
 	ebiten.SetWindowSize(gameWidth, gameHeight)
-	ebiten.SetWindowTitle("Ebitengine Game Jam '24")
+	ebiten.SetWindowTitle("Building Manager")
 
 	loadAssets()
 
@@ -53,6 +55,7 @@ type Game struct {
 	Player      *Player
 	Complex     *Building
 	RequestPool []*Request
+	Text        *etxt.Renderer
 }
 
 func (g *Game) Layout(outsideWidth int, outsideHeight int) (screenWidth int, screenHeight int) {
@@ -67,6 +70,7 @@ func (g *Game) Update() error {
 		initializeTenants(tenants)
 		g.initializeBuilding()
 		g.initializeRequestPool(FileSystem)
+		g.ConfigureTextRenderer()
 		load = false
 	} else if play {
 		if tprint {
@@ -112,10 +116,13 @@ func (g *Game) Draw(screen *ebiten.Image) {
 		screen.DrawImage(portalBackground, op)
 		ebitenutil.DebugPrint(screen, "Game")
 		ebitenutil.DebugPrintAt(screen, strconv.Itoa(len(g.Complex.Tenants)), 0, 30)
-		y := 0
+		x := 800
+		y := 180
 		for _, r := range g.Complex.Requests {
 			ebitenutil.DebugPrintAt(screen, r.Title, 40, y)
-			y += 20
+			y += 40
+			g.Text.SetTarget(screen)
+			g.Text.Draw(r.Title, x, y)
 		}
 	} else {
 		op := &ebiten.DrawImageOptions{}
