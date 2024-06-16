@@ -1,6 +1,7 @@
 package main
 
 import (
+	"embed"
 	"fmt"
 	"log"
 	"strconv"
@@ -14,14 +15,18 @@ var (
 	play         = false
 	tprint       = true
 	rentIncrease = 3 // percentage increase at renewal
+
+	//go:embed images
+	FileSystem embed.FS
 )
 
 func main() {
-	gameWidth, gameHeight := 640, 480
+	gameWidth, gameHeight := 1280, 960
 
 	ebiten.SetWindowSize(gameWidth, gameHeight)
 	ebiten.SetWindowTitle("Ebitengine Game Jam '24")
 
+	loadAssets()
 	initializeTenants(tenants)
 	initializeBuilding()
 
@@ -82,22 +87,15 @@ func (g *Game) Draw(screen *ebiten.Image) {
 		// TODO
 		// logic for displaying Maintenance Portal
 	} else {
+		op := &ebiten.DrawImageOptions{}
+		op.GeoM.Scale(0.4, 0.4)
+		screen.DrawImage(titleBackground, op)
 		ebitenutil.DebugPrint(screen, "Menu - Press Enter to Play")
 		// TODO
 		// logic to display Building Art
 		// logic to display "Play" button
 		// Later:	logic to display "Controls" menu button
 	}
-	/*
-		ebitenutil.DrawRect(
-			screen,
-			float64(0),
-			float64(0),
-			20,
-			20,
-			color.White,
-		)
-	*/
 }
 
 type Player struct {
