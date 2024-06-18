@@ -24,7 +24,6 @@ var (
 	//go:embed data
 	//go:embed fonts
 	//go:embed images
-	//go:embed requests.json
 	FileSystem embed.FS
 )
 

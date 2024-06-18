@@ -47,7 +47,7 @@ func (r *Request) Resolve(quality int) {
 
 func (g *Game) initializeRequestPool(fs embed.FS) {
 	var rawRequestPool []*Request
-	requestData, err := fs.ReadFile("requests.json")
+	requestData, err := fs.ReadFile("data/requests.json")
 	if err != nil {
 		log.Fatal("Error when opening file: ", err)
 	}
