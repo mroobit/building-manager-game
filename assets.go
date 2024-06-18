@@ -87,9 +87,11 @@ func (g *Game) SetTextProfile(p *TextProfile) {
 
 	y := map[string]etxt.VertAlign{
 		"YCenter": etxt.YCenter,
+		"Top":     etxt.Top,
 	}
 	x := map[string]etxt.HorzAlign{
 		"XCenter": etxt.XCenter,
+		"Left":    etxt.Left,
 	}
 
 	g.Text.SetAlign(y[p.AlignY], x[p.AlignX])

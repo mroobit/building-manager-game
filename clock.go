@@ -4,6 +4,7 @@ import "fmt"
 
 type Clock struct {
 	Tick      int
+	Timer     int
 	Month     int
 	Recurring map[string][2]int
 }

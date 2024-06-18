@@ -117,8 +117,23 @@ func (g *Game) Draw(screen *ebiten.Image) {
 		op.GeoM.Scale(0.4, 0.4)
 		screen.DrawImage(background["play"], op)
 
-		vector.DrawFilledRect(screen, 0, 0, 1280.0, 120.0, color.RGBA{70, 10, 100, 125}, false)
-		vector.DrawFilledRect(screen, 0, 120, 300.0, 860.0, color.RGBA{70, 10, 100, 125}, false)
+		// TODO: abstract out portal base (rectangles, buttons, header address)
+		vector.DrawFilledRect(screen, 0, 0, 1280.0, 80.0, color.RGBA{70, 10, 100, 125}, false)
+		vector.DrawFilledRect(screen, 0, 80, 360.0, 900.0, color.RGBA{70, 10, 100, 125}, false)
+		vector.DrawFilledRect(screen, 360, 940, 980.0, 60.0, color.RGBA{70, 10, 100, 125}, false)
+
+		g.SetTextProfile(textProfile["portal-button"])
+		g.Text.SetTarget(screen)
+		g.Text.Draw("Overview", 30, 100)
+		g.Text.Draw("Maintenace Requests", 30, 160)
+		g.Text.Draw("Financials", 30, 220)
+
+		// TODO: Set active screen
+		// TODO: Set header "breadcrumbs" by active screen
+		g.SetTextProfile(textProfile["portal-header-footer"])
+		g.Text.Draw("Home > Maintenance Requests", 370, 40)
+		g.Text.Draw("2406 Ebiten Ln", 1100, 40)
+
 		x := 800
 		y := 180
 		for _, r := range g.Building.Requests {

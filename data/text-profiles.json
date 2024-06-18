@@ -5,5 +5,19 @@
 	"alignx": "XCenter",
 	"size": 48,
 	"color": [ 239, 91, 91, 255 ]
+},
+{
+	"name": "portal-button",
+	"aligny": "Top",
+	"alignx": "Left",
+	"size": 32,
+	"color": [ 10, 10, 10, 255 ]
+},
+{
+	"name": "portal-header-footer",
+	"aligny": "YCenter",
+	"alignx": "Left",
+	"size": 20,
+	"color": [ 10, 10, 10, 255 ]
 }
 ]
