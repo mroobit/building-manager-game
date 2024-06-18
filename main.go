@@ -58,6 +58,7 @@ type Game struct {
 	Building    *Building
 	RequestPool []*Request
 	Text        *etxt.Renderer
+	Clock       *Clock
 }
 
 func (g *Game) Layout(outsideWidth int, outsideHeight int) (screenWidth int, screenHeight int) {
@@ -70,6 +71,7 @@ func (g *Game) Update() error {
 	if load {
 		initializeClickables()
 		initializeTenants(tenants)
+		g.initializeClock()
 		g.initializeBuilding()
 		g.initializeRequestPool(FileSystem)
 		g.ConfigureTextRenderer()
@@ -77,6 +79,10 @@ func (g *Game) Update() error {
 			load = false
 		}
 	} else if play {
+		g.Clock.Tick += 1
+		if g.Clock.Tick%200 == 0 {
+			g.Clock.IncrementMonth()
+		}
 		if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
 			g.Building.GenerateRequest(g.RequestPool)
 		}
@@ -141,6 +147,8 @@ func (g *Game) Draw(screen *ebiten.Image) {
 			)
 		}
 	}
+	ebitenutil.DebugPrintAt(screen, "Clock.Tick: "+strconv.Itoa(g.Clock.Tick), 20, 100)
+	ebitenutil.DebugPrintAt(screen, "Clock.Month: "+strconv.Itoa(g.Clock.Month), 20, 120)
 	ebitenutil.DebugPrintAt(screen, "Cursor X: "+strconv.Itoa(cursor[0]), 30, 45)
 	ebitenutil.DebugPrintAt(screen, "Cursor Y: "+strconv.Itoa(cursor[1]), 30, 65)
 }
