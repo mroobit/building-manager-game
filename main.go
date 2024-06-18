@@ -9,6 +9,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
+	"github.com/hajimehoshi/ebiten/v2/vector"
 	"github.com/tinne26/etxt"
 )
 
@@ -18,11 +19,11 @@ var (
 	play         = false
 	infoControls = false
 	cursor       [2]int
-	tprint       = true
 	rentIncrease = 3 // percentage increase at renewal
 
-	//go:embed images
+	//go:embed data
 	//go:embed fonts
+	//go:embed images
 	//go:embed requests.json
 	FileSystem embed.FS
 )
@@ -52,8 +53,9 @@ func main() {
 type Game struct {
 	Width       int
 	Height      int
+	State       *State
 	Player      *Player
-	Complex     *Building
+	Building    *Building
 	RequestPool []*Request
 	Text        *etxt.Renderer
 }
@@ -71,14 +73,12 @@ func (g *Game) Update() error {
 		g.initializeBuilding()
 		g.initializeRequestPool(FileSystem)
 		g.ConfigureTextRenderer()
-		load = false
-	} else if play {
-		if tprint {
-			g.Complex.ListTenants()
-			tprint = false
+		if len(background) == 2 {
+			load = false
 		}
+	} else if play {
 		if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
-			g.Complex.GenerateRequest(g.RequestPool)
+			g.Building.GenerateRequest(g.RequestPool)
 		}
 		// TODO
 		// logic for interacting with Maintenance Portal
@@ -110,16 +110,17 @@ func (g *Game) Update() error {
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
-	if play {
+	if load {
+	} else if play {
 		op := &ebiten.DrawImageOptions{}
 		op.GeoM.Scale(0.4, 0.4)
-		screen.DrawImage(portalBackground, op)
-		ebitenutil.DebugPrint(screen, "Game")
-		ebitenutil.DebugPrintAt(screen, strconv.Itoa(len(g.Complex.Tenants)), 0, 30)
+		screen.DrawImage(background["play"], op)
+
+		vector.DrawFilledRect(screen, 0, 0, 1280.0, 120.0, color.RGBA{70, 10, 100, 125}, false)
+		vector.DrawFilledRect(screen, 0, 120, 300.0, 860.0, color.RGBA{70, 10, 100, 125}, false)
 		x := 800
 		y := 180
-		for _, r := range g.Complex.Requests {
-			ebitenutil.DebugPrintAt(screen, r.Title, 40, y)
+		for _, r := range g.Building.Requests {
 			y += 40
 			g.Text.SetTarget(screen)
 			g.Text.Draw(r.Title, x, y)
@@ -127,7 +128,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	} else {
 		op := &ebiten.DrawImageOptions{}
 		op.GeoM.Scale(0.4, 0.4)
-		screen.DrawImage(titleBackground, op)
+		screen.DrawImage(background["title"], op)
 		ebitenutil.DebugPrint(screen, "Menu - Press Enter to Play")
 		if infoControls == true {
 			ebitenutil.DrawRect(

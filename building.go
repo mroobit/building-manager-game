@@ -21,7 +21,7 @@ type Building struct {
 func (g *Game) initializeBuilding() {
 	r := make([]*Request, 0, 30)
 
-	g.Complex = &Building{
+	g.Building = &Building{
 		Tenants:     tenants,
 		Requests:    r,
 		Maintenance: monthlyBuildingCost,

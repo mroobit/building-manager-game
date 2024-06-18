@@ -5,11 +5,36 @@
 	"location": "unit",
 	"urgent": false,
 	"solutions": [
-		[ "Call a plumber", 200, 10 ],
-		[ "Use a plunger and drano", 40, 8 ],
-		[ "Just use drano", 15, 5 ],
-		[ "Improvise", 0, -1 ],
-		[ "Tell tenant to use drano", 0, 3 ]
+		{
+			"action": "Call a plumber",
+			"cost": 200,
+			"efficacy": 10,
+			"time": 1
+		},
+		{
+			"action": "Use a plunger and drano",
+			"cost": 40,
+			"efficacy": 8,
+			"time": 3
+		},
+		{
+			"action": "Just use drano",
+			"cost": 15,
+			"efficacy": 5,
+			"time": 2
+		},
+		{
+			"action": "Improvise",
+			"cost": 0,
+			"efficacy": -1,
+			"time": 2
+		},
+		{
+			"action": "Tell tenant to use drano",
+			"cost": 0,
+		        "efficacy": 3,
+			"time": 1
+		}
 	]
 },
 {
@@ -18,8 +43,18 @@
 	"location": "unit",
 	"urgent": false,
 	"solutions": [
-		[ "Replace the entire tub spout", 75, 10 ],
-		[ "Improvise", 0, -1 ]
+		{
+			"action": "Replace the entire tub spout",
+			"cost": 75,
+			"efficacy": 10,
+			"time": 4
+		},
+		{
+			"action": "Improvise",
+			"cost": 0,
+			"efficacy": -1,
+			"time": 2
+		}
 	]
 },
 {
@@ -28,10 +63,30 @@
 	"location": "unit",
 	"urgent": true,
 	"solutions": [
-		[ "Hire a contractor to replace the window", 1000, 10 ],
-		[ "Replace the window", 500, 6 ],
-		[ "Remove the window from the sill and use caulk to put the pane back in place", 30, 4 ],
-		[ "Improvise", 0, -1 ]
+		{
+			"action": "Hire a contractor to replace the window",
+			"cost": 1000,
+			"efficacy": 10,
+			"time": 2
+		},
+		{
+			"action": "Replace the window",
+			"cost": 500,
+			"efficacy": 6,
+			"time": 30
+		},
+		{
+			"action": "Remove the window from the sill and use caulk to put the pane back in place",
+			"cost": 30,
+			"efficacy": 4,
+			"time": 16
+		},
+		{
+			"action": "Improvise",
+			"cost": 0,
+			"efficacy": -1,
+			"time": 2
+		}
 	]
 },
 {
@@ -40,9 +95,24 @@
 	"location": "basement",
 	"urgent": false,
 	"solutions": [
-		[ "Call HappyWash to service the machine", 0, 8 ],
-		[ "Put an \"Out of Order\" sign on the machine", 0, -1 ],
-		[ "Tell tenant to call HappyWash to service the machine", 0, 1 ]
+		{
+			"action": "Call HappyWash to service the machine",
+			"cost": 0,
+			"efficacy": 8,
+			"time": 1
+		},
+		{
+			"action": "Put an \"Out of Order\" sign on the machine",
+			"cost": 0,
+			"efficacy": -1,
+			"time": 1
+		},
+		{
+			"action": "Tell tenant to call HappyWash to service the machine",
+			"cost": 0,
+			"efficacy": 1,
+			"time": 1
+		}
 	]
 }
 ]
