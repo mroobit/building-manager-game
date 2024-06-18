@@ -39,10 +39,6 @@ func main() {
 	game := &Game{
 		Width:  gameWidth,
 		Height: gameHeight,
-		Player: &Player{
-			Money:      1000,
-			Reputation: 7,
-		},
 	}
 
 	if err := ebiten.RunGame(game); err != nil {
@@ -54,7 +50,6 @@ type Game struct {
 	Width       int
 	Height      int
 	State       *State
-	Player      *Player
 	Building    *Building
 	RequestPool []*Request
 	Text        *etxt.Renderer
@@ -79,6 +74,7 @@ func (g *Game) Update() error {
 			load = false
 		}
 	} else if play {
+		// TODO: Make incrementing of months a function of tasks done(weight) + ticks
 		g.Clock.Tick += 1
 		if g.Clock.Tick%200 == 0 {
 			g.Clock.IncrementMonth()
@@ -151,10 +147,4 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	ebitenutil.DebugPrintAt(screen, "Clock.Month: "+strconv.Itoa(g.Clock.Month), 20, 120)
 	ebitenutil.DebugPrintAt(screen, "Cursor X: "+strconv.Itoa(cursor[0]), 30, 45)
 	ebitenutil.DebugPrintAt(screen, "Cursor Y: "+strconv.Itoa(cursor[1]), 30, 65)
-}
-
-type Player struct {
-	// Name       string	// maybe include later the option to enter name
-	Money      int
-	Reputation int
 }
