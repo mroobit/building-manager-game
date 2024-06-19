@@ -98,6 +98,9 @@ func (g *Game) Update() error {
 		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) && hover != "" {
 			g.Page = hover
 		}
+		if inpututil.IsKeyJustPressed(ebiten.KeyR) {
+			g.Page = "request-details"
+		}
 
 	} else if infoControls {
 		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {

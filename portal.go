@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"image/color"
 	"strconv"
+	"strings"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/vector"
@@ -18,7 +20,7 @@ func (g *Game) DrawPortal(screen *ebiten.Image) {
 	vector.DrawFilledRect(screen, 0, 0, 1280.0, 980.0, color.RGBA{255, 255, 255, 255}, false)
 
 	vector.DrawFilledRect(screen, 0, 0, 1280.0, 80.0, color.RGBA{170, 130, 200, 255}, false)
-	vector.DrawFilledRect(screen, 0, 80, 360.0, 820.0, color.RGBA{70, 30, 100, 95}, false)
+	vector.DrawFilledRect(screen, 0, 80, 350.0, 820.0, color.RGBA{70, 30, 100, 95}, false)
 	vector.DrawFilledRect(screen, 0, 900, 1280.0, 80.0, color.RGBA{170, 130, 200, 255}, false)
 
 	g.SetTextProfile(textProfile["portal-button"])
@@ -76,19 +78,19 @@ func (g *Game) DrawPortalPage(screen *ebiten.Image) {
 	switch g.Page {
 	case "request-list":
 		g.SetTextProfile(textProfile["portal-page-title"])
-		g.Text.Draw("Open Maintenance Requests", titleX, titleY)
+		g.Text.Draw("Open Tenant Requests", titleX, titleY)
 
 		g.SetTextProfile(textProfile["portal-header-footer"])
-		g.Text.Draw("Home > Maintenance Requests", crumbX, crumbY)
+		g.Text.Draw("Home > Tenant Requests", crumbX, crumbY)
 
 		g.DrawRequestList(screen)
 
 	case "request-details":
 		g.SetTextProfile(textProfile["portal-page-title"])
-		g.Text.Draw("Maintenance Request - Details", titleX, titleY)
+		g.Text.Draw("Tenant Request - Details", titleX, titleY)
 
 		g.SetTextProfile(textProfile["portal-header-footer"])
-		g.Text.Draw("Home > Maintenance Request Details", crumbX, crumbY)
+		g.Text.Draw("Home > Tenant Request Details", crumbX, crumbY)
 
 		g.DrawRequestDetails(screen)
 
@@ -188,9 +190,9 @@ func (g *Game) DrawRequestList(screen *ebiten.Image) {
 	y := 180
 
 	issueCol := textX
-	receivedCol := textX + 280
-	locationCol := textX + 380
-	resolvedCol := textX + 480
+	receivedCol := textX + 300
+	locationCol := textX + 440
+	resolvedCol := textX + 580
 
 	vector.DrawFilledRect(screen, 390, 160, 850.0, 40.0, color.RGBA{170, 130, 200, 255}, false)
 	g.Text.Draw("Issue", issueCol, y)
@@ -200,20 +202,24 @@ func (g *Game) DrawRequestList(screen *ebiten.Image) {
 
 	g.SetTextProfile(textProfile["request-list"])
 
+	//	pagination := 0 // for when there are > 16 requests, allow navigation to additional requests?
+
 	for _, r := range g.Building.Requests {
-		y += 40
-		received := ""
-		if r.DaysOpen == 0 {
-			received = "Today"
-		} else if r.DaysOpen == 1 {
-			received = "Yesterday"
-		} else {
-			received = strconv.Itoa(r.DaysOpen) + " days ago"
+		if !r.Closed {
+			y += 40
+			received := ""
+			if r.DaysOpen == 0 {
+				received = "Today"
+			} else if r.DaysOpen == 1 {
+				received = "Yesterday"
+			} else {
+				received = strconv.Itoa(r.DaysOpen) + " days ago"
+			}
+			g.Text.Draw(r.Title, issueCol, y)
+			g.Text.Draw(received, receivedCol, y) // TODO: increment r.DaysOpen when g.Clock.Days does
+			g.Text.Draw(r.Location, locationCol, y)
+			g.Text.Draw(strconv.FormatBool(r.Resolved), resolvedCol, y)
 		}
-		g.Text.Draw(r.Title, issueCol, y)
-		g.Text.Draw(received, receivedCol, y) // TODO: increment r.DaysOpen when g.Clock.Days does
-		g.Text.Draw(r.Location, locationCol, y)
-		g.Text.Draw(strconv.FormatBool(r.Resolved), resolvedCol, y)
 	}
 
 }
@@ -223,14 +229,46 @@ func (g *Game) DrawRequestDetails(screen *ebiten.Image) {
 	request := g.Building.Requests[0]
 
 	labelCol := 410
-	valueCol := 460
+	valueCol := labelCol + 140
 	y := 180
 
-	g.SetTextProfile(textProfile["portal-header-footer"])
+	g.SetTextProfile(textProfile["request-description"])
 	g.Text.Draw("Issue", labelCol, y)
 	g.Text.Draw(request.Title, valueCol, y)
 
-	g.Text.Draw("Description", labelCol, y+40)
-	g.Text.Draw(request.Description, valueCol, y+40) // write function to wrap text based on width available, text size
+	y += 40
+	g.Text.Draw("Location", labelCol, y)
+	g.Text.Draw(request.Location, valueCol, y)
 
+	y += 40
+	g.Text.Draw("Description", labelCol, y)
+	g.Text.Draw(wrapText(request.Description), valueCol, y) // write function to wrap text based on width available, text size
+
+}
+
+func wrapText(s string) string {
+	line := ""
+	w := ""
+	sWords := strings.Split(s, " ")
+
+	fmt.Println(sWords)
+
+	for i, word := range sWords {
+		if len(line)+len(word) <= 50 {
+			if line == "" {
+				line = word
+			} else {
+				line = line + " " + word
+			}
+		} else {
+			w = w + line + "\n"
+			line = word
+		}
+
+		if i == len(sWords)-1 {
+			w = w + line
+		}
+	}
+
+	return w
 }

@@ -29,7 +29,7 @@ func (c *Clickable) Hover(cursor [2]int) bool {
 }
 
 func initializeClickables() {
-	// load from json/csv/whatever later
+	// TODO: load from json/csv/whatever later
 	titleClickable = make(map[string]*Clickable)
 	cPlay := NewClickable([2]int{100, 300}, [2]int{400, 360}, "play", "Start Game")
 	titleClickable["play"] = cPlay

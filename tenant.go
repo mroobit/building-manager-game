@@ -27,6 +27,7 @@ func NewTenant(unit string, rent int, leaseLength int) *Tenant {
 
 func initializeTenants(t []*Tenant) {
 	// TODO: for each, generate dynamically (including satisfaction)
+	//	alt: create a tenant-pool json, load pool of possible tenants, select some
 	t[0] = NewTenant("1A", 850, 12)
 	t[1] = NewTenant("1B", 800, 5)
 	t[2] = NewTenant("1C", 800, 5)

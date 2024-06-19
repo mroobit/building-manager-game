@@ -16,6 +16,14 @@
 	"color": [ 10, 10, 10, 255 ]
 },
 {
+	"name": "request-description",
+	"font": "Liberation Sans",
+	"aligny": "Top",
+	"alignx": "Left",
+	"size": 20,
+	"color": [ 10, 10, 10, 255 ]
+},
+{
 	"name": "portal-button",
 	"font": "Comfortaa Regular",
 	"aligny": "Top",
@@ -33,7 +41,7 @@
 },
 {
 	"name": "portal-page-title",
-	"font": "Comfortaa Regular",
+	"font": "Comfortaa Bold",
 	"aligny": "YCenter",
 	"alignx": "XCenter",
 	"size": 40,
