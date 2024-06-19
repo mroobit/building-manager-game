@@ -1,7 +1,8 @@
 package main
 
 var (
-	titleClickable map[string]*Clickable
+	titleClickable  map[string]*Clickable
+	portalClickable map[string]*Clickable
 )
 
 type Clickable struct {
@@ -34,4 +35,12 @@ func initializeClickables() {
 	titleClickable["play"] = cPlay
 	cControls := NewClickable([2]int{100, 400}, [2]int{400, 465}, "controls", "Display Control Info")
 	titleClickable["controls"] = cControls
+
+	portalClickable = make(map[string]*Clickable)
+	cOverview := NewClickable([2]int{0, 100}, [2]int{360, 140}, "overview", "Display Portal Overview")
+	portalClickable["overview"] = cOverview
+	cRequestList := NewClickable([2]int{0, 160}, [2]int{360, 200}, "request-list", "Display Open Maintenance Requests")
+	portalClickable["request-list"] = cRequestList
+	cFinancial := NewClickable([2]int{0, 220}, [2]int{360, 260}, "financial-overview", "Display Financial Overview")
+	portalClickable["financial-overview"] = cFinancial
 }

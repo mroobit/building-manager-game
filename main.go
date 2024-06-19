@@ -47,7 +47,7 @@ func main() {
 type Game struct {
 	Width       int
 	Height      int
-	State       *State
+	Page        string
 	Building    *Building
 	RequestPool []*Request
 	Text        *etxt.Renderer
@@ -85,8 +85,20 @@ func (g *Game) Update() error {
 		// TODO: generate problems based on Tick/Day + some randomness
 		g.CreateProblems()
 
-		// TODO
-		// logic for interacting with Maintenance Portal
+		switch {
+		case portalClickable["overview"].Hover(cursor):
+			hover = "overview"
+		case portalClickable["request-list"].Hover(cursor):
+			hover = "request-list"
+		case portalClickable["financial-overview"].Hover(cursor):
+			hover = "financial-overview"
+		default:
+			hover = ""
+		}
+		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) && hover != "" {
+			g.Page = hover
+		}
+
 	} else if infoControls {
 		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 			infoControls = false
@@ -124,12 +136,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 		g.DrawPortal(screen)
 
 		// TODO: Set active screen
-		// TODO: Set header "breadcrumbs" by active screen
-		g.SetTextProfile(textProfile["portal-header-footer"])
-		g.Text.Draw("Home > Maintenance Requests", 370, 40)
-
-		g.DrawRequestList(screen)
-
+		g.DrawPortalPage(screen)
 	} else {
 		op := &ebiten.DrawImageOptions{}
 		op.GeoM.Scale(0.4, 0.4)

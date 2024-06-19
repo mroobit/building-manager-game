@@ -39,15 +39,56 @@ func (g *Game) DrawLayout(screen *ebiten.Image, page string) { // page is string
 
 */
 
-func (g *Game) DrawRequestList(screen *ebiten.Image) {
+func (g *Game) DrawPortalPage(screen *ebiten.Image) {
 	g.Text.SetTarget(screen)
-	g.SetTextProfile(textProfile["portal-page-title"])
 
-	g.Text.Draw("Open Maintenance Requests", 815, 130)
+	titleX := 815
+	titleY := 130
 
+	crumbX := 370
+	crumbY := 40
+
+	switch g.Page {
+	case "request-list":
+		g.SetTextProfile(textProfile["portal-page-title"])
+		g.Text.Draw("Open Maintenance Requests", titleX, titleY)
+
+		g.SetTextProfile(textProfile["portal-header-footer"])
+		g.Text.Draw("Home > Maintenance Requests", crumbX, crumbY)
+
+		g.DrawRequestList(screen)
+
+	case "request-details":
+		g.SetTextProfile(textProfile["portal-page-title"])
+		g.Text.Draw("Maintenance Request - Details", titleX, titleY)
+
+		g.SetTextProfile(textProfile["portal-header-footer"])
+		g.Text.Draw("Home > Maintenance Request Details", crumbX, crumbY)
+
+		g.DrawRequestDetails(screen)
+
+	case "financial-overview":
+		g.SetTextProfile(textProfile["portal-page-title"])
+		g.Text.Draw("Financial Overview", titleX, titleY)
+
+		g.SetTextProfile(textProfile["portal-header-footer"])
+		g.Text.Draw("Home > Financial Overview", crumbX, crumbY)
+
+	case "overview":
+		fallthrough
+	default:
+		g.SetTextProfile(textProfile["portal-page-title"])
+		g.Text.Draw("Overview", titleX, titleY)
+
+		g.SetTextProfile(textProfile["portal-header-footer"])
+		g.Text.Draw("Home", crumbX, crumbY)
+	}
+}
+
+func (g *Game) DrawRequestList(screen *ebiten.Image) {
 	g.SetTextProfile(textProfile["portal-header-footer"])
 
-	textX := 400
+	textX := 410
 	y := 180
 
 	issueCol := textX
@@ -76,5 +117,22 @@ func (g *Game) DrawRequestList(screen *ebiten.Image) {
 		g.Text.Draw(r.Location, locationCol, y)
 		g.Text.Draw(strconv.FormatBool(r.Resolved), resolvedCol, y)
 	}
+
+}
+
+func (g *Game) DrawRequestDetails(screen *ebiten.Image) {
+	// hard-code specific request for now, to use selected request later
+	request := g.Building.Requests[0]
+
+	labelCol := 410
+	valueCol := 460
+	y := 180
+
+	g.SetTextProfile(textProfile["portal-header-footer"])
+	g.Text.Draw("Issue", labelCol, y)
+	g.Text.Draw(request.Title, valueCol, y)
+
+	g.Text.Draw("Description", labelCol, y+40)
+	g.Text.Draw(request.Description, valueCol, y+40) // write function to wrap text based on width available, text size
 
 }
