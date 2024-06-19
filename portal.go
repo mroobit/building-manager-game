@@ -68,6 +68,11 @@ func (g *Game) DrawPortalPage(screen *ebiten.Image) {
 	crumbX := 370
 	crumbY := 40
 
+	labelX := crumbX + 30
+	valueX := labelX + 650
+	signX := valueX - 10
+	sectionX := labelX
+
 	switch g.Page {
 	case "request-list":
 		g.SetTextProfile(textProfile["portal-page-title"])
@@ -94,10 +99,6 @@ func (g *Game) DrawPortalPage(screen *ebiten.Image) {
 		g.SetTextProfile(textProfile["portal-header-footer"])
 		g.Text.Draw("Home > Financial Overview", crumbX, crumbY)
 
-		labelX := crumbX + 30
-		valueX := labelX + 650
-		signX := valueX - 10
-		sectionX := labelX
 		y := titleY + 50
 
 		g.SetTextProfile(textProfile["financial-section"])
@@ -122,7 +123,7 @@ func (g *Game) DrawPortalPage(screen *ebiten.Image) {
 
 		y += 60
 		g.SetTextProfile(textProfile["financial-section"])
-		g.Text.Draw("Antcipated Revenue and Costs", sectionX, y)
+		g.Text.Draw("Upcoming Revenue and Costs", sectionX, y)
 		y += 40
 		g.SetTextProfile(textProfile["financial-red"])
 		g.Text.Draw("Fixed Costs (eg mortgage, insurance)", labelX, y)
@@ -157,6 +158,26 @@ func (g *Game) DrawPortalPage(screen *ebiten.Image) {
 
 		g.SetTextProfile(textProfile["portal-header-footer"])
 		g.Text.Draw("Home", crumbX, crumbY)
+
+		y := titleY + 50
+
+		g.SetTextProfile(textProfile["portal-header-footer"])
+		g.Text.Draw("Reputation", labelX, y)
+		g.Text.Draw(strconv.Itoa(g.Building.Reputation), valueX, y)
+		y += 40
+		/*
+			g.Text.Draw("Net Balance", labelX, y)
+			g.Text.Draw(strconv.Itoa(g.NetBalance()), valueX, y)
+			y += 40
+		*/
+		g.Text.Draw("Number of Tenants", labelX, y)
+		g.Text.Draw(strconv.Itoa(len(g.Building.Tenants)), valueX, y)
+		y += 40
+		g.Text.Draw("Vacancies", labelX, y)
+		g.Text.Draw(strconv.Itoa(10-len(g.Building.Tenants)), valueX, y)
+		y += 40
+		g.Text.Draw("Open Requests", labelX, y)
+		g.Text.Draw(strconv.Itoa(len(g.Building.Requests)), valueX, y)
 	}
 }
 
