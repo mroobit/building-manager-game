@@ -51,6 +51,13 @@ func (g *Game) DrawPortal(screen *ebiten.Image) {
 
 	g.SetTextProfile(textProfile["portal-header-footer"])
 	g.Text.Draw("2406 Ebiten Ln", 1100, 40)
+
+	vector.DrawFilledRect(screen, 30, 720, 290.0, 150.0, color.RGBA{255, 255, 255, 255}, false)
+
+	g.SetTextProfile(textProfile["portal-calendar-label"])
+	g.Text.Draw("Days Left in Month", 175, 760)
+	g.SetTextProfile(textProfile["portal-calendar"])
+	g.Text.Draw(strconv.Itoa(30-g.Clock.Days), 175, 820)
 }
 
 /*

@@ -48,6 +48,22 @@
 	"color": [ 10, 10, 10, 255 ]
 },
 {
+	"name": "portal-calendar-label",
+	"font": "Comfortaa Regular",
+	"aligny": "YCenter",
+	"alignx": "XCenter",
+	"size": 24,
+	"color": [ 10, 10, 10, 255 ]
+},
+{
+	"name": "portal-calendar",
+	"font": "Comfortaa Regular",
+	"aligny": "YCenter",
+	"alignx": "XCenter",
+	"size": 48,
+	"color": [ 10, 10, 10, 255 ]
+},
+{
 	"name": "financial-section",
 	"font": "Comfortaa Bold",
 	"aligny": "Top",
