@@ -75,12 +75,14 @@ func (g *Game) Update() error {
 	} else if play {
 		// TODO: Make incrementing of months a function of tasks done(weight) + ticks
 		g.Clock.Tick += 1
-		if g.Clock.Tick%200 == 0 {
-			g.Clock.IncrementMonth()
-		}
 		if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
 			g.Building.GenerateRequest(g.RequestPool)
 		}
+		if inpututil.IsKeyJustPressed(ebiten.KeySpace) {
+			g.Building.Requests[0].Close()
+		}
+		g.Clock.CheckDaysInMonth()
+
 		// TODO
 		// logic for interacting with Maintenance Portal
 	} else if infoControls {
@@ -139,7 +141,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 		for _, r := range g.Building.Requests {
 			y += 40
 			g.Text.SetTarget(screen)
-			g.Text.Draw(r.Title, x, y)
+			g.Text.Draw(r.Title+" - "+strconv.FormatBool(r.Closed), x, y)
 		}
 	} else {
 		op := &ebiten.DrawImageOptions{}
@@ -159,6 +161,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	}
 	ebitenutil.DebugPrintAt(screen, "Clock.Tick: "+strconv.Itoa(g.Clock.Tick), 20, 100)
 	ebitenutil.DebugPrintAt(screen, "Clock.Month: "+strconv.Itoa(g.Clock.Month), 20, 120)
+	ebitenutil.DebugPrintAt(screen, "Clock.Days: "+strconv.Itoa(g.Clock.Days), 20, 140)
 	ebitenutil.DebugPrintAt(screen, "Cursor X: "+strconv.Itoa(cursor[0]), 30, 45)
 	ebitenutil.DebugPrintAt(screen, "Cursor Y: "+strconv.Itoa(cursor[1]), 30, 65)
 }

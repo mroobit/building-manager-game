@@ -5,6 +5,7 @@ import "fmt"
 type Clock struct {
 	Tick      int
 	Timer     int
+	Days      int
 	Month     int
 	Recurring map[string][2]int
 }
@@ -27,6 +28,14 @@ func (c *Clock) IncrementMonth() {
 		c.Recurring[key] = update
 	}
 	c.CheckEvents()
+	c.Days = 0
+	c.Tick = 0
+}
+
+func (c *Clock) CheckDaysInMonth() {
+	if c.Days >= 31 || c.Tick > 4000 {
+		c.IncrementMonth()
+	}
 }
 
 func (c *Clock) CheckEvents() {

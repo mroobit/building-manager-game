@@ -47,7 +47,18 @@ func (b *Building) ListTenants() {
 
 func (b *Building) GenerateRequest(pool []*Request) {
 	t := b.Tenants[rand.IntN(len(b.Tenants))]
-	r := pool[rand.IntN(len(pool))]
+	blankRequest := pool[rand.IntN(len(pool))]
+	r := &Request{
+		Title:       blankRequest.Title,
+		Description: blankRequest.Description,
+		Location:    blankRequest.Location,
+		Tenant:      t,
+		Urgent:      blankRequest.Urgent,
+		DaysOpen:    0,
+		Closed:      false,
+		Resolved:    false,
+	}
+
 	if r.Location == "unit" {
 		r.Location = t.Unit
 	}
