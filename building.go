@@ -65,4 +65,15 @@ func (b *Building) ReopenRequests() {
 	}
 }
 
+func (b *Building) OpenRequestCount() int {
+	count := 0
+	for _, r := range b.Requests {
+		if !r.Closed {
+			count += 1
+		}
+	}
+
+	return count
+}
+
 // TODO: func (b *Building)Vacancies {} -- reports which units are vacant

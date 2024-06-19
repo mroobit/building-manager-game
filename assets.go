@@ -62,10 +62,15 @@ func loadFonts() {
 	if err != nil {
 		log.Fatalf("Error while loading fonts: %s", err.Error())
 	}
+	fonts.EachFont(func(name string, _ *etxt.Font) error {
+		fmt.Println(name)
+		return nil
+	})
 }
 
 type TextProfile struct {
 	Name   string
+	Font   string
 	AlignY string
 	AlignX string
 	Size   int
@@ -77,7 +82,6 @@ func (g *Game) ConfigureTextRenderer() {
 	renderer := etxt.NewStdRenderer()
 	cache := etxt.NewDefaultCache(10 * 1024 * 1024)
 	renderer.SetCacheHandler(cache.NewHandler())
-	renderer.SetFont(fonts.GetFont("Liberation Sans"))
 	g.Text = renderer
 	g.SetTextProfile(textProfile["default"])
 }
@@ -94,6 +98,7 @@ func (g *Game) SetTextProfile(p *TextProfile) {
 		"Left":    etxt.Left,
 	}
 
+	g.Text.SetFont(fonts.GetFont(p.Font))
 	g.Text.SetAlign(y[p.AlignY], x[p.AlignX])
 	g.Text.SetSizePx(p.Size)
 	g.Text.SetColor(color.RGBA{p.Color[0], p.Color[1], p.Color[2], p.Color[3]})

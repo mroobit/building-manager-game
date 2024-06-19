@@ -1,13 +1,23 @@
 [
 {
 	"name": "default",
+	"font": "Liberation Sans",
 	"aligny": "YCenter",
 	"alignx": "XCenter",
 	"size": 48,
 	"color": [ 239, 91, 91, 255 ]
 },
 {
+	"name": "request-list",
+	"font": "Liberation Sans",
+	"aligny": "YCenter",
+	"alignx": "Left",
+	"size": 20,
+	"color": [ 10, 10, 10, 255 ]
+},
+{
 	"name": "portal-button",
+	"font": "Comfortaa Regular",
 	"aligny": "Top",
 	"alignx": "Left",
 	"size": 32,
@@ -15,6 +25,7 @@
 },
 {
 	"name": "portal-header-footer",
+	"font": "Comfortaa Regular",
 	"aligny": "YCenter",
 	"alignx": "Left",
 	"size": 20,
@@ -22,9 +33,34 @@
 },
 {
 	"name": "portal-page-title",
+	"font": "Comfortaa Regular",
 	"aligny": "YCenter",
 	"alignx": "XCenter",
 	"size": 40,
 	"color": [ 10, 10, 10, 255 ]
+},
+{
+	"name": "financial-green",
+	"font": "Comfortaa Regular",
+	"aligny": "Top",
+	"alignx": "Left",
+	"size": 24,
+	"color": [ 10, 90, 10, 255 ]
+},
+{
+	"name": "financial-red",
+	"font": "Comfortaa Regular",
+	"aligny": "Top",
+	"alignx": "Left",
+	"size": 24,
+	"color": [ 150, 10, 10, 255 ]
+},
+{
+	"name": "alert-button",
+	"font": "Comfortaa Regular",
+	"aligny": "YCenter",
+	"alignx": "XCenter",
+	"size": 24,
+	"color": [ 30, 30, 70, 255 ]
 }
 ]

@@ -24,7 +24,25 @@ func (g *Game) DrawPortal(screen *ebiten.Image) {
 	g.SetTextProfile(textProfile["portal-button"])
 	g.Text.SetTarget(screen)
 	g.Text.Draw("Overview", 30, 100)
-	g.Text.Draw("Maintenace Requests", 30, 160)
+	g.Text.Draw("Requests", 30, 160)
+	// TODO: draw request number in filled circle, circle color changes based on # of requests
+	var alertColor color.Color
+
+	numR := len(g.Building.Requests)
+	switch {
+	case numR <= 3:
+		alertColor = color.RGBA{20, 200, 20, 205}
+	case numR <= 6:
+		alertColor = color.RGBA{255, 190, 75, 205}
+	default:
+		alertColor = color.RGBA{250, 105, 90, 205}
+	}
+
+	vector.DrawFilledCircle(screen, 290.0, 180.0, 22.0, alertColor, false)
+	g.SetTextProfile(textProfile["alert-button"])
+	g.Text.Draw(strconv.Itoa(g.Building.OpenRequestCount()), 290, 180)
+
+	g.SetTextProfile(textProfile["portal-button"])
 	g.Text.Draw("Financials", 30, 220)
 
 	g.SetTextProfile(textProfile["portal-header-footer"])
@@ -74,6 +92,39 @@ func (g *Game) DrawPortalPage(screen *ebiten.Image) {
 		g.SetTextProfile(textProfile["portal-header-footer"])
 		g.Text.Draw("Home > Financial Overview", crumbX, crumbY)
 
+		labelX := crumbX + 30
+		valueX := labelX + 650
+		sectionX := 445
+		y := titleY + 50
+
+		if g.Building.Money >= 0 {
+			g.SetTextProfile(textProfile["financial-green"])
+		} else {
+			g.SetTextProfile(textProfile["financial-red"])
+		}
+		g.Text.Draw("Current Banking Balance", labelX, y)
+		g.Text.Draw("$"+strconv.Itoa(g.Building.Money), valueX, y)
+
+		g.SetTextProfile(textProfile["financial-red"])
+		y += 60
+		g.Text.Draw("Antcipated Revenue and Costs", sectionX, y)
+		y += 40
+		g.Text.Draw("Fixed Costs (eg mortgage, insurance)", labelX, y)
+		g.Text.Draw("$"+strconv.Itoa(g.Building.Money), valueX, y)
+
+		y += 40
+		g.Text.Draw("Repair Costs", labelX, y)
+		g.Text.Draw("$"+strconv.Itoa(g.Building.Money), valueX, y)
+
+		y += 40
+		g.SetTextProfile(textProfile["financial-green"])
+		g.Text.Draw("Rent Income", labelX, y)
+		g.Text.Draw("$"+strconv.Itoa(g.Building.Money), valueX, y)
+
+		y += 40
+		g.Text.Draw("Net Change", labelX, y)
+		g.Text.Draw("$"+strconv.Itoa(g.Building.Money), valueX, y)
+
 	case "overview":
 		fallthrough
 	default:
@@ -101,6 +152,8 @@ func (g *Game) DrawRequestList(screen *ebiten.Image) {
 	g.Text.Draw("Received", receivedCol, y)
 	g.Text.Draw("Location", locationCol, y)
 	g.Text.Draw("Resolved?", resolvedCol, y)
+
+	g.SetTextProfile(textProfile["request-list"])
 
 	for _, r := range g.Building.Requests {
 		y += 40
