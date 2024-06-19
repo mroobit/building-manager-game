@@ -20,6 +20,10 @@ func (g *Game) initializeClock() {
 	g.Clock = c
 }
 
+// update tenant months left
+// update money in/out
+// initiate events (prod to schedule spraying, annual inspection, infestation, etc)
+// update months played
 func (c *Clock) IncrementMonth() {
 	c.Month += 1
 	for key, value := range c.Recurring {

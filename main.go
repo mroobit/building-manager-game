@@ -76,12 +76,15 @@ func (g *Game) Update() error {
 		// TODO: Make incrementing of months a function of tasks done(weight) + ticks
 		g.Clock.Tick += 1
 		if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
-			g.Building.GenerateRequest(g.RequestPool)
+			g.GenerateRequest()
 		}
 		if inpututil.IsKeyJustPressed(ebiten.KeySpace) {
 			g.Building.Requests[0].Close()
 		}
 		g.Clock.CheckDaysInMonth()
+
+		// TODO: generate problems based on Tick/Day + some randomness
+		g.CreateProblems()
 
 		// TODO
 		// logic for interacting with Maintenance Portal
