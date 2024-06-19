@@ -40,6 +40,14 @@
 	"color": [ 10, 10, 10, 255 ]
 },
 {
+	"name": "financial-section",
+	"font": "Comfortaa Bold",
+	"aligny": "Top",
+	"alignx": "Left",
+	"size": 28,
+	"color": [ 10, 10, 10, 255 ]
+},
+{
 	"name": "financial-green",
 	"font": "Comfortaa Regular",
 	"aligny": "Top",
@@ -57,7 +65,7 @@
 },
 {
 	"name": "alert-button",
-	"font": "Comfortaa Regular",
+	"font": "Comfortaa Bold",
 	"aligny": "YCenter",
 	"alignx": "XCenter",
 	"size": 24,

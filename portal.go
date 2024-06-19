@@ -18,14 +18,16 @@ func (g *Game) DrawPortal(screen *ebiten.Image) {
 	vector.DrawFilledRect(screen, 0, 0, 1280.0, 980.0, color.RGBA{255, 255, 255, 255}, false)
 
 	vector.DrawFilledRect(screen, 0, 0, 1280.0, 80.0, color.RGBA{170, 130, 200, 255}, false)
-	vector.DrawFilledRect(screen, 0, 80, 360.0, 820.0, color.RGBA{70, 10, 100, 125}, false)
+	vector.DrawFilledRect(screen, 0, 80, 360.0, 820.0, color.RGBA{70, 30, 100, 95}, false)
 	vector.DrawFilledRect(screen, 0, 900, 1280.0, 80.0, color.RGBA{170, 130, 200, 255}, false)
 
 	g.SetTextProfile(textProfile["portal-button"])
 	g.Text.SetTarget(screen)
 	g.Text.Draw("Overview", 30, 100)
 	g.Text.Draw("Requests", 30, 160)
-	// TODO: draw request number in filled circle, circle color changes based on # of requests
+
+	// TODO: improve alert circle logic
+	// TODO: improve alert circle appearance
 	var alertColor color.Color
 
 	numR := len(g.Building.Requests)
@@ -94,36 +96,58 @@ func (g *Game) DrawPortalPage(screen *ebiten.Image) {
 
 		labelX := crumbX + 30
 		valueX := labelX + 650
-		sectionX := 445
+		signX := valueX - 10
+		sectionX := labelX
 		y := titleY + 50
 
+		g.SetTextProfile(textProfile["financial-section"])
+		g.Text.Draw("Current Balances", sectionX, y)
+		y += 40
+
+		g.SetTextProfile(textProfile["financial-green"])
+		g.Text.Draw("Bank Account Balance", labelX, y)
+		g.Text.Draw("$"+strconv.Itoa(g.Building.Money), valueX, y)
+		y += 40
+		g.SetTextProfile(textProfile["financial-red"])
+		g.Text.Draw("Credit Card Balance", labelX, y)
+		g.Text.Draw("$"+strconv.Itoa(g.Building.CreditBalance), valueX, y)
+		y += 60
 		if g.Building.Money >= 0 {
 			g.SetTextProfile(textProfile["financial-green"])
 		} else {
 			g.SetTextProfile(textProfile["financial-red"])
 		}
-		g.Text.Draw("Current Banking Balance", labelX, y)
+		g.Text.Draw("Net Balance", labelX, y)
 		g.Text.Draw("$"+strconv.Itoa(g.Building.Money), valueX, y)
 
-		g.SetTextProfile(textProfile["financial-red"])
 		y += 60
+		g.SetTextProfile(textProfile["financial-section"])
 		g.Text.Draw("Antcipated Revenue and Costs", sectionX, y)
 		y += 40
+		g.SetTextProfile(textProfile["financial-red"])
 		g.Text.Draw("Fixed Costs (eg mortgage, insurance)", labelX, y)
-		g.Text.Draw("$"+strconv.Itoa(g.Building.Money), valueX, y)
+		g.Text.Draw("-", signX, y)
+		g.Text.Draw("$"+strconv.Itoa(g.Building.FixedCosts), valueX, y)
 
 		y += 40
-		g.Text.Draw("Repair Costs", labelX, y)
-		g.Text.Draw("$"+strconv.Itoa(g.Building.Money), valueX, y)
+		g.Text.Draw("Credit Card Payment", labelX, y)
+		g.Text.Draw("-", signX, y)
+		g.Text.Draw("$"+strconv.Itoa(g.Building.CreditBalance), valueX, y)
 
 		y += 40
 		g.SetTextProfile(textProfile["financial-green"])
 		g.Text.Draw("Rent Income", labelX, y)
-		g.Text.Draw("$"+strconv.Itoa(g.Building.Money), valueX, y)
+		g.Text.Draw("+", signX, y)
+		g.Text.Draw("$"+strconv.Itoa(g.UpcomingRent()), valueX, y)
 
-		y += 40
+		y += 60
+		if g.Building.Money >= 0 {
+			g.SetTextProfile(textProfile["financial-green"])
+		} else {
+			g.SetTextProfile(textProfile["financial-red"])
+		}
 		g.Text.Draw("Net Change", labelX, y)
-		g.Text.Draw("$"+strconv.Itoa(g.Building.Money), valueX, y)
+		g.Text.Draw("$"+strconv.Itoa(g.UpcomingPayments()), valueX, y)
 
 	case "overview":
 		fallthrough

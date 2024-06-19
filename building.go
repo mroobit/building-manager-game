@@ -11,25 +11,26 @@ var (
 )
 
 type Building struct {
-	Manager     string
-	Money       int
-	Reputation  int
-	Tenants     []*Tenant
-	Requests    []*Request
-	Maintenance int // monthly cost
-	Inspection  int // months until next inspection
+	Manager       string
+	Money         int
+	CreditBalance int
+	Reputation    int
+	Tenants       []*Tenant
+	Requests      []*Request
+	FixedCosts    int // monthly cost, will increase over time
+	Inspection    int // months until next inspection
 }
 
 func (g *Game) initializeBuilding() {
 	r := make([]*Request, 0, 30)
 
 	g.Building = &Building{
-		Money:       1000,
-		Reputation:  7,
-		Tenants:     tenants,
-		Requests:    r,
-		Maintenance: monthlyBuildingCost,
-		Inspection:  10,
+		Money:      1000,
+		Reputation: 7,
+		Tenants:    tenants,
+		Requests:   r,
+		FixedCosts: monthlyBuildingCost,
+		Inspection: 10,
 	}
 }
 
