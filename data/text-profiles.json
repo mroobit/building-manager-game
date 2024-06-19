@@ -19,5 +19,12 @@
 	"alignx": "Left",
 	"size": 20,
 	"color": [ 10, 10, 10, 255 ]
+},
+{
+	"name": "portal-page-title",
+	"aligny": "YCenter",
+	"alignx": "XCenter",
+	"size": 40,
+	"color": [ 10, 10, 10, 255 ]
 }
 ]

@@ -9,7 +9,6 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
-	"github.com/hajimehoshi/ebiten/v2/vector"
 	"github.com/tinne26/etxt"
 )
 
@@ -112,40 +111,25 @@ func (g *Game) Update() error {
 		// TODO
 		// set a count-down to display transition
 	}
+	if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
+		// TODO: dialogue to confirm player wants to exit game
+		return ebiten.Termination
+	}
 	return nil
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
 	if load {
 	} else if play {
-		op := &ebiten.DrawImageOptions{}
-		op.GeoM.Scale(0.4, 0.4)
-		screen.DrawImage(background["play"], op)
-
-		// TODO: abstract out portal base (rectangles, buttons, header address)
-		vector.DrawFilledRect(screen, 0, 0, 1280.0, 80.0, color.RGBA{70, 10, 100, 125}, false)
-		vector.DrawFilledRect(screen, 0, 80, 360.0, 900.0, color.RGBA{70, 10, 100, 125}, false)
-		vector.DrawFilledRect(screen, 360, 940, 980.0, 60.0, color.RGBA{70, 10, 100, 125}, false)
-
-		g.SetTextProfile(textProfile["portal-button"])
-		g.Text.SetTarget(screen)
-		g.Text.Draw("Overview", 30, 100)
-		g.Text.Draw("Maintenace Requests", 30, 160)
-		g.Text.Draw("Financials", 30, 220)
+		g.DrawPortal(screen)
 
 		// TODO: Set active screen
 		// TODO: Set header "breadcrumbs" by active screen
 		g.SetTextProfile(textProfile["portal-header-footer"])
 		g.Text.Draw("Home > Maintenance Requests", 370, 40)
-		g.Text.Draw("2406 Ebiten Ln", 1100, 40)
 
-		x := 800
-		y := 180
-		for _, r := range g.Building.Requests {
-			y += 40
-			g.Text.SetTarget(screen)
-			g.Text.Draw(r.Title+" - "+strconv.FormatBool(r.Closed), x, y)
-		}
+		g.DrawRequestList(screen)
+
 	} else {
 		op := &ebiten.DrawImageOptions{}
 		op.GeoM.Scale(0.4, 0.4)

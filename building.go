@@ -44,11 +44,16 @@ func (b *Building) ListTenants() {
 	}
 }
 
-func (b *Building) AddRequest(request *Request) {
-	b.Requests = append(b.Requests, request)
+func (b *Building) ReceiveRequest(r *Request) {
+	// TODO: Also trigger notification if player is not on request list screen
+	if r.Urgent {
+		b.Requests = append([]*Request{r}, b.Requests...)
+	} else {
+		b.Requests = append(b.Requests, r)
+	}
 }
 
-func (b *Building) ReviveRequests() {
+func (b *Building) ReopenRequests() {
 	for _, r := range b.Requests {
 		if !r.Resolved {
 			r.Closed = false
