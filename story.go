@@ -12,7 +12,6 @@ import (
 var storyText string
 
 func (g *Game) IntroStory(screen *ebiten.Image) {
-	// TODO: display Aunt Jo's story
 	// TODO: display building hand-over "paperwork" declaring Number of Tenants, etc
 	// TODO: display "Skip" button
 
@@ -21,7 +20,6 @@ func (g *Game) IntroStory(screen *ebiten.Image) {
 
 	g.SetTextProfile(textProfile["aunt-jos-letter"])
 	g.Text.SetTarget(screen)
-	//	g.Text.Draw("I hate to be the bearer of bad news, but I, your beloved Aunt Josephine, am dead!", 90, 70)
 	g.Text.Draw(storyText, 90, 55)
 }
 

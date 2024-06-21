@@ -46,7 +46,6 @@ func (b *Building) ListTenants() {
 }
 
 func (b *Building) ReceiveRequest(r *Request) {
-	// TODO: Also trigger notification if player is not on request list screen
 	if r.Urgent {
 		b.Requests = append([]*Request{r}, b.Requests...)
 	} else {

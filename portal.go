@@ -265,7 +265,7 @@ func wrapText(s string, length int) string {
 	sWords := strings.Split(s, " ")
 
 	for i, word := range sWords {
-		if strings.Contains(word, "\n") { // if matches with \n, split by newline, affix first to end of line, add that to word, then set line = second part
+		if strings.Contains(word, "\n") {
 			n := strings.Split(word, "\n")
 			w = w + line + " " + n[0] + "\n"
 			line = n[1]
