@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"image/color"
 	"strconv"
 	"strings"
@@ -249,7 +248,7 @@ func (g *Game) DrawRequestDetails(screen *ebiten.Image) {
 
 	y += 40
 	g.Text.Draw("Description", labelCol, y)
-	g.Text.Draw(wrapText(request.Description), valueCol, y)
+	g.Text.Draw(wrapText(request.Description, 60), valueCol, y)
 
 	y += 80
 	g.Text.Draw("Solutions", labelCol, y)
@@ -260,15 +259,17 @@ func (g *Game) DrawRequestDetails(screen *ebiten.Image) {
 
 }
 
-func wrapText(s string) string {
+func wrapText(s string, length int) string {
 	line := ""
 	w := ""
 	sWords := strings.Split(s, " ")
 
-	fmt.Println(sWords)
-
 	for i, word := range sWords {
-		if len(line)+len(word) <= 50 {
+		if strings.Contains(word, "\n") { // if matches with \n, split by newline, affix first to end of line, add that to word, then set line = second part
+			n := strings.Split(word, "\n")
+			w = w + line + " " + n[0] + "\n"
+			line = n[1]
+		} else if len(line)+len(word) <= length {
 			if line == "" {
 				line = word
 			} else {

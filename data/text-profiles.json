@@ -94,5 +94,13 @@
 	"alignx": "XCenter",
 	"size": 24,
 	"color": [ 30, 30, 70, 255 ]
+},
+{
+	"name": "aunt-jos-letter",
+	"font": "Allison Regular",
+	"aligny": "Top",
+	"alignx": "Left",
+	"size": 56,
+	"color": [ 30, 30, 30, 255 ]
 }
 ]

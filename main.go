@@ -16,6 +16,7 @@ import (
 var (
 	load         = true
 	hover        = ""
+	story        = false
 	play         = false
 	infoControls = false
 	cursor       [2]int
@@ -69,9 +70,16 @@ func (g *Game) Update() error {
 		g.initializeBuilding()
 		g.initializeRequestPool(FileSystem)
 		g.ConfigureTextRenderer()
+		loadLetter(FileSystem)
 		if len(background) == 2 {
 			load = false
 		}
+	} else if story {
+		if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
+			play = true
+			story = false
+		}
+
 	} else if play {
 		// TODO: Make incrementing of months a function of tasks done(weight) + ticks
 		g.Clock.Tick += 1
@@ -137,7 +145,8 @@ func (g *Game) Update() error {
 		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 			switch hover {
 			case "play":
-				play = true
+				story = true
+			//	play = true
 			case "controls":
 				infoControls = true
 			}
@@ -154,6 +163,8 @@ func (g *Game) Update() error {
 
 func (g *Game) Draw(screen *ebiten.Image) {
 	if load {
+	} else if story {
+		g.IntroStory(screen)
 	} else if play {
 		g.DrawPortal(screen)
 
