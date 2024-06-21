@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"image/color"
 	"log"
-	"strconv"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
@@ -14,11 +13,7 @@ import (
 )
 
 var (
-	load         = true
 	hover        = ""
-	story        = false
-	play         = false
-	infoControls = false
 	cursor       [2]int
 	rentIncrease = 3 // percentage increase at renewal
 
@@ -39,6 +34,7 @@ func main() {
 	game := &Game{
 		Width:  gameWidth,
 		Height: gameHeight,
+		State:  "load",
 	}
 
 	if err := ebiten.RunGame(game); err != nil {
@@ -49,6 +45,7 @@ func main() {
 type Game struct {
 	Width       int
 	Height      int
+	State       string
 	Page        string
 	Building    *Building
 	RequestPool []*Request
@@ -63,7 +60,7 @@ func (g *Game) Layout(outsideWidth int, outsideHeight int) (screenWidth int, scr
 func (g *Game) Update() error {
 	cursor[0], cursor[1] = ebiten.CursorPosition()
 
-	if load {
+	if g.State == "load" {
 		initializeClickables()
 		initializeTenants(tenants)
 		g.initializeClock()
@@ -72,27 +69,26 @@ func (g *Game) Update() error {
 		g.ConfigureTextRenderer()
 		loadLetter(FileSystem)
 		if len(background) == 2 {
-			load = false
+			g.State = "title"
 		}
-	} else if story {
+	} else if g.State == "story" {
 		if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
-			play = true
-			story = false
+			g.State = "play"
 		}
 
-	} else if play {
+	} else if g.State == "play" {
 		// TODO: Make incrementing of months a function of tasks done(weight) + ticks
 		g.Clock.Tick += 1
+		g.CheckDaysInMonth()
+		// TODO: generate problems based on Tick/Day + some randomness
+		g.CreateProblems()
+
 		if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
 			g.GenerateRequest()
 		}
 		if inpututil.IsKeyJustPressed(ebiten.KeySpace) {
 			g.Building.Requests[0].Close()
 		}
-		g.CheckDaysInMonth()
-
-		// TODO: generate problems based on Tick/Day + some randomness
-		g.CreateProblems()
 
 		switch {
 		case portalClickable["overview"].Hover(cursor):
@@ -125,9 +121,9 @@ func (g *Game) Update() error {
 			}
 		}
 
-	} else if infoControls {
+	} else if g.State == "infoControls" {
 		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
-			infoControls = false
+			g.State = ""
 		}
 	} else {
 		switch {
@@ -145,10 +141,9 @@ func (g *Game) Update() error {
 		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 			switch hover {
 			case "play":
-				story = true
-			//	play = true
+				g.State = "story"
 			case "controls":
-				infoControls = true
+				g.State = "infoControls"
 			}
 		}
 		// TODO
@@ -162,20 +157,17 @@ func (g *Game) Update() error {
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
-	if load {
-	} else if story {
+	if g.State == "load" {
+	} else if g.State == "story" {
 		g.IntroStory(screen)
-	} else if play {
+	} else if g.State == "play" {
 		g.DrawPortal(screen)
-
-		// TODO: Set active screen
 		g.DrawPortalPage(screen)
 	} else {
 		op := &ebiten.DrawImageOptions{}
 		op.GeoM.Scale(0.4, 0.4)
 		screen.DrawImage(background["title"], op)
-		ebitenutil.DebugPrint(screen, "Menu - Press Enter to Play")
-		if infoControls == true {
+		if g.State == "infoControls" {
 			ebitenutil.DrawRect(
 				screen,
 				400,
@@ -186,9 +178,11 @@ func (g *Game) Draw(screen *ebiten.Image) {
 			)
 		}
 	}
-	ebitenutil.DebugPrintAt(screen, "Clock.Tick: "+strconv.Itoa(g.Clock.Tick), 20, 100)
-	ebitenutil.DebugPrintAt(screen, "Clock.Month: "+strconv.Itoa(g.Clock.Month), 20, 120)
-	ebitenutil.DebugPrintAt(screen, "Clock.Days: "+strconv.Itoa(g.Clock.Days), 20, 140)
-	ebitenutil.DebugPrintAt(screen, "Cursor X: "+strconv.Itoa(cursor[0]), 30, 45)
-	ebitenutil.DebugPrintAt(screen, "Cursor Y: "+strconv.Itoa(cursor[1]), 30, 65)
+	/*
+		ebitenutil.DebugPrintAt(screen, "Clock.Tick: "+strconv.Itoa(g.Clock.Tick), 20, 100)
+		ebitenutil.DebugPrintAt(screen, "Clock.Month: "+strconv.Itoa(g.Clock.Month), 20, 120)
+		ebitenutil.DebugPrintAt(screen, "Clock.Days: "+strconv.Itoa(g.Clock.Days), 20, 140)
+		ebitenutil.DebugPrintAt(screen, "Cursor X: "+strconv.Itoa(cursor[0]), 30, 45)
+		ebitenutil.DebugPrintAt(screen, "Cursor Y: "+strconv.Itoa(cursor[1]), 30, 65)
+	*/
 }
