@@ -249,7 +249,7 @@ func (g *Game) DrawRequestDetails(screen *ebiten.Image) {
 
 	y += 40
 	g.Text.Draw("Description", labelCol, y)
-	g.Text.Draw(wrapText(request.Description), valueCol, y) // write function to wrap text based on width available, text size
+	g.Text.Draw(wrapText(request.Description), valueCol, y)
 
 	y += 80
 	g.Text.Draw("Solutions", labelCol, y)

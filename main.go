@@ -2,6 +2,7 @@ package main
 
 import (
 	"embed"
+	"fmt"
 	"image/color"
 	"log"
 	"strconv"
@@ -101,6 +102,9 @@ func (g *Game) Update() error {
 		if inpututil.IsKeyJustPressed(ebiten.KeyR) {
 			g.Page = "request-details"
 		}
+		if inpututil.IsKeyJustPressed(ebiten.KeyD) {
+			fmt.Println(g.Building.Requests[0])
+		}
 
 		if g.Page == "request-details" {
 			// TODO: create option to mark closed without doing anything
@@ -125,6 +129,10 @@ func (g *Game) Update() error {
 			hover = "controls"
 		default:
 			hover = ""
+		}
+
+		if inpututil.IsKeyJustPressed(ebiten.KeyD) {
+			fmt.Println(g.RequestPool[0])
 		}
 		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 			switch hover {

@@ -8,16 +8,27 @@ import (
 )
 
 type Request struct {
-	Title       string
-	Description string
-	Location    string
-	Tenant      *Tenant
-	Urgent      bool
-	//	Options           []*Solutions
-	DaysOpen          int  // this increments regularly
-	Closed            bool // requests can be closed without resolving
-	Resolved          bool // was the problem actually fixed
+	Title             string `json:"title"`
+	Description       string `json:"description"`
+	Location          string `json:"location"`
+	Tenant            *Tenant
+	Urgent            bool       `json:"urgent"`
+	Solutions         []Solution `json:"solutions"`
+	DaysOpen          int        // this increments regularly
+	Closed            bool       // requests can be closed without resolving
+	Resolved          bool       // was the problem actually fixed
 	ResolutionQuality int
+}
+
+type Solution struct {
+	Action   string `json:"action"`
+	Cost     int    `json:"cost"`
+	Efficacy int    `json:"efficacy"`
+	Time     int    `json:"time"`
+}
+
+type wrapper struct {
+	Requests []*Request `json:"requests"`
 }
 
 func NewRequest(title string, description string, location string, tenant *Tenant, urgent bool) *Request {

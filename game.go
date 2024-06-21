@@ -19,6 +19,7 @@ func (g *Game) GenerateRequest() {
 		Location:    blankRequest.Location,
 		Tenant:      t,
 		Urgent:      blankRequest.Urgent,
+		Solutions:   blankRequest.Solutions,
 		DaysOpen:    0,
 		Closed:      false,
 		Resolved:    false,
