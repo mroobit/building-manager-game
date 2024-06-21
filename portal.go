@@ -57,7 +57,7 @@ func (g *Game) DrawPortal(screen *ebiten.Image) {
 	g.SetTextProfile(textProfile["portal-calendar-label"])
 	g.Text.Draw("Days Left in Month", 175, 760)
 	g.SetTextProfile(textProfile["portal-calendar"])
-	g.Text.Draw(strconv.Itoa(30-g.Clock.Days), 175, 820)
+	g.Text.Draw(strconv.Itoa(30-(g.Clock.Days/3)), 175, 820)
 }
 
 /*
@@ -250,6 +250,13 @@ func (g *Game) DrawRequestDetails(screen *ebiten.Image) {
 	y += 40
 	g.Text.Draw("Description", labelCol, y)
 	g.Text.Draw(wrapText(request.Description), valueCol, y) // write function to wrap text based on width available, text size
+
+	y += 80
+	g.Text.Draw("Solutions", labelCol, y)
+	for _, s := range request.Solutions {
+		y += 40
+		g.Text.Draw(s.Action, valueCol, y)
+	}
 
 }
 

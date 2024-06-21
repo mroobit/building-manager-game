@@ -80,7 +80,7 @@ func (g *Game) Update() error {
 		if inpututil.IsKeyJustPressed(ebiten.KeySpace) {
 			g.Building.Requests[0].Close()
 		}
-		g.Clock.CheckDaysInMonth()
+		g.CheckDaysInMonth()
 
 		// TODO: generate problems based on Tick/Day + some randomness
 		g.CreateProblems()
@@ -100,6 +100,17 @@ func (g *Game) Update() error {
 		}
 		if inpututil.IsKeyJustPressed(ebiten.KeyR) {
 			g.Page = "request-details"
+		}
+
+		if g.Page == "request-details" {
+			// TODO: create option to mark closed without doing anything
+			// TODO: logic to select a resolution option to try
+			// tmp: hard-coded doing first option
+			if inpututil.IsKeyJustPressed(ebiten.KeyS) {
+				cost, time := g.Building.Requests[0].Resolve(1)
+				g.AdvanceDay(time)
+				g.Building.CreditBalance += cost
+			}
 		}
 
 	} else if infoControls {

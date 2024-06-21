@@ -3,6 +3,7 @@ package main
 import (
 	"embed"
 	"encoding/json"
+	"fmt"
 	"log"
 )
 
@@ -37,12 +38,16 @@ func (r *Request) Close() {
 	r.Closed = true
 }
 
-func (r *Request) Resolve(quality int) {
+func (r *Request) Resolve(option int) (cost int, time int) {
 	// TODO: implement Options []*Solution in Request struct
 	// then add logic for assigning resolution quality to request when resolving based on chosen option
+	fmt.Println("SOLUTIONS")
+	fmt.Println(r.Solutions)
 	r.Resolved = true
-	r.ResolutionQuality = quality
-	r.Closed = true
+	//	r.ResolutionQuality = r.Options[option].Efficacy
+	// r.Closed = true
+	//return r.Solutions[option].Cost, r.Solutions[option].Time
+	return 50, 11
 }
 
 func (g *Game) initializeRequestPool(fs embed.FS) {
