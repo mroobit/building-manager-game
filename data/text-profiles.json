@@ -32,6 +32,14 @@
 	"color": [ 10, 10, 10, 255 ]
 },
 {
+	"name": "request-solutions",
+	"font": "Liberation Sans",
+	"aligny": "Top",
+	"alignx": "Left",
+	"size": 24,
+	"color": [ 10, 10, 10, 255 ]
+},
+{
 	"name": "portal-button",
 	"font": "Comfortaa Regular",
 	"aligny": "Top",
