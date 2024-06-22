@@ -44,6 +44,9 @@ func (g *Game) AdvanceDay(t int) {
 	for _, r := range g.Building.Requests {
 		r.DaysOpen += day
 	}
+	if g.Clock.Days >= 90 {
+		g.IncrementMonth()
+	}
 }
 
 func (g *Game) CheckDaysInMonth() {

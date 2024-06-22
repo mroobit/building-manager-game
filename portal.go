@@ -207,8 +207,18 @@ func (g *Game) DrawRequestList(screen *ebiten.Image) {
 				received = "Today"
 			} else if r.DaysOpen == 1 {
 				received = "Yesterday"
-			} else {
+			} else if r.DaysOpen < 7 {
 				received = strconv.Itoa(r.DaysOpen) + " days ago"
+			} else if r.DaysOpen < 14 {
+				received = "Last week"
+			} else if r.DaysOpen < 31 {
+				n := r.DaysOpen / 7
+				received = strconv.Itoa(n) + " weeks ago"
+			} else if r.DaysOpen < 60 {
+				received = "Last month"
+			} else {
+				n := r.DaysOpen / 30
+				received = strconv.Itoa(n) + " months ago"
 			}
 			g.Text.Draw(r.Title, issueCol, y)
 			g.Text.Draw(received, receivedCol, y) // TODO: increment r.DaysOpen when g.Clock.Days does

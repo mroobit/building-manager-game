@@ -115,18 +115,13 @@ func (g *Game) Update() error {
 				}
 			}
 		}
-		if inpututil.IsKeyJustPressed(ebiten.KeyR) {
-			g.Page = "request-details"
-		}
 
 		if g.Page == "request-details" {
 			// TODO: create option to mark closed without doing anything
 			// TODO: logic to select a resolution option to try
 			// tmp: hard-coded doing first option
 			if inpututil.IsKeyJustPressed(ebiten.KeyS) {
-				//	cost, time := g.Building.Requests[0].Resolve(1)
-				time := 2
-				cost := 10
+				cost, time := g.Building.ActiveRequest.Resolve(0)
 				g.AdvanceDay(time)
 				g.Building.CreditBalance += cost
 			}
