@@ -94,6 +94,7 @@ func (g *Game) DrawPortalPage(screen *ebiten.Image) {
 		g.Text.Draw("Home > Financial Overview", crumbX, crumbY)
 
 		y := titleY + 50
+		sign := "-"
 
 		g.SetTextProfile(textProfile["financial-section"])
 		g.Text.Draw("Current Balances", sectionX, y)
@@ -107,13 +108,17 @@ func (g *Game) DrawPortalPage(screen *ebiten.Image) {
 		g.Text.Draw("Credit Card Balance", labelX, y)
 		g.Text.Draw("$"+strconv.Itoa(g.Building.CreditBalance), valueX, y)
 		y += 60
-		if g.Building.Money >= 0 {
+		netBalance := g.Building.Money - g.Building.CreditBalance
+		if netBalance >= 0 {
 			g.SetTextProfile(textProfile["financial-green"])
+			sign = ""
 		} else {
 			g.SetTextProfile(textProfile["financial-red"])
+			sign = "-"
+			netBalance *= -1
 		}
 		g.Text.Draw("Net Balance", labelX, y)
-		g.Text.Draw("$"+strconv.Itoa(g.Building.Money), valueX, y)
+		g.Text.Draw(sign+"$"+strconv.Itoa(netBalance), valueX, y)
 
 		y += 60
 		g.SetTextProfile(textProfile["financial-section"])
@@ -136,13 +141,18 @@ func (g *Game) DrawPortalPage(screen *ebiten.Image) {
 		g.Text.Draw("$"+strconv.Itoa(g.UpcomingRent()), valueX, y)
 
 		y += 60
-		if g.Building.Money >= 0 {
+
+		netChange := g.UpcomingPayments()
+		if netChange >= 0 {
 			g.SetTextProfile(textProfile["financial-green"])
+			sign = ""
 		} else {
 			g.SetTextProfile(textProfile["financial-red"])
+			sign = "-"
+			netChange *= -1
 		}
 		g.Text.Draw("Net Change", labelX, y)
-		g.Text.Draw("$"+strconv.Itoa(g.UpcomingPayments()), valueX, y)
+		g.Text.Draw(sign+"$"+strconv.Itoa(netChange), valueX, y)
 
 	case "overview":
 		fallthrough
