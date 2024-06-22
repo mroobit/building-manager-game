@@ -59,14 +59,6 @@ func (g *Game) DrawPortal(screen *ebiten.Image) {
 	g.Text.Draw(strconv.Itoa(30-(g.Clock.Days/3)), 175, 820)
 }
 
-/*
-func (g *Game) DrawMaintenance(screen *ebiten.Image) {
-...or
-func (g *Game) DrawLayout(screen *ebiten.Image, page string) { // page is string declaring which page is active, eg Requests
-}
-
-*/
-
 func (g *Game) DrawPortalPage(screen *ebiten.Image) {
 	g.Text.SetTarget(screen)
 
@@ -98,7 +90,7 @@ func (g *Game) DrawPortalPage(screen *ebiten.Image) {
 		g.SetTextProfile(textProfile["portal-header-footer"])
 		g.Text.Draw("Home > Tenant Request Details", crumbX, crumbY)
 
-		g.DrawRequestDetails(screen)
+		g.DrawRequestDetails(screen, &g.Building.ActiveRequest)
 
 	case "financial-overview":
 		g.SetTextProfile(textProfile["portal-page-title"])
@@ -206,9 +198,12 @@ func (g *Game) DrawRequestList(screen *ebiten.Image) {
 	g.Text.Draw("Location", locationCol, y)
 	g.Text.Draw("Resolved?", resolvedCol, y)
 
+	vector.DrawFilledRect(screen, 390, 200, 850.0, 645.0, color.RGBA{200, 200, 200, 255}, false)
 	g.SetTextProfile(textProfile["request-list"])
 
 	//	pagination := 0 // for when there are > 16 requests, allow navigation to additional requests?
+
+	//	sortedRequests := g.Building.RequestsByUrgency()
 
 	for _, r := range g.Building.Requests {
 		if !r.Closed {
@@ -230,10 +225,7 @@ func (g *Game) DrawRequestList(screen *ebiten.Image) {
 
 }
 
-func (g *Game) DrawRequestDetails(screen *ebiten.Image) {
-	// hard-code specific request for now, to use selected request later
-	request := g.Building.Requests[0]
-
+func (g *Game) DrawRequestDetails(screen *ebiten.Image, request *Request) {
 	labelCol := 410
 	valueCol := labelCol + 140
 	y := 180

@@ -3,13 +3,15 @@ package main
 import (
 	"embed"
 	"encoding/json"
-	"fmt"
 	"log"
+
+	"github.com/google/uuid"
 )
 
 type Request struct {
 	Title             string `json:"title"`
 	Description       string `json:"description"`
+	ID                uuid.UUID
 	Location          string `json:"location"`
 	Tenant            *Tenant
 	Urgent            bool       `json:"urgent"`
@@ -52,8 +54,6 @@ func (r *Request) Close() {
 func (r *Request) Resolve(option int) (cost int, time int) {
 	// TODO: implement Options []*Solution in Request struct
 	// then add logic for assigning resolution quality to request when resolving based on chosen option
-	fmt.Println("SOLUTIONS")
-	fmt.Println(r.Solutions)
 	r.Resolved = true
 	//	r.ResolutionQuality = r.Options[option].Efficacy
 	// r.Closed = true

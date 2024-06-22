@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"image/color"
 	"log"
+	"strconv"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
@@ -86,9 +87,11 @@ func (g *Game) Update() error {
 		if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
 			g.GenerateRequest()
 		}
-		if inpututil.IsKeyJustPressed(ebiten.KeySpace) {
-			g.Building.Requests[0].Close()
-		}
+		/*
+			if inpututil.IsKeyJustPressed(ebiten.KeySpace) {
+				g.Building.Requests[0].Close()
+			}
+		*/
 
 		switch {
 		case portalClickable["overview"].Hover(cursor):
@@ -97,17 +100,33 @@ func (g *Game) Update() error {
 			hover = "request-list"
 		case portalClickable["financial-overview"].Hover(cursor):
 			hover = "financial-overview"
+		case portalClickable["request-details"].Hover(cursor):
+			hover = "request-details"
 		default:
 			hover = ""
 		}
 		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) && hover != "" {
 			g.Page = hover
+			// logic to determine request
+			if g.Page == "request-details" {
+				// cursorY - topY
+				// % 40 + 1 ?
+				i := (cursor[1] - 200) / 40
+				if i < len(g.Building.Requests) {
+					id := g.Building.Requests[i].ID
+					g.Building.ActiveRequest = g.Building.RequestMap[id]
+				} else {
+					g.Page = "request-list"
+				}
+				// take cursor location specifics
+				// based on y value, determine list index
+				// then grab the UUID of that request
+				// and assign based on the map?
+				//g.Building.ActiveRequest = *g.Building.Requests[0]
+			}
 		}
 		if inpututil.IsKeyJustPressed(ebiten.KeyR) {
 			g.Page = "request-details"
-		}
-		if inpututil.IsKeyJustPressed(ebiten.KeyD) {
-			fmt.Println(g.Building.Requests[0])
 		}
 
 		if g.Page == "request-details" {
@@ -115,7 +134,9 @@ func (g *Game) Update() error {
 			// TODO: logic to select a resolution option to try
 			// tmp: hard-coded doing first option
 			if inpututil.IsKeyJustPressed(ebiten.KeyS) {
-				cost, time := g.Building.Requests[0].Resolve(1)
+				//	cost, time := g.Building.Requests[0].Resolve(1)
+				time := 2
+				cost := 10
 				g.AdvanceDay(time)
 				g.Building.CreditBalance += cost
 			}
@@ -183,6 +204,6 @@ func (g *Game) Draw(screen *ebiten.Image) {
 		ebitenutil.DebugPrintAt(screen, "Clock.Month: "+strconv.Itoa(g.Clock.Month), 20, 120)
 		ebitenutil.DebugPrintAt(screen, "Clock.Days: "+strconv.Itoa(g.Clock.Days), 20, 140)
 		ebitenutil.DebugPrintAt(screen, "Cursor X: "+strconv.Itoa(cursor[0]), 30, 45)
-		ebitenutil.DebugPrintAt(screen, "Cursor Y: "+strconv.Itoa(cursor[1]), 30, 65)
 	*/
+	ebitenutil.DebugPrintAt(screen, "Cursor Y: "+strconv.Itoa(cursor[1]), 30, 65)
 }

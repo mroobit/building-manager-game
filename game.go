@@ -13,7 +13,7 @@ func (g *Game) CreateProblems() {
 func (g *Game) GenerateRequest() {
 	t := g.Building.Tenants[rand.IntN(len(g.Building.Tenants))]
 	blankRequest := g.RequestPool[rand.IntN(len(g.RequestPool))]
-	r := &Request{
+	r := Request{
 		Title:       blankRequest.Title,
 		Description: blankRequest.Description,
 		Location:    blankRequest.Location,

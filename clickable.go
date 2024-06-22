@@ -39,8 +39,10 @@ func initializeClickables() {
 	portalClickable = make(map[string]*Clickable)
 	cOverview := NewClickable([2]int{0, 100}, [2]int{360, 140}, "overview", "Display Portal Overview")
 	portalClickable["overview"] = cOverview
-	cRequestList := NewClickable([2]int{0, 160}, [2]int{360, 200}, "request-list", "Display Open Maintenance Requests")
+	cRequestList := NewClickable([2]int{0, 160}, [2]int{360, 200}, "request-list", "Display Open Tenant Requests")
 	portalClickable["request-list"] = cRequestList
 	cFinancial := NewClickable([2]int{0, 220}, [2]int{360, 260}, "financial-overview", "Display Financial Overview")
 	portalClickable["financial-overview"] = cFinancial
+	cDetails := NewClickable([2]int{390, 200}, [2]int{1240, 845}, "request-details", "Display Individual Tenant Request")
+	portalClickable["request-details"] = cDetails
 }
