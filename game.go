@@ -29,7 +29,7 @@ func (g *Game) GenerateRequest() {
 		r.Location = t.Unit
 	}
 	r.Tenant = t
-	g.Building.ReceiveRequest(r)
+	g.Building.ReceiveRequest(&r)
 }
 
 /*

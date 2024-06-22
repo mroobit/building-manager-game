@@ -24,6 +24,14 @@
 	"color": [ 10, 10, 10, 255 ]
 },
 {
+	"name": "request-resolve-close",
+	"font": "Comfortaa Regular",
+	"aligny": "YCenter",
+	"alignx": "XCenter",
+	"size": 32,
+	"color": [ 10, 10, 10, 255 ]
+},
+{
 	"name": "portal-button",
 	"font": "Comfortaa Regular",
 	"aligny": "Top",

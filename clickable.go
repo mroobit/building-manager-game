@@ -1,5 +1,7 @@
 package main
 
+import "github.com/hajimehoshi/ebiten/v2"
+
 var (
 	titleClickable  map[string]*Clickable
 	portalClickable map[string]*Clickable
@@ -45,4 +47,12 @@ func initializeClickables() {
 	portalClickable["financial-overview"] = cFinancial
 	cDetails := NewClickable([2]int{390, 200}, [2]int{1240, 845}, "request-details", "Display Individual Tenant Request")
 	portalClickable["request-details"] = cDetails
+	cResolve := NewClickable([2]int{530, 400}, [2]int{800, 470}, "try-to-resolve", "Display Possible Solutions")
+	portalClickable["try-to-resolve"] = cResolve
+	cClose := NewClickable([2]int{830, 400}, [2]int{1000, 470}, "close-request", "Close Active Request")
+	portalClickable["close-request"] = cClose
+}
+
+func (c *Clickable) DrawHoverEffect(screen ebiten.Image) {
+	// TODO: use clickable dimensions to draw hover effect
 }

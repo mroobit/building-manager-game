@@ -19,15 +19,15 @@ type Building struct {
 	Reputation    int
 	Tenants       []*Tenant
 	Requests      []*Request
-	RequestMap    map[uuid.UUID]Request
-	ActiveRequest Request
+	RequestMap    map[uuid.UUID]*Request
+	ActiveRequest *Request
 	FixedCosts    int // monthly cost, will increase over time
 	Inspection    int // months until next inspection
 }
 
 func (g *Game) initializeBuilding() {
 	r := make([]*Request, 0, 30)
-	m := make(map[uuid.UUID]Request)
+	m := make(map[uuid.UUID]*Request)
 
 	g.Building = &Building{
 		Money:      1000,
@@ -51,13 +51,13 @@ func (b *Building) ListTenants() {
 	}
 }
 
-func (b *Building) ReceiveRequest(r Request) {
+func (b *Building) ReceiveRequest(r *Request) {
 	r.ID = uuid.New()
 	b.RequestMap[r.ID] = r
 	if r.Urgent {
-		b.Requests = append([]*Request{&r}, b.Requests...)
+		b.Requests = append([]*Request{r}, b.Requests...)
 	} else {
-		b.Requests = append(b.Requests, &r)
+		b.Requests = append(b.Requests, r)
 	}
 }
 
@@ -98,6 +98,16 @@ func (b *Building) OpenRequestCount() int {
 	}
 
 	return count
+}
+
+func (b *Building) OpenIndices() []int {
+	indices := []int{}
+	for i, r := range b.Requests {
+		if !r.Closed {
+			indices = append(indices, i)
+		}
+	}
+	return indices
 }
 
 // TODO: func (b *Building)Vacancies {} -- reports which units are vacant

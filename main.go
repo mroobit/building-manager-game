@@ -103,16 +103,31 @@ func (g *Game) Update() error {
 				hover = "request-details"
 			}
 		}
+		if g.Page == "request-details" {
+			if portalClickable["try-to-resolve"].Hover(cursor) {
+				hover = "try-to-resolve"
+			} else if portalClickable["close-request"].Hover(cursor) {
+				hover = "close-request"
+			}
+		}
 		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) && hover != "" {
 			g.Page = hover
 			if g.Page == "request-details" {
 				i := (cursor[1] - 200) / 40
-				if i < len(g.Building.Requests) {
-					id := g.Building.Requests[i].ID
+				trueIndices := g.Building.OpenIndices()
+				if i < len(trueIndices) {
+					id := g.Building.Requests[trueIndices[i]].ID
 					g.Building.ActiveRequest = g.Building.RequestMap[id]
 				} else {
 					g.Page = "request-list"
 				}
+			}
+			if g.Page == "try-to-resolve" {
+				// TODO: similar to previous, clickable space then determine which selected
+			}
+			if g.Page == "close-request" {
+				g.Building.ActiveRequest.Close()
+				g.Page = "request-list"
 			}
 		}
 
@@ -125,6 +140,7 @@ func (g *Game) Update() error {
 				g.AdvanceDay(time)
 				g.Building.CreditBalance += cost
 			}
+
 		}
 
 	} else if g.State == "infoControls" {

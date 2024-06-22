@@ -84,7 +84,7 @@ func (g *Game) DrawPortalPage(screen *ebiten.Image) {
 		g.SetTextProfile(textProfile["portal-breadcrumb"])
 		g.Text.Draw("Home > Tenant Requests > Request Details", crumbX, crumbY)
 
-		g.DrawRequestDetails(screen, &g.Building.ActiveRequest)
+		g.DrawRequestDetails(screen, g.Building.ActiveRequest)
 
 	case "financial-overview":
 		g.SetTextProfile(textProfile["portal-page-title"])
@@ -259,14 +259,26 @@ func (g *Game) DrawRequestDetails(screen *ebiten.Image, request *Request) {
 	y += 40
 	g.Text.Draw("Description", labelCol, y)
 	g.Text.Draw(wrapText(request.Description, 60), valueCol, y)
+	/*
+		y += 80
+		g.Text.Draw("Solutions", labelCol, y)
+		for _, s := range request.Solutions {
+			y += 40
+			g.Text.Draw(s.Action, valueCol, y)
+		}
+	*/
 
-	y += 80
-	g.Text.Draw("Solutions", labelCol, y)
-	for _, s := range request.Solutions {
-		y += 40
-		g.Text.Draw(s.Action, valueCol, y)
-	}
+	// TODO: draw buttons for "Try to Solve" & "Close Request"
+	vector.DrawFilledRect(screen, 530, 400, 270.0, 70.0, color.RGBA{170, 130, 200, 255}, false)
+	vector.DrawFilledRect(screen, 830, 400, 270.0, 70.0, color.RGBA{250, 130, 130, 255}, false)
 
+	g.SetTextProfile(textProfile["request-resolve-close"])
+	g.Text.Draw("Try to Resolve", 665, 435)
+	g.Text.Draw("Close Request", 965, 435)
+}
+
+func (g *Game) DrawSolutions(scree *ebiten.Image, solutions []Solution) {
+	// TODO: draw label, draw box of height corresponding to # solutions, draw solution text
 }
 
 func wrapText(s string, length int) string {
