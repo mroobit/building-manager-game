@@ -45,6 +45,31 @@ func (g *Game) DrawPortal(screen *ebiten.Image) {
 	g.SetTextProfile(textProfile["portal-header-footer"])
 	g.Text.Draw("2406 Ebiten Ln", 1100, 30)
 
+	moneyLeftX := 42
+	moneyRightX := 310
+	moneyY := 562
+	vector.DrawFilledRect(screen, 30, 550, 290.0, 150.0, color.RGBA{255, 255, 255, 255}, false)
+	g.SetTextProfile(textProfile["portal-money-left"])
+	g.Text.Draw("Bank", moneyLeftX, moneyY)
+	g.SetTextProfile(textProfile["portal-money-right"])
+	g.Text.Draw("$"+strconv.Itoa(g.Building.Money), moneyRightX, moneyY)
+	moneyY += 40
+	g.SetTextProfile(textProfile["portal-money-left"])
+	g.Text.Draw("Credit Card", moneyLeftX, moneyY)
+	g.SetTextProfile(textProfile["portal-money-right-red"])
+	g.Text.Draw("$"+strconv.Itoa(g.Building.CreditBalance), moneyRightX, moneyY)
+	moneyY += 60
+	g.SetTextProfile(textProfile["portal-money-left"])
+	g.Text.Draw("Upcoming", moneyLeftX, moneyY)
+	g.SetTextProfile(textProfile["portal-money-right-green"])
+	sign := "+"
+	netChange := g.UpcomingPayments()
+	if netChange < 0 {
+		sign = "-"
+		g.SetTextProfile(textProfile["portal-money-right-red"])
+	}
+	g.Text.Draw(sign+"$"+strconv.Itoa(g.UpcomingPayments()), moneyRightX, moneyY)
+
 	vector.DrawFilledRect(screen, 30, 720, 290.0, 150.0, color.RGBA{255, 255, 255, 255}, false)
 
 	g.SetTextProfile(textProfile["portal-calendar-label"])

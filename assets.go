@@ -94,6 +94,7 @@ func (g *Game) SetTextProfile(p *TextProfile) {
 	x := map[string]etxt.HorzAlign{
 		"XCenter": etxt.XCenter,
 		"Left":    etxt.Left,
+		"Right":   etxt.Right,
 	}
 
 	g.Text.SetFont(fonts.GetFont(p.Font))
