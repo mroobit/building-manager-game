@@ -32,6 +32,14 @@
 	"color": [ 10, 10, 10, 255 ]
 },
 {
+	"name": "portal-breadcrumb",
+	"font": "Comfortaa Regular",
+	"aligny": "YCenter",
+	"alignx": "Left",
+	"size": 16,
+	"color": [ 30, 30, 30, 255 ]
+},
+{
 	"name": "portal-header-footer",
 	"font": "Comfortaa Regular",
 	"aligny": "YCenter",

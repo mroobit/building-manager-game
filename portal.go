@@ -10,16 +10,10 @@ import (
 )
 
 func (g *Game) DrawPortal(screen *ebiten.Image) {
-	/*
-		op := &ebiten.DrawImageOptions{}
-		op.GeoM.Scale(0.4, 0.4)
-		screen.DrawImage(background["play"], op)
-	*/
-
 	vector.DrawFilledRect(screen, 0, 0, 1280.0, 980.0, color.RGBA{255, 255, 255, 255}, false)
 
-	vector.DrawFilledRect(screen, 0, 0, 1280.0, 80.0, color.RGBA{170, 130, 200, 255}, false)
-	vector.DrawFilledRect(screen, 0, 80, 350.0, 820.0, color.RGBA{70, 30, 100, 95}, false)
+	vector.DrawFilledRect(screen, 0, 0, 1280.0, 55.0, color.RGBA{170, 130, 200, 255}, false)
+	vector.DrawFilledRect(screen, 0, 55, 350.0, 845.0, color.RGBA{70, 30, 100, 95}, false)
 	vector.DrawFilledRect(screen, 0, 900, 1280.0, 80.0, color.RGBA{170, 130, 200, 255}, false)
 
 	g.SetTextProfile(textProfile["portal-button"])
@@ -49,7 +43,7 @@ func (g *Game) DrawPortal(screen *ebiten.Image) {
 	g.Text.Draw("Financials", 30, 220)
 
 	g.SetTextProfile(textProfile["portal-header-footer"])
-	g.Text.Draw("2406 Ebiten Ln", 1100, 40)
+	g.Text.Draw("2406 Ebiten Ln", 1100, 30)
 
 	vector.DrawFilledRect(screen, 30, 720, 290.0, 150.0, color.RGBA{255, 255, 255, 255}, false)
 
@@ -63,10 +57,10 @@ func (g *Game) DrawPortalPage(screen *ebiten.Image) {
 	g.Text.SetTarget(screen)
 
 	titleX := 815
-	titleY := 130
+	titleY := 125
 
 	crumbX := 370
-	crumbY := 40
+	crumbY := 80
 
 	labelX := crumbX + 30
 	valueX := labelX + 650
@@ -78,7 +72,7 @@ func (g *Game) DrawPortalPage(screen *ebiten.Image) {
 		g.SetTextProfile(textProfile["portal-page-title"])
 		g.Text.Draw("Open Tenant Requests", titleX, titleY)
 
-		g.SetTextProfile(textProfile["portal-header-footer"])
+		g.SetTextProfile(textProfile["portal-breadcrumb"])
 		g.Text.Draw("Home > Tenant Requests", crumbX, crumbY)
 
 		g.DrawRequestList(screen)
@@ -87,8 +81,8 @@ func (g *Game) DrawPortalPage(screen *ebiten.Image) {
 		g.SetTextProfile(textProfile["portal-page-title"])
 		g.Text.Draw("Tenant Request - Details", titleX, titleY)
 
-		g.SetTextProfile(textProfile["portal-header-footer"])
-		g.Text.Draw("Home > Tenant Request Details", crumbX, crumbY)
+		g.SetTextProfile(textProfile["portal-breadcrumb"])
+		g.Text.Draw("Home > Tenant Requests > Request Details", crumbX, crumbY)
 
 		g.DrawRequestDetails(screen, &g.Building.ActiveRequest)
 
@@ -96,7 +90,7 @@ func (g *Game) DrawPortalPage(screen *ebiten.Image) {
 		g.SetTextProfile(textProfile["portal-page-title"])
 		g.Text.Draw("Financial Overview", titleX, titleY)
 
-		g.SetTextProfile(textProfile["portal-header-footer"])
+		g.SetTextProfile(textProfile["portal-breadcrumb"])
 		g.Text.Draw("Home > Financial Overview", crumbX, crumbY)
 
 		y := titleY + 50
@@ -156,7 +150,7 @@ func (g *Game) DrawPortalPage(screen *ebiten.Image) {
 		g.SetTextProfile(textProfile["portal-page-title"])
 		g.Text.Draw("Overview", titleX, titleY)
 
-		g.SetTextProfile(textProfile["portal-header-footer"])
+		g.SetTextProfile(textProfile["portal-breadcrumb"])
 		g.Text.Draw("Home", crumbX, crumbY)
 
 		y := titleY + 50
