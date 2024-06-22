@@ -6,7 +6,8 @@ var (
 )
 
 type Tenant struct {
-	// TODO: give tenants names later, for more flavor
+	// TODO: add max rent a tenant is willing to pay before they'll move out
+	Name            string
 	Satisfaction    int
 	Unit            string
 	Rent            int
@@ -14,8 +15,9 @@ type Tenant struct {
 	WillRenew       bool
 }
 
-func NewTenant(unit string, rent int, leaseLength int) *Tenant {
+func NewTenant(name string, unit string, rent int, leaseLength int) *Tenant {
 	tenant := &Tenant{
+		Name:            name,
 		Satisfaction:    initialSatisfaction,
 		Unit:            unit,
 		Rent:            rent,
@@ -28,16 +30,16 @@ func NewTenant(unit string, rent int, leaseLength int) *Tenant {
 func initializeTenants(t []*Tenant) {
 	// TODO: for each, generate dynamically (including satisfaction)
 	//	alt: create a tenant-pool json, load pool of possible tenants, select some
-	t[0] = NewTenant("1A", 850, 12)
-	t[1] = NewTenant("1B", 800, 5)
-	t[2] = NewTenant("1C", 800, 5)
-	t[3] = NewTenant("1D", 800, 5)
-	t[4] = NewTenant("1E", 800, 5)
-	t[5] = NewTenant("1F", 800, 5)
-	t[6] = NewTenant("1G", 800, 5)
-	t[7] = NewTenant("1H", 800, 5)
-	t[8] = NewTenant("1I", 800, 5)
-	t[9] = NewTenant("1J", 800, 5)
+	t[0] = NewTenant("Jason Ellingsworth", "1A", 850, 12)
+	t[1] = NewTenant("Victoria Kent", "1B", 800, 5)
+	t[2] = NewTenant("Winnie Lopez", "1C", 800, 5)
+	t[3] = NewTenant("Gerard Fontaine", "1D", 800, 5)
+	t[4] = NewTenant("Grace Holtz", "1E", 800, 5)
+	t[5] = NewTenant("Andre Svenson", "1F", 800, 5)
+	t[6] = NewTenant("Fiona Phelps", "1G", 800, 5)
+	t[7] = NewTenant("Maxine Flaherty", "1H", 800, 5)
+	t[8] = NewTenant("Harriet Su", "1I", 800, 5)
+	t[9] = NewTenant("LeAnne Smith", "1J", 800, 5)
 }
 
 func (t *Tenant) ReduceSatisfaction() {

@@ -194,13 +194,13 @@ func (g *Game) DrawRequestList(screen *ebiten.Image) {
 	issueCol := textX
 	receivedCol := textX + 300
 	locationCol := textX + 440
-	resolvedCol := textX + 580
+	nameCol := textX + 580
 
 	vector.DrawFilledRect(screen, 390, 160, 850.0, 40.0, color.RGBA{170, 130, 200, 255}, false)
 	g.Text.Draw("Issue", issueCol, y)
 	g.Text.Draw("Received", receivedCol, y)
 	g.Text.Draw("Location", locationCol, y)
-	g.Text.Draw("Resolved?", resolvedCol, y)
+	g.Text.Draw("Reported By", nameCol, y)
 
 	vector.DrawFilledRect(screen, 390, 200, 850.0, 645.0, color.RGBA{200, 200, 200, 255}, false)
 	g.SetTextProfile(textProfile["request-list"])
@@ -233,7 +233,7 @@ func (g *Game) DrawRequestList(screen *ebiten.Image) {
 			g.Text.Draw(r.Title, issueCol, y)
 			g.Text.Draw(received, receivedCol, y) // TODO: increment r.DaysOpen when g.Clock.Days does
 			g.Text.Draw(r.Location, locationCol, y)
-			g.Text.Draw(strconv.FormatBool(r.Resolved), resolvedCol, y)
+			g.Text.Draw(r.Tenant.Name, nameCol, y)
 		}
 	}
 
@@ -251,6 +251,10 @@ func (g *Game) DrawRequestDetails(screen *ebiten.Image, request *Request) {
 	y += 40
 	g.Text.Draw("Location", labelCol, y)
 	g.Text.Draw(request.Location, valueCol, y)
+
+	y += 40
+	g.Text.Draw("Reporter", labelCol, y)
+	g.Text.Draw(request.Tenant.Name, valueCol, y)
 
 	y += 40
 	g.Text.Draw("Description", labelCol, y)
