@@ -24,16 +24,16 @@
 			"time": 2
 		},
 		{
-			"action": "Improvise",
-			"cost": 0,
-			"efficacy": -1,
-			"time": 2
-		},
-		{
 			"action": "Tell tenant to use drano",
 			"cost": 0,
 		        "efficacy": 3,
 			"time": 1
+		},
+		{
+			"action": "Improvise",
+			"cost": 0,
+			"efficacy": -1,
+			"time": 2
 		}
 	]
 },

@@ -16,6 +16,7 @@ type Request struct {
 	Tenant            *Tenant
 	Urgent            bool       `json:"urgent"`
 	Solutions         []Solution `json:"solutions"`
+	Attempts          []string   // solutions that have been attempted
 	DaysOpen          int        // this increments regularly
 	Closed            bool       // requests can be closed without resolving
 	Resolved          bool       // was the problem actually fixed
@@ -51,14 +52,12 @@ func (r *Request) Close() {
 	r.Closed = true
 }
 
-func (r *Request) Resolve(option int) (cost int, time int) {
-	// TODO: implement Options []*Solution in Request struct
-	// then add logic for assigning resolution quality to request when resolving based on chosen option
+func (r *Request) Resolve(selection int) (cost, time int) {
+	r.Attempts = append(r.Attempts, r.Solutions[selection].Action)
 	r.Resolved = true
-	//	r.ResolutionQuality = r.Options[option].Efficacy
+	r.ResolutionQuality = r.Solutions[selection].Efficacy
 	// r.Closed = true
-	//return r.Solutions[option].Cost, r.Solutions[option].Time
-	return 50, 11
+	return r.Solutions[selection].Cost, r.Solutions[selection].Time
 }
 
 func (g *Game) initializeRequestPool(fs embed.FS) {

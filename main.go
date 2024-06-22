@@ -87,11 +87,6 @@ func (g *Game) Update() error {
 		if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
 			g.GenerateRequest()
 		}
-		/*
-			if inpututil.IsKeyJustPressed(ebiten.KeySpace) {
-				g.Building.Requests[0].Close()
-			}
-		*/
 
 		switch {
 		case portalClickable["overview"].Hover(cursor):
@@ -100,17 +95,17 @@ func (g *Game) Update() error {
 			hover = "request-list"
 		case portalClickable["financial-overview"].Hover(cursor):
 			hover = "financial-overview"
-		case portalClickable["request-details"].Hover(cursor):
-			hover = "request-details"
 		default:
 			hover = ""
 		}
+		if g.Page == "request-list" {
+			if portalClickable["request-details"].Hover(cursor) {
+				hover = "request-details"
+			}
+		}
 		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) && hover != "" {
 			g.Page = hover
-			// logic to determine request
 			if g.Page == "request-details" {
-				// cursorY - topY
-				// % 40 + 1 ?
 				i := (cursor[1] - 200) / 40
 				if i < len(g.Building.Requests) {
 					id := g.Building.Requests[i].ID
@@ -118,11 +113,6 @@ func (g *Game) Update() error {
 				} else {
 					g.Page = "request-list"
 				}
-				// take cursor location specifics
-				// based on y value, determine list index
-				// then grab the UUID of that request
-				// and assign based on the map?
-				//g.Building.ActiveRequest = *g.Building.Requests[0]
 			}
 		}
 		if inpututil.IsKeyJustPressed(ebiten.KeyR) {
