@@ -112,39 +112,46 @@ func (g *Game) Update() error {
 				hover = "close-request"
 			}
 		}
+		if g.Page == "try-to-resolve" && portalClickable["solutions"].Hover(cursor) {
+			hover = "solutions"
+		}
 		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) && hover != "" {
-			g.Page = hover
-			if g.Page == "request-details" {
+
+			switch hover {
+			case "overview":
+				g.Page = "overview"
+			case "request-list":
+				g.Page = "request-list"
+			case "financial-overview":
+				g.Page = "financial-overview"
+			case "tenants":
+				g.Page = "tenants"
+			case "try-to-resolve":
+				g.Page = "try-to-resolve"
+			case "close-request":
+				g.Building.ActiveRequest.Close()
+				g.Page = "request-list"
+			case "solutions":
+				i := (cursor[1] - 400) / 50
+				if cursor[0] >= 400 && cursor[0] <= 1250 && i < len(g.Building.ActiveRequest.Solutions) {
+					solution := g.Building.ActiveRequest.Solutions[i]
+					cost, time := g.Building.ActiveRequest.Resolve(solution)
+					g.Building.CreditBalance += cost
+					g.AdvanceDay(time)
+					// TODO: add a dialgoue about doing the solution and its effect
+					// as well as that you've closed the issue
+					g.Page = "request-list"
+				}
+			case "request-details":
 				i := (cursor[1] - 200) / 40
 				trueIndices := g.Building.OpenIndices()
 				if i < len(trueIndices) {
 					id := g.Building.Requests[trueIndices[i]].ID
 					g.Building.ActiveRequest = g.Building.RequestMap[id]
-				} else {
-					g.Page = "request-list"
+					g.Page = "request-details"
 				}
 			}
-			if g.Page == "try-to-resolve" {
-				// TODO: similar to previous, clickable space then determine which selected
-			}
-			if g.Page == "close-request" {
-				g.Building.ActiveRequest.Close()
-				g.Page = "request-list"
-			}
 		}
-
-		if g.Page == "request-details" {
-			// TODO: create option to mark closed without doing anything
-			// TODO: logic to select a resolution option to try
-			// tmp: hard-coded doing first option
-			if inpututil.IsKeyJustPressed(ebiten.KeyS) {
-				cost, time := g.Building.ActiveRequest.Resolve(0)
-				g.AdvanceDay(time)
-				g.Building.CreditBalance += cost
-			}
-
-		}
-
 	} else if g.State == "infoControls" {
 		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 			g.State = ""

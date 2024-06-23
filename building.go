@@ -73,22 +73,6 @@ func (b *Building) ReopenRequests() {
 	}
 }
 
-/*
-func (b *Building) RequestsByUrgency() []uuid.UUID {
-	r := make([]uuid.UUID, 0)
-	for key, value := range b.Requests {
-		if !value.Closed {
-			if value.Urgent == true {
-				r = append([]uuid.UUID{key}, r...)
-			} else {
-				r = append(r, key)
-			}
-		}
-	}
-	return r
-}
-*/
-
 func (b *Building) OpenRequestCount() int {
 	count := 0
 	for _, r := range b.Requests {
@@ -100,6 +84,7 @@ func (b *Building) OpenRequestCount() int {
 	return count
 }
 
+// OpenIndices returns a slice of the indices of open requests
 func (b *Building) OpenIndices() []int {
 	indices := []int{}
 	for i, r := range b.Requests {
@@ -110,4 +95,23 @@ func (b *Building) OpenIndices() []int {
 	return indices
 }
 
-// TODO: func (b *Building)Vacancies {} -- reports which units are vacant
+func (b *Building) Vacancies() int {
+	count := 0
+	for _, t := range b.Tenants {
+		if t.Name != "" {
+			count += 1
+		}
+	}
+	return count
+}
+
+// VacanciesList returns a slice of the indices of empty units
+func (b *Building) VacanciesList() []int {
+	indices := []int{}
+	for i, t := range b.Tenants {
+		if t.Name != "" {
+			indices = append(indices, i)
+		}
+	}
+	return indices
+}

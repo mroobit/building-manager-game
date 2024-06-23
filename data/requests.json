@@ -76,7 +76,7 @@
 			"time": 30
 		},
 		{
-			"action": "Remove the window from the sill and use caulk to put the pane back in place",
+			"action": "Remove window from the sill and caulk the pane back in place",
 			"cost": 30,
 			"efficacy": 4,
 			"time": 16

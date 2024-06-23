@@ -54,12 +54,12 @@ func (r *Request) Close() {
 	r.Closed = true
 }
 
-func (r *Request) Resolve(selection int) (cost, time int) {
-	r.Attempts = append(r.Attempts, r.Solutions[selection].Action)
+func (r *Request) Resolve(solution Solution) (cost, time int) {
+	r.Attempts = append(r.Attempts, solution.Action)
 	r.Resolved = true
-	r.ResolutionQuality = r.Solutions[selection].Efficacy
-	// r.Closed = true
-	return r.Solutions[selection].Cost, r.Solutions[selection].Time
+	r.ResolutionQuality = solution.Efficacy
+	r.Closed = true
+	return solution.Cost, solution.Time
 }
 
 func (g *Game) initializeRequestPool(fs embed.FS) {

@@ -110,7 +110,7 @@ func (g *Game) DrawPortalPage(screen *ebiten.Image) {
 		g.SetTextProfile(textProfile["portal-breadcrumb"])
 		g.Text.Draw("Home > Tenant Requests > Request Details", crumbX, crumbY)
 
-		g.DrawRequestDetails(screen, g.Building.ActiveRequest)
+		g.DrawRequestDetails(screen)
 
 	case "try-to-resolve":
 		g.SetTextProfile(textProfile["portal-page-title"])
@@ -119,8 +119,8 @@ func (g *Game) DrawPortalPage(screen *ebiten.Image) {
 		g.SetTextProfile(textProfile["portal-breadcrumb"])
 		g.Text.Draw("Home > Tenant Requests > Request Details", crumbX, crumbY)
 
-		g.DrawRequestDetails(screen, g.Building.ActiveRequest)
-		g.DrawSolutions(screen, g.Building.ActiveRequest)
+		g.DrawRequestDetails(screen)
+		g.DrawSolutions(screen)
 
 	case "financial-overview":
 		g.SetTextProfile(textProfile["portal-page-title"])
@@ -266,6 +266,14 @@ func (g *Game) DrawPortalPage(screen *ebiten.Image) {
 		y += 40
 		g.Text.Draw("Open Requests", labelX, y)
 		g.Text.Draw(strconv.Itoa(len(g.Building.Requests)), valueX, y)
+		y += 40
+		g.Text.Draw("Months Until Next Inspection", labelX, y)
+		g.Text.Draw(strconv.Itoa(g.Building.Inspection), valueX, y)
+		/*
+			y += 40
+			g.Text.Draw("Next Spraying: "+strconv.Itoa(g.Building., labelX, y)
+			g.Text.Draw(strconv.Itoa(len(g.Building.Requests)), valueX, y)
+		*/
 	}
 }
 
@@ -323,34 +331,26 @@ func (g *Game) DrawRequestList(screen *ebiten.Image) {
 
 }
 
-func (g *Game) DrawRequestDetails(screen *ebiten.Image, request *Request) {
+func (g *Game) DrawRequestDetails(screen *ebiten.Image) {
 	labelCol := 410
 	valueCol := labelCol + 140
 	y := 180
 
 	g.SetTextProfile(textProfile["request-description"])
 	g.Text.Draw("Issue", labelCol, y)
-	g.Text.Draw(request.Title, valueCol, y)
+	g.Text.Draw(g.Building.ActiveRequest.Title, valueCol, y)
 
 	y += 40
 	g.Text.Draw("Location", labelCol, y)
-	g.Text.Draw(request.Location, valueCol, y)
+	g.Text.Draw(g.Building.ActiveRequest.Location, valueCol, y)
 
 	y += 40
 	g.Text.Draw("Reporter", labelCol, y)
-	g.Text.Draw(request.Tenant.Name, valueCol, y)
+	g.Text.Draw(g.Building.ActiveRequest.Tenant.Name, valueCol, y)
 
 	y += 40
 	g.Text.Draw("Description", labelCol, y)
-	g.Text.Draw(wrapText(request.Description, 60), valueCol, y)
-	/*
-		y += 80
-		g.Text.Draw("Solutions", labelCol, y)
-		for _, s := range request.Solutions {
-			y += 40
-			g.Text.Draw(s.Action, valueCol, y)
-		}
-	*/
+	g.Text.Draw(wrapText(g.Building.ActiveRequest.Description, 60), valueCol, y)
 
 	// TODO: draw buttons for "Try to Solve" & "Close Request"
 	vector.DrawFilledRect(screen, 530, 400, 270.0, 70.0, color.RGBA{170, 130, 200, 255}, false)
@@ -361,18 +361,18 @@ func (g *Game) DrawRequestDetails(screen *ebiten.Image, request *Request) {
 	g.Text.Draw("Close Request", 965, 435)
 }
 
-func (g *Game) DrawSolutions(screen *ebiten.Image, r *Request) {
+func (g *Game) DrawSolutions(screen *ebiten.Image) {
 	// TODO: draw label, draw box of height corresponding to # solutions, draw solution text
 
-	h := float32(len(r.Solutions)+1) * 50.0
+	h := float32(len(g.Building.ActiveRequest.Solutions)+1) * 50.0
 	x := 430
 	y := 430
 
 	vector.DrawFilledRect(screen, 390, 400, 850.0, h, color.RGBA{170, 130, 200, 255}, false)
 	g.SetTextProfile(textProfile["request-solutions"])
 
-	for _, s := range r.Solutions {
-		g.Text.Draw(s.Action, x, y)
+	for _, s := range g.Building.ActiveRequest.Solutions {
+		g.Text.Draw(s.Action+" ($"+strconv.Itoa(s.Cost)+")", x, y)
 		y += 50
 	}
 }

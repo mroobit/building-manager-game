@@ -54,6 +54,10 @@ func initializeClickables() {
 	portalClickable["try-to-resolve"] = cResolve
 	cClose := NewClickable([2]int{830, 400}, [2]int{1000, 470}, "close-request", "Close Active Request")
 	portalClickable["close-request"] = cClose
+
+	cSolutions := NewClickable([2]int{400, 430}, [2]int{1250, 850}, "solutions", "Resolve Request with Selected Solution")
+	portalClickable["solutions"] = cSolutions
+
 }
 
 func (c *Clickable) DrawHoverEffect(screen ebiten.Image) {

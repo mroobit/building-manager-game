@@ -68,16 +68,6 @@ func (t *Tenant) IncreaseSatisfaction() {
 // This method's parameters can be positive or negative: positive for new lease, negative for time passing, early moveout, eviction
 // TODO: func (t *Tenant).MoveOut(b *Building) & MoveInto
 
-func (b *Building) Vacancies() int {
-	count := 0
-	for _, t := range b.Tenants {
-		if t.Name != "" {
-			count += 1
-		}
-	}
-	return count
-}
-
 func (t *Tenant) Needed() bool {
 	return t.Name == ""
 }
@@ -91,3 +81,5 @@ func (t *Tenant) MoveIn() {
 	// TODO: pull tenant from tenant pool
 	// if tenant.MaxRent < unit rent, assign to the empty unit
 }
+
+// TODO loadTenantPool from json
