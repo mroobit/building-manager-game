@@ -66,7 +66,7 @@ func (b *Building) ReopenRequests() {
 		if !r.Resolved {
 			r.Closed = false
 			r.Urgent = true
-			r.Tenant.ReduceSatisfaction()
+			r.Tenant.Impact(-1)
 		}
 		// TODO: Reduce quality of resolution on poor-solution requests until must reopen
 		// Have some such requests actually get fully-resolved

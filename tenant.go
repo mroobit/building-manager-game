@@ -43,30 +43,24 @@ func initializeTenants(t []*Tenant) {
 	t[9] = NewTenant("LeAnne Smith", "1J", 800, 5)
 }
 
-func (t *Tenant) ReduceSatisfaction() {
-	t.Satisfaction -= 1
+// TODO: func (t *Tenant)Renew {}
+// TODO: func (t *Tenant)UpdateMonthsRemaining(months int) {}
+// This method's parameters can be positive or negative: positive for new lease, negative for time passing, early moveout, eviction
+// TODO: func (t *Tenant).MoveOut(b *Building) & MoveInto
+
+func (t *Tenant) Impact(i int) {
+	t.Satisfaction += i
 	switch {
 	case t.Satisfaction < 0:
 		t.Satisfaction = 0
 	case t.Satisfaction <= 3:
 		t.WillRenew = false
-	}
-}
-
-func (t *Tenant) IncreaseSatisfaction() {
-	t.Satisfaction += 1
-	switch {
 	case t.Satisfaction > 10:
 		t.Satisfaction = 10
 	case t.Satisfaction >= 7:
 		t.WillRenew = true
 	}
 }
-
-// TODO: func (t *Tenant)Renew {}
-// TODO: func (t *Tenant)UpdateMonthsRemaining(months int) {}
-// This method's parameters can be positive or negative: positive for new lease, negative for time passing, early moveout, eviction
-// TODO: func (t *Tenant).MoveOut(b *Building) & MoveInto
 
 func (t *Tenant) Needed() bool {
 	return t.Name == ""

@@ -26,9 +26,11 @@ type Request struct {
 
 type Solution struct {
 	Action   string `json:"action"`
+	Outcome  string `json:"outcome"` // story followup // TODO: make this a []string with possible outcomes?
 	Cost     int    `json:"cost"`
 	Efficacy int    `json:"efficacy"`
 	Time     int    `json:"time"`
+	Impact   int    `json:"impact"` // impact on tenant satisfaction
 }
 
 type wrapper struct {
@@ -58,6 +60,7 @@ func (r *Request) Resolve(solution Solution) (cost, time int) {
 	r.Attempts = append(r.Attempts, solution.Action)
 	r.Resolved = true
 	r.ResolutionQuality = solution.Efficacy
+	r.Tenant.Impact(solution.Impact)
 	r.Closed = true
 	return solution.Cost, solution.Time
 }
