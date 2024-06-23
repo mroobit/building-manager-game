@@ -9,12 +9,22 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/vector"
 )
 
-func (g *Game) DrawPortal(screen *ebiten.Image) {
-	vector.DrawFilledRect(screen, 0, 0, 1280.0, 980.0, color.RGBA{255, 255, 255, 255}, false)
+var (
+	portalPurple          = color.RGBA{170, 130, 200, 255}
+	portalPurpleSecondary = color.RGBA{70, 30, 100, 95}
+	white                 = color.RGBA{255, 255, 255, 255}
 
-	vector.DrawFilledRect(screen, 0, 0, 1280.0, 55.0, color.RGBA{170, 130, 200, 255}, false)
-	vector.DrawFilledRect(screen, 0, 55, 350.0, 845.0, color.RGBA{70, 30, 100, 95}, false)
-	vector.DrawFilledRect(screen, 0, 900, 1280.0, 80.0, color.RGBA{170, 130, 200, 255}, false)
+	alertGreen  = color.RGBA{20, 200, 20, 205}
+	alertYellow = color.RGBA{255, 190, 75, 205}
+	alertRed    = color.RGBA{250, 105, 90, 205}
+)
+
+func (g *Game) DrawPortal(screen *ebiten.Image) {
+	vector.DrawFilledRect(screen, 0, 0, 1280.0, 980.0, white, false)
+
+	vector.DrawFilledRect(screen, 0, 0, 1280.0, 55.0, portalPurple, false)
+	vector.DrawFilledRect(screen, 0, 55, 350.0, 845.0, portalPurpleSecondary, false)
+	vector.DrawFilledRect(screen, 0, 900, 1280.0, 80.0, portalPurple, false)
 
 	g.SetTextProfile(textProfile["portal-button"])
 	g.Text.SetTarget(screen)
@@ -25,14 +35,14 @@ func (g *Game) DrawPortal(screen *ebiten.Image) {
 	// TODO: improve alert circle appearance
 	var alertColor color.Color
 
-	numR := len(g.Building.Requests)
+	numR := g.Building.OpenRequestCount()
 	switch {
 	case numR <= 3:
-		alertColor = color.RGBA{20, 200, 20, 205}
+		alertColor = alertGreen
 	case numR <= 6:
-		alertColor = color.RGBA{255, 190, 75, 205}
+		alertColor = alertYellow
 	default:
-		alertColor = color.RGBA{250, 105, 90, 205}
+		alertColor = alertRed
 	}
 
 	vector.DrawFilledCircle(screen, 290.0, 180.0, 22.0, alertColor, false)
@@ -49,7 +59,7 @@ func (g *Game) DrawPortal(screen *ebiten.Image) {
 	moneyLeftX := 42
 	moneyRightX := 310
 	moneyY := 562
-	vector.DrawFilledRect(screen, 30, 550, 290.0, 150.0, color.RGBA{255, 255, 255, 255}, false)
+	vector.DrawFilledRect(screen, 30, 550, 290.0, 150.0, white, false)
 	g.SetTextProfile(textProfile["portal-money-left"])
 	g.Text.Draw("Bank", moneyLeftX, moneyY)
 	g.SetTextProfile(textProfile["portal-money-right"])
@@ -71,7 +81,7 @@ func (g *Game) DrawPortal(screen *ebiten.Image) {
 	}
 	g.Text.Draw(sign+"$"+strconv.Itoa(g.UpcomingPayments()), moneyRightX, moneyY)
 
-	vector.DrawFilledRect(screen, 30, 720, 290.0, 150.0, color.RGBA{255, 255, 255, 255}, false)
+	vector.DrawFilledRect(screen, 30, 720, 290.0, 150.0, white, false)
 
 	g.SetTextProfile(textProfile["portal-calendar-label"])
 	g.Text.Draw("Days Left in Month", 175, 760)

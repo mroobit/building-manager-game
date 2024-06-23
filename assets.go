@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"embed"
 	"encoding/json"
 	"fmt"
@@ -9,6 +10,8 @@ import (
 	"log"
 
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/audio"
+	"github.com/hajimehoshi/ebiten/v2/audio/vorbis"
 	"github.com/tinne26/etxt"
 )
 
@@ -121,4 +124,35 @@ func loadTextProfiles() {
 	for _, p := range rawProfiles {
 		textProfile[p.Name] = p
 	}
+}
+
+func loadAudio() {
+	// TODO: load each audio file into its own audioPlayer
+	// auntJosLetter := loadAudioPlayer("audio/aunt-jos-letter.ogg")
+	// yuck0 := loadAudioPlayer("audio/yuck0.ogg")
+	// yuck1 := loadAudioPlayer("audio/yuck1.ogg")
+	// yuck2 := loadAudioPlayer("audio/yuck2.ogg")
+	// yuck := []*audio.Player{yuck0, yuck1, yuck2}
+}
+
+func loadAudioPlayer(path string) *audio.Player {
+	audioRaw, err := FileSystem.ReadFile(path)
+	if err != nil {
+		log.Fatalf("Error opening file %s: %v\n", path, err)
+	}
+	audioBytes, err := vorbis.DecodeWithSampleRate(SampleRate, bytes.NewReader(audioRaw))
+	if err != nil {
+		log.Fatalf("Error creating audio stream for %s: %v\n", path, err)
+	}
+	player, err := audio.CurrentContext().NewPlayer(audioBytes)
+	if err != nil {
+		log.Fatalf("Error creating new audio player for %s: %v\n", path, err)
+	}
+	return player
+}
+
+func (g *Game) ConfigureAudio() {
+	_ = audio.NewContext(SampleRate)
+	audioPlayer := loadAudioPlayer("audio/minimum-viable-audio.ogg")
+	g.AudioPlayer = audioPlayer
 }

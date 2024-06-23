@@ -2,22 +2,25 @@ package main
 
 import (
 	"embed"
-	"fmt"
 	"image/color"
 	"log"
 	"strconv"
 
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/audio"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 	"github.com/tinne26/etxt"
 )
+
+const SampleRate = 44100
 
 var (
 	hover        = ""
 	cursor       [2]int
 	rentIncrease = 3 // percentage increase at renewal
 
+	//go:embed audio
 	//go:embed data
 	//go:embed fonts
 	//go:embed images
@@ -52,6 +55,7 @@ type Game struct {
 	RequestPool []*Request
 	Text        *etxt.Renderer
 	Clock       *Clock
+	AudioPlayer *audio.Player
 }
 
 func (g *Game) Layout(outsideWidth int, outsideHeight int) (screenWidth int, screenHeight int) {
@@ -68,15 +72,19 @@ func (g *Game) Update() error {
 		g.initializeBuilding()
 		g.initializeRequestPool(FileSystem)
 		g.ConfigureTextRenderer()
+		g.ConfigureAudio()
 		loadLetter(FileSystem)
 		if len(background) == 2 {
 			g.State = "title"
 		}
 	} else if g.State == "story" {
+		// g.AudioPlayer = auntJosLetter
+		g.AudioPlayer.Play()
 		if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
 			g.State = "play"
+			g.Page = "login"
+			g.AudioPlayer.Pause()
 		}
-
 	} else if g.State == "play" {
 		// TODO: Make incrementing of months a function of tasks done(weight) + ticks
 		g.Clock.Tick += 1
@@ -166,9 +174,6 @@ func (g *Game) Update() error {
 			hover = ""
 		}
 
-		if inpututil.IsKeyJustPressed(ebiten.KeyD) {
-			fmt.Println(g.RequestPool[0])
-		}
 		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 			switch hover {
 			case "play":
