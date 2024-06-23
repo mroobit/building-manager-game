@@ -79,7 +79,7 @@ func (g *Game) Update() error {
 		}
 	} else if g.State == "story" {
 		// g.AudioPlayer = auntJosLetter
-		g.AudioPlayer.Play()
+		// g.AudioPlayer.Play()
 		if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
 			g.State = "play"
 			g.Page = "login"
@@ -91,6 +91,12 @@ func (g *Game) Update() error {
 		g.CheckDaysInMonth()
 		// TODO: generate problems based on Tick/Day + some randomness
 		g.CreateProblems()
+
+		if g.Page == "login" {
+			if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
+				g.Page = "overview"
+			}
+		}
 
 		if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
 			g.GenerateRequest()
@@ -137,7 +143,7 @@ func (g *Game) Update() error {
 			case "try-to-resolve":
 				g.Page = "try-to-resolve"
 			case "close-request":
-				g.Building.ActiveRequest.Close()
+				g.Building.ActiveRequest.Closed = true
 				g.Page = "request-list"
 			case "solutions":
 				i := (cursor[1] - 400) / 50

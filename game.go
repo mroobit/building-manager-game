@@ -11,7 +11,13 @@ func (g *Game) CreateProblems() {
 }
 
 func (g *Game) GenerateRequest() {
-	t := g.Building.Tenants[rand.IntN(len(g.Building.Tenants))]
+	if g.Building.Vacancies() == len(g.Building.Tenants) {
+		return
+	}
+	t := NewTenant("", "", 0, 0)
+	for t.Name == "" {
+		t = g.Building.Tenants[rand.IntN(len(g.Building.Tenants))]
+	}
 	blankRequest := g.RequestPool[rand.IntN(len(g.RequestPool))]
 	r := Request{
 		Title:       blankRequest.Title,

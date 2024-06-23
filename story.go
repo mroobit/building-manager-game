@@ -9,14 +9,18 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/vector"
 )
 
-var storyText string
+var (
+	storyText string
+
+	letterBackground = color.RGBA{25, 15, 15, 255}
+)
 
 func (g *Game) IntroStory(screen *ebiten.Image) {
 	// TODO: display building hand-over "paperwork" declaring Number of Tenants, etc
 	// TODO: display "Skip" button
 
-	vector.DrawFilledRect(screen, 0, 0, 1280.0, 980.0, color.RGBA{25, 15, 15, 255}, false)
-	vector.DrawFilledRect(screen, 40, 40, 1200.0, 880.0, color.RGBA{255, 255, 255, 255}, false)
+	vector.DrawFilledRect(screen, 0, 0, 1280.0, 980.0, letterBackground, false)
+	vector.DrawFilledRect(screen, 40, 40, 1200.0, 880.0, white, false)
 
 	g.SetTextProfile(textProfile["aunt-jos-letter"])
 	g.Text.SetTarget(screen)

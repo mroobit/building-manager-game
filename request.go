@@ -3,7 +3,6 @@ package main
 import (
 	"embed"
 	"encoding/json"
-	"fmt"
 	"log"
 
 	"github.com/google/uuid"
@@ -49,11 +48,6 @@ func NewRequest(title string, description string, location string, tenant *Tenan
 		Resolved:    false,
 	}
 	return r
-}
-
-func (r *Request) Close() {
-	fmt.Println("Closing: " + r.Title + " opened by " + r.Tenant.Name)
-	r.Closed = true
 }
 
 func (r *Request) Resolve(solution Solution) (cost, time int) {

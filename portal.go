@@ -12,11 +12,13 @@ import (
 var (
 	portalPurple          = color.RGBA{170, 130, 200, 255}
 	portalPurpleSecondary = color.RGBA{70, 30, 100, 95}
+	portalTertiary        = color.RGBA{200, 200, 200, 255}
 	white                 = color.RGBA{255, 255, 255, 255}
 
 	alertGreen  = color.RGBA{20, 200, 20, 205}
 	alertYellow = color.RGBA{255, 190, 75, 205}
 	alertRed    = color.RGBA{250, 105, 90, 205}
+	diffRed     = color.RGBA{250, 130, 130, 255}
 )
 
 func (g *Game) DrawPortal(screen *ebiten.Image) {
@@ -214,7 +216,7 @@ func (g *Game) DrawPortalPage(screen *ebiten.Image) {
 		rectY := float32(titleY + 50)
 		yIncr := 30
 		for i, t := range g.Building.Tenants {
-			vector.DrawFilledRect(screen, rectX, rectY, 340.0, 105.0, color.RGBA{200, 200, 200, 255}, false)
+			vector.DrawFilledRect(screen, rectX, rectY, 340.0, 105.0, portalTertiary, false)
 
 			g.SetTextProfile(textProfile["tenant-bold-left"])
 			g.Text.Draw("Unit "+t.Unit, unitX, unitY)
@@ -247,7 +249,37 @@ func (g *Game) DrawPortalPage(screen *ebiten.Image) {
 				rectY = float32(titleY + 50)
 			}
 		}
+	case "login":
+		// TODO: quick little login screen cuteness
+		// rectangle background
+		// login rectangle
+		// animate username getting filled in with "manager"
+		// include audio for typing on both of these animations!!
+		// animate dots filling in password
+		// animate "loading" the portal
 
+		vector.DrawFilledRect(screen, 0, 0, 1280.0, 960.0, white, false)
+		vector.DrawFilledRect(screen, 0, 0, 1280.0, 960.0, portalPurpleSecondary, false)
+		vector.DrawFilledRect(screen, 398, 181, 484.0, 581.0, portalPurpleSecondary, false)
+		vector.DrawFilledRect(screen, 400, 180, 480.0, 580.0, white, false)
+		g.SetTextProfile(textProfile["portal-page-title"])
+		g.Text.Draw("Building\nManagement\nPortal", 640, 430)
+
+		vector.DrawFilledRect(screen, 460, 530, 360.0, 40.0, portalTertiary, false)
+		g.SetTextProfile(textProfile["login-label"])
+		g.Text.Draw("Email", 460, 528)
+		g.SetTextProfile(textProfile["login"])
+		g.Text.Draw("manager@ebitenbldg.com", 470, 540)
+
+		vector.DrawFilledRect(screen, 460, 610, 360.0, 40.0, portalTertiary, false)
+		g.SetTextProfile(textProfile["login-label"])
+		g.Text.Draw("Password", 460, 608)
+		g.SetTextProfile(textProfile["login-password"])
+		g.Text.Draw("●●●●●●●●●●●●●●●●●●", 470, 620)
+
+		vector.DrawFilledRect(screen, 460, 690, 360.0, 40.0, portalPurple, false)
+		g.SetTextProfile(textProfile["login-play"])
+		g.Text.Draw("Play Game", 640, 710)
 	case "overview":
 		fallthrough
 	default:
@@ -298,13 +330,13 @@ func (g *Game) DrawRequestList(screen *ebiten.Image) {
 	locationCol := textX + 440
 	nameCol := textX + 580
 
-	vector.DrawFilledRect(screen, 390, 160, 850.0, 40.0, color.RGBA{170, 130, 200, 255}, false)
+	vector.DrawFilledRect(screen, 390, 160, 850.0, 40.0, portalPurple, false)
 	g.Text.Draw("Issue", issueCol, y)
 	g.Text.Draw("Received", receivedCol, y)
 	g.Text.Draw("Location", locationCol, y)
 	g.Text.Draw("Reported By", nameCol, y)
 
-	vector.DrawFilledRect(screen, 390, 200, 850.0, 645.0, color.RGBA{200, 200, 200, 255}, false)
+	vector.DrawFilledRect(screen, 390, 200, 850.0, 645.0, portalTertiary, false)
 	g.SetTextProfile(textProfile["request-list"])
 
 	//	pagination := 0 // for when there are > 16 requests, allow navigation to additional requests?
@@ -363,8 +395,8 @@ func (g *Game) DrawRequestDetails(screen *ebiten.Image) {
 	g.Text.Draw(wrapText(g.Building.ActiveRequest.Description, 60), valueCol, y)
 
 	// TODO: draw buttons for "Try to Solve" & "Close Request"
-	vector.DrawFilledRect(screen, 530, 400, 270.0, 70.0, color.RGBA{170, 130, 200, 255}, false)
-	vector.DrawFilledRect(screen, 830, 400, 270.0, 70.0, color.RGBA{250, 130, 130, 255}, false)
+	vector.DrawFilledRect(screen, 530, 400, 270.0, 70.0, portalPurple, false)
+	vector.DrawFilledRect(screen, 830, 400, 270.0, 70.0, diffRed, false)
 
 	g.SetTextProfile(textProfile["request-resolve-close"])
 	g.Text.Draw("Try to Resolve", 665, 435)
@@ -378,7 +410,7 @@ func (g *Game) DrawSolutions(screen *ebiten.Image) {
 	x := 430
 	y := 430
 
-	vector.DrawFilledRect(screen, 390, 400, 850.0, h, color.RGBA{170, 130, 200, 255}, false)
+	vector.DrawFilledRect(screen, 390, 400, 850.0, h, portalPurple, false)
 	g.SetTextProfile(textProfile["request-solutions"])
 
 	for _, s := range g.Building.ActiveRequest.Solutions {

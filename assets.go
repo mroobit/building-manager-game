@@ -91,8 +91,9 @@ func (g *Game) ConfigureTextRenderer() {
 
 func (g *Game) SetTextProfile(p *TextProfile) {
 	y := map[string]etxt.VertAlign{
-		"YCenter": etxt.YCenter,
-		"Top":     etxt.Top,
+		"YCenter":  etxt.YCenter,
+		"Top":      etxt.Top,
+		"Baseline": etxt.Baseline,
 	}
 	x := map[string]etxt.HorzAlign{
 		"XCenter": etxt.XCenter,

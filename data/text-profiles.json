@@ -190,5 +190,37 @@
 	"alignx": "Right",
 	"size": 20,
 	"color": [ 30, 30, 70, 255 ]
+},
+{
+	"name": "login",
+	"font": "Comfortaa Regular",
+	"aligny": "AlignY",
+	"alignx": "Left",
+	"size": 20,
+	"color": [ 30, 30, 70, 255 ]
+},
+{
+	"name": "login-password",
+	"font": "Liberation Sans",
+	"aligny": "AlignY",
+	"alignx": "Left",
+	"size": 20,
+	"color": [ 30, 30, 70, 255 ]
+},
+{
+	"name": "login-play",
+	"font": "Comfortaa Bold",
+	"aligny": "YCenter",
+	"alignx": "XCenter",
+	"size": 20,
+	"color": [ 30, 30, 70, 255 ]
+},
+{
+	"name": "login-label",
+	"font": "Comfortaa Regular",
+	"aligny": "Baseline",
+	"alignx": "Left",
+	"size": 16,
+	"color": [ 90, 90, 120, 255 ]
 }
 ]
