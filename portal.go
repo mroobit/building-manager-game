@@ -40,7 +40,8 @@ func (g *Game) DrawPortal(screen *ebiten.Image) {
 	g.Text.Draw(strconv.Itoa(g.Building.OpenRequestCount()), 290, 180)
 
 	g.SetTextProfile(textProfile["portal-button"])
-	g.Text.Draw("Financials", 30, 220)
+	g.Text.Draw("Tenants", 30, 220)
+	g.Text.Draw("Financial Picture", 30, 280)
 
 	g.SetTextProfile(textProfile["portal-header-footer"])
 	g.Text.Draw("2406 Ebiten Ln", 1100, 30)
@@ -189,6 +190,54 @@ func (g *Game) DrawPortalPage(screen *ebiten.Image) {
 		g.Text.Draw("Net Change", labelX, y)
 		g.Text.Draw(sign+"$"+strconv.Itoa(netChange), valueX, y)
 
+	case "tenants":
+		g.SetTextProfile(textProfile["portal-page-title"])
+		g.Text.Draw("Tenants", titleX, titleY)
+
+		g.SetTextProfile(textProfile["portal-breadcrumb"])
+		g.Text.Draw("Home > Tenants", crumbX, crumbY)
+
+		unitX := labelX + 30
+		unitRightX := labelX + 330
+		unitY := titleY + 60
+		rectX := float32(labelX + 10)
+		rectY := float32(titleY + 50)
+		yIncr := 30
+		for i, t := range g.Building.Tenants {
+			vector.DrawFilledRect(screen, rectX, rectY, 340.0, 105.0, color.RGBA{200, 200, 200, 255}, false)
+
+			g.SetTextProfile(textProfile["tenant-bold-left"])
+			g.Text.Draw("Unit "+t.Unit, unitX, unitY)
+			if t.Name == "" {
+				g.SetTextProfile(textProfile["tenant-bold-right"])
+				g.Text.Draw("(Vacant)", unitRightX, unitY)
+				unitY += yIncr * 3
+			} else {
+				g.SetTextProfile(textProfile["tenant-regular-right"])
+				g.Text.Draw(t.Name, unitRightX, unitY)
+				unitY += yIncr
+				g.SetTextProfile(textProfile["tenant-regular-left"])
+				g.Text.Draw("Rent", unitX, unitY)
+				g.SetTextProfile(textProfile["tenant-regular-right"])
+				g.Text.Draw(strconv.Itoa(t.Rent), unitRightX, unitY)
+				unitY += yIncr
+				g.SetTextProfile(textProfile["tenant-regular-left"])
+				g.Text.Draw("Months Left in Lease", unitX, unitY)
+				g.SetTextProfile(textProfile["tenant-regular-right"])
+				g.Text.Draw(strconv.Itoa(t.MonthsRemaining), unitRightX, unitY)
+				unitY += yIncr
+			}
+			unitY += yIncr + 10
+			rectY += float32(yIncr + 100)
+			if i == 4 {
+				unitX += 440
+				unitRightX += 440
+				rectX += 440
+				unitY = titleY + 60
+				rectY = float32(titleY + 50)
+			}
+		}
+
 	case "overview":
 		fallthrough
 	default:
@@ -213,7 +262,7 @@ func (g *Game) DrawPortalPage(screen *ebiten.Image) {
 		g.Text.Draw(strconv.Itoa(len(g.Building.Tenants)), valueX, y)
 		y += 40
 		g.Text.Draw("Vacancies", labelX, y)
-		g.Text.Draw(strconv.Itoa(10-len(g.Building.Tenants)), valueX, y)
+		g.Text.Draw(strconv.Itoa(g.Building.Vacancies()), valueX, y)
 		y += 40
 		g.Text.Draw("Open Requests", labelX, y)
 		g.Text.Draw(strconv.Itoa(len(g.Building.Requests)), valueX, y)

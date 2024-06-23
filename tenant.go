@@ -3,6 +3,7 @@ package main
 var (
 	tenants             = make([]*Tenant, 10)
 	initialSatisfaction = 7 // scale of 1-10
+	defaultLeaseLength  = 12
 )
 
 type Tenant struct {
@@ -33,7 +34,7 @@ func initializeTenants(t []*Tenant) {
 	t[0] = NewTenant("Jason Ellingsworth", "1A", 850, 12)
 	t[1] = NewTenant("Victoria Kent", "1B", 800, 5)
 	t[2] = NewTenant("Winnie Lopez", "1C", 800, 5)
-	t[3] = NewTenant("Gerard Fontaine", "1D", 800, 5)
+	t[3] = NewTenant("", "1D", 800, 5)
 	t[4] = NewTenant("Grace Holtz", "1E", 800, 5)
 	t[5] = NewTenant("Andre Svenson", "1F", 800, 5)
 	t[6] = NewTenant("Fiona Phelps", "1G", 800, 5)
@@ -66,3 +67,27 @@ func (t *Tenant) IncreaseSatisfaction() {
 // TODO: func (t *Tenant)UpdateMonthsRemaining(months int) {}
 // This method's parameters can be positive or negative: positive for new lease, negative for time passing, early moveout, eviction
 // TODO: func (t *Tenant).MoveOut(b *Building) & MoveInto
+
+func (b *Building) Vacancies() int {
+	count := 0
+	for _, t := range b.Tenants {
+		if t.Name != "" {
+			count += 1
+		}
+	}
+	return count
+}
+
+func (t *Tenant) Needed() bool {
+	return t.Name == ""
+}
+
+func (t *Tenant) MoveOut() {
+	t.Name = ""
+	// increase rent for listing price
+}
+
+func (t *Tenant) MoveIn() {
+	// TODO: pull tenant from tenant pool
+	// if tenant.MaxRent < unit rent, assign to the empty unit
+}

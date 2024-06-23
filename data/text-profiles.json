@@ -158,5 +158,37 @@
 	"alignx": "Left",
 	"size": 56,
 	"color": [ 30, 30, 30, 255 ]
+},
+{
+	"name": "tenant-bold-left",
+	"font": "Comfortaa Bold",
+	"aligny": "Top",
+	"alignx": "Left",
+	"size": 20,
+	"color": [ 30, 30, 70, 255 ]
+},
+{
+	"name": "tenant-bold-right",
+	"font": "Comfortaa Bold",
+	"aligny": "Top",
+	"alignx": "Right",
+	"size": 20,
+	"color": [ 30, 30, 70, 255 ]
+},
+{
+	"name": "tenant-regular-left",
+	"font": "Comfortaa Regular",
+	"aligny": "Top",
+	"alignx": "Left",
+	"size": 20,
+	"color": [ 30, 30, 70, 255 ]
+},
+{
+	"name": "tenant-regular-right",
+	"font": "Comfortaa Regular",
+	"aligny": "Top",
+	"alignx": "Right",
+	"size": 20,
+	"color": [ 30, 30, 70, 255 ]
 }
 ]

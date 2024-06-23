@@ -95,6 +95,8 @@ func (g *Game) Update() error {
 			hover = "request-list"
 		case portalClickable["financial-overview"].Hover(cursor):
 			hover = "financial-overview"
+		case portalClickable["tenants"].Hover(cursor):
+			hover = "tenants"
 		default:
 			hover = ""
 		}
