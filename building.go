@@ -1,9 +1,6 @@
 package main
 
 import (
-	"fmt"
-	"strconv"
-
 	"github.com/google/uuid"
 )
 
@@ -41,17 +38,6 @@ func (g *Game) initializeBuilding() {
 	}
 }
 
-// TODO: (stretch) make this more useable for display as tenant roster
-func (b *Building) ListTenants() {
-	for _, t := range b.Tenants {
-		fmt.Println("Tenant in Unit " + t.Unit)
-		fmt.Println(" - Rent: " + strconv.Itoa(t.Rent))
-		fmt.Println(" - Satisfaction: " + strconv.Itoa(t.Satisfaction))
-		fmt.Println(" - Months Left: " + strconv.Itoa(t.MonthsRemaining))
-		fmt.Println(" - Will Renew: " + strconv.FormatBool(t.WillRenew))
-	}
-}
-
 func (b *Building) ReceiveRequest(r *Request) {
 	r.ID = uuid.New()
 	b.RequestMap[r.ID] = r
@@ -62,18 +48,6 @@ func (b *Building) ReceiveRequest(r *Request) {
 	}
 }
 
-func (b *Building) ReopenRequests() {
-	for _, r := range b.Requests {
-		if !r.Resolved {
-			r.Closed = false
-			r.Urgent = true
-			r.Tenant.Impact(-1)
-		}
-		// TODO: Reduce quality of resolution on poor-solution requests until must reopen
-		// Have some such requests actually get fully-resolved
-	}
-}
-
 func (b *Building) OpenRequestCount() int {
 	count := 0
 	for _, r := range b.Requests {
@@ -81,7 +55,6 @@ func (b *Building) OpenRequestCount() int {
 			count += 1
 		}
 	}
-
 	return count
 }
 
