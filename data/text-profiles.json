@@ -136,10 +136,26 @@
 	"color": [ 10, 90, 10, 255 ]
 },
 {
+	"name": "financial-right-green",
+	"font": "Comfortaa Regular",
+	"aligny": "Top",
+	"alignx": "Right",
+	"size": 24,
+	"color": [ 10, 90, 10, 255 ]
+},
+{
 	"name": "financial-red",
 	"font": "Comfortaa Regular",
 	"aligny": "Top",
 	"alignx": "Left",
+	"size": 24,
+	"color": [ 150, 10, 10, 255 ]
+},
+{
+	"name": "financial-right-red",
+	"font": "Comfortaa Regular",
+	"aligny": "Top",
+	"alignx": "Right",
 	"size": 24,
 	"color": [ 150, 10, 10, 255 ]
 },

@@ -245,5 +245,45 @@
 			"impact": -1
 		}
 	]
+},
+{
+	"title": "Lost my key",
+	"description": "Hello, I have lost my key and am locked out of my unit. Could you please let me back in?",
+	"location": "unit",
+	"urgent": true,
+	"solutions": [
+		{
+			"action": "Hire a locksmith to re-key the door",
+			"outcome": "You meet the tenant at their door, verify their identity, then call a locksmith to re-key the lock. You keep a copy of the key just in case this tenant locks themself out again.",
+			"cost": 120,
+			"efficacy": 10,
+			"time": 2,
+			"impact": 1
+		},
+		{
+			"action": "Look for a copy of their key",
+			"outcome": "You spend half the day looking for keys, but cannot find a backup of the tenant's key",
+			"cost": 0,
+			"efficacy": 0,
+			"time": 2,
+			"impact": 0
+		},
+		{
+			"action": "Hire a teacher who can help you to 'unlock anything in your life'",
+			"outcome": "While the course was interesting and you have a lot to think about, you realize at the end that you're not any closer to being able to unlock any door in the building.",
+			"cost": 700,
+			"efficacy": 0,
+			"time": 6,
+			"impact": -1
+		},
+		{
+			"action": "Break down the door",
+			"outcome": "You break down the door. The tenant doesn't seem that grateful they're able to get into their unit, but on the positive side, you decide to replace the door, including the lock.",
+			"cost": 200,
+			"efficacy": 8,
+			"time": 3,
+			"impact": -1
+		}
+	]
 }
 ]

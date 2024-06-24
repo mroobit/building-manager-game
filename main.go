@@ -88,6 +88,7 @@ func (g *Game) Update() error {
 	} else if g.State == "play" {
 		// TODO: Make incrementing of months a function of tasks done(weight) + ticks
 		g.Clock.Tick += 1
+		g.AdvanceDayByTicks()
 		g.CheckDaysInMonth()
 		// TODO: generate problems based on Tick/Day + some randomness
 		g.CreateProblems()

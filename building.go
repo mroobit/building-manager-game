@@ -13,16 +13,17 @@ var (
 )
 
 type Building struct {
-	Manager       string
-	Money         int
-	CreditBalance int
-	Reputation    int
-	Tenants       []*Tenant
-	Requests      []*Request
-	RequestMap    map[uuid.UUID]*Request
-	ActiveRequest *Request
-	FixedCosts    int // monthly cost, will increase over time
-	Inspection    int // months until next inspection
+	Manager           string
+	Money             int
+	CreditBalance     int
+	Reputation        int
+	Tenants           []*Tenant
+	Requests          []*Request
+	RequestMap        map[uuid.UUID]*Request
+	ActiveRequest     *Request
+	RequestsAddressed int
+	FixedCosts        int // monthly cost, will increase over time
+	Inspection        int // months until next inspection
 }
 
 func (g *Game) initializeBuilding() {

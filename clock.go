@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math/rand/v2"
+	"strings"
+)
 
 type Clock struct {
 	Tick      int
@@ -19,11 +23,6 @@ func (g *Game) initializeClock() {
 	}
 	g.Clock = c
 }
-
-// update tenant months left
-// update money in/out
-// initiate events (prod to schedule spraying, annual inspection, infestation, etc)
-// update months played
 
 func (g *Game) IncrementMonth() {
 	g.Clock.Month += 1
@@ -44,14 +43,36 @@ func (g *Game) AdvanceDay(t int) {
 	day += (g.Clock.Days / 3)
 	for _, r := range g.Building.Requests {
 		r.DaysOpen += day
+		if r.Closed && !r.Resolved {
+			if r.ResolutionQuality <= 3 {
+				if !strings.HasPrefix(r.Title, "(Reopened)") {
+					r.Title = "(Reopened) " + r.Title
+					r.Description = "I reopened this request because it was not actually resolved. " + r.Description
+				}
+				r.Closed = false
+			} else if r.ResolutionQuality <= 6 {
+				// solution efficacy over time: good or bad?
+				change := rand.IntN(5) - 2
+				r.ResolutionQuality += change
+			} else if r.ResolutionQuality >= 7 {
+				r.Resolved = true
+			}
+		}
 	}
 	if g.Clock.Days >= 90 {
 		g.IncrementMonth()
 	}
 }
 
+func (g *Game) AdvanceDayByTicks() {
+	if g.Building.RequestsAddressed < 3 && g.Clock.Tick > 3000 {
+		g.AdvanceDay(3)
+		g.Clock.Tick = 0
+	}
+}
+
 func (g *Game) CheckDaysInMonth() {
-	if g.Clock.Days >= 93 || g.Clock.Tick > 4000 {
+	if g.Clock.Days >= 93 {
 		g.IncrementMonth()
 	}
 }
