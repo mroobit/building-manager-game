@@ -238,5 +238,13 @@
 	"alignx": "Left",
 	"size": 16,
 	"color": [ 90, 90, 120, 255 ]
+},
+{
+	"name": "resolution-outcome",
+	"font": "Comfortaa Regular",
+	"aligny": "YCenter",
+	"alignx": "XCenter",
+	"size": 36,
+	"color": [ 10, 10, 10, 255 ]
 }
 ]

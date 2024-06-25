@@ -16,7 +16,7 @@ type Request struct {
 	Tenant            *Tenant
 	Urgent            bool       `json:"urgent"`
 	Solutions         []Solution `json:"solutions"`
-	Attempts          []string   // solutions that have been attempted
+	Attempts          []int      // solutions that have been attempted
 	DaysOpen          int        // this increments regularly
 	Closed            bool       // requests can be closed without resolving
 	Resolved          bool       // was the problem actually fixed
@@ -54,7 +54,7 @@ func NewRequest(title string, description string, location string, tenant *Tenan
 func (r *Request) Resolve(solutionIndex int) (cost, time int) {
 	r.Solutions[solutionIndex].Attempted = true
 	solution := r.Solutions[solutionIndex]
-	r.Attempts = append(r.Attempts, solution.Action)
+	r.Attempts = append(r.Attempts, solutionIndex)
 	r.ResolutionQuality = solution.Efficacy
 	if r.ResolutionQuality >= 7 {
 		r.Resolved = true

@@ -130,6 +130,11 @@ func (g *Game) Update() error {
 		if g.Page == "try-to-resolve" && portalButton["solutions"].Hover(cursor) {
 			hover = "solutions"
 		}
+		if g.Page == "resolution-outcome" {
+			if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
+				g.Page = "request-list"
+			}
+		}
 		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) && hover != "" {
 
 			switch hover {
@@ -152,7 +157,6 @@ func (g *Game) Update() error {
 				if cursor[0] >= 400 && cursor[0] <= 1250 && i < len(trueIndices) {
 					trueIndex := trueIndices[i]
 					//g.Building.ActiveRequest.Solutions[trueIndex].Attempted = true
-					//solution := g.Building.ActiveRequest.Solutions[trueIndex]
 					cost, time := g.Building.ActiveRequest.Resolve(trueIndex)
 					if g.Building.ActiveRequest.ResolutionQuality >= 7 {
 						g.Building.RequestsAddressed += 1
@@ -161,7 +165,7 @@ func (g *Game) Update() error {
 					g.AdvanceDay(time)
 					// TODO: add a dialgoue about doing the solution and its effect
 					// as well as that you've closed the issue
-					g.Page = "request-list"
+					g.Page = "resolution-outcome"
 				}
 			case "request-details":
 				i := (cursor[1] - 200) / 40

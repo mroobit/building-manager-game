@@ -23,6 +23,7 @@ var (
 	portalPurpleSecondary = color.RGBA{70, 30, 100, 95}
 	portalTertiary        = color.RGBA{200, 200, 200, 255}
 	white                 = color.RGBA{255, 255, 255, 255}
+	transparentPurple     = color.RGBA{40, 0, 60, 30}
 
 	alertGreen  = color.RGBA{20, 200, 20, 205}
 	alertYellow = color.RGBA{255, 190, 75, 205}
@@ -143,7 +144,8 @@ func (g *Game) DrawPortalPage(screen *ebiten.Image) {
 
 		g.DrawRequestDetails(screen)
 		g.DrawSolutions(screen)
-
+	case "resolution-outcome":
+		g.DrawOutcome(screen)
 	case "financial-overview":
 		g.SetTextProfile(textProfile["portal-page-title"])
 		g.Text.Draw("Financial Overview", titleX, titleY)
@@ -476,6 +478,29 @@ func (g *Game) DrawSolutions(screen *ebiten.Image) {
 
 func (g *Game) DrawOutcome(screen *ebiten.Image) {
 	// TODO display story text for the outcome of the solution selected
+	vector.DrawFilledRect(
+		screen,
+		0,
+		0,
+		float32(g.Width),
+		float32(g.Height),
+		transparentPurple,
+		false,
+	)
+	vector.DrawFilledRect(
+		screen,
+		float32(g.Width/6),
+		float32(g.Height/4),
+		float32(2*g.Width/3),
+		float32(g.Height/2),
+		white,
+		false,
+	)
+	r := g.Building.ActiveRequest
+	outcome := r.Solutions[r.Attempts[len(r.Attempts)-1]].Outcome
+
+	g.SetTextProfile(textProfile["portal-calendar"])
+	g.Text.Draw(wrapText(outcome, 30), g.Width/2, g.Height/2)
 }
 
 func wrapText(s string, length int) string {
