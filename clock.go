@@ -82,7 +82,9 @@ func (g *Game) AdvanceDay(t int) {
 	for _, r := range g.Building.Requests {
 		r.DaysOpen += day
 		if r.Closed && !r.Resolved {
-			if r.ResolutionQuality <= 3 {
+			if r.AvailableSolutionsCount() == 0 {
+				r.Resolved = true
+			} else if r.ResolutionQuality <= 3 {
 				if !strings.HasPrefix(r.Title, "(Reopened)") {
 					r.Title = "(Reopened) " + r.Title
 					r.Description = "I reopened this request because it was not actually resolved. " + r.Description
