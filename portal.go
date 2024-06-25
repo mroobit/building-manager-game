@@ -132,6 +132,7 @@ func (g *Game) DrawPortalPage(screen *ebiten.Image) {
 		g.Text.Draw("Home > Tenant Requests > Request Details", crumbX, crumbY)
 
 		g.DrawRequestDetails(screen)
+		g.DrawResolveClose(screen)
 
 	case "try-to-resolve":
 		g.SetTextProfile(textProfile["portal-page-title"])
@@ -421,7 +422,9 @@ func (g *Game) DrawRequestDetails(screen *ebiten.Image) {
 	g.Text.Draw("Description", labelCol, y)
 	g.Text.Draw(wrapText(g.Building.ActiveRequest.Description, 60), valueCol, y)
 
-	// TODO: draw buttons for "Try to Solve" & "Close Request"
+}
+
+func (g *Game) DrawResolveClose(screen *ebiten.Image) {
 	vector.DrawFilledRect(
 		screen,
 		float32(portalButton["try-to-resolve"].UpperLeft[0]),
