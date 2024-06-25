@@ -9,6 +9,15 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/vector"
 )
 
+const (
+	portalSidebarWidth  = 350.0
+	portalSidebarHeight = 845.0
+	portalHeaderHeight  = 55.0
+	portalFooterHeight  = 80.0
+	portalWindowWidth   = 930.0
+	portalWindowHeight  = portalSidebarHeight
+)
+
 var (
 	portalPurple          = color.RGBA{170, 130, 200, 255}
 	portalPurpleSecondary = color.RGBA{70, 30, 100, 95}
@@ -22,16 +31,16 @@ var (
 )
 
 func (g *Game) DrawPortal(screen *ebiten.Image) {
-	vector.DrawFilledRect(screen, 0, 0, 1280.0, 980.0, white, false)
+	vector.DrawFilledRect(screen, 0, 0, float32(g.Width), float32(g.Height), white, false)
 
-	vector.DrawFilledRect(screen, 0, 0, 1280.0, 55.0, portalPurple, false)
-	vector.DrawFilledRect(screen, 0, 55, 350.0, 845.0, portalPurpleSecondary, false)
-	vector.DrawFilledRect(screen, 0, 900, 1280.0, 80.0, portalPurple, false)
+	vector.DrawFilledRect(screen, 0, 0, float32(g.Width), portalHeaderHeight, portalPurple, false)
+	vector.DrawFilledRect(screen, 0, portalHeaderHeight, portalSidebarWidth, portalSidebarHeight, portalPurpleSecondary, false)
+	vector.DrawFilledRect(screen, 0, portalHeaderHeight+portalSidebarHeight, float32(1280.0), portalFooterHeight, portalPurple, false)
 
 	g.SetTextProfile(textProfile["portal-button"])
 	g.Text.SetTarget(screen)
-	g.Text.Draw("Overview", 30, 100)
-	g.Text.Draw("Requests", 30, 160)
+	g.Text.Draw("Overview", 30, portalButton["overview"].UpperLeft[1])
+	g.Text.Draw("Requests", 30, portalButton["request-list"].UpperLeft[1])
 
 	// TODO: improve alert circle logic
 	// TODO: improve alert circle appearance
@@ -52,8 +61,8 @@ func (g *Game) DrawPortal(screen *ebiten.Image) {
 	g.Text.Draw(strconv.Itoa(g.Building.OpenRequestCount()), 290, 180)
 
 	g.SetTextProfile(textProfile["portal-button"])
-	g.Text.Draw("Tenants", 30, 220)
-	g.Text.Draw("Financial Picture", 30, 280)
+	g.Text.Draw("Tenants", 30, portalButton["tenants"].UpperLeft[1])
+	g.Text.Draw("Financial Picture", 30, portalButton["financial-overview"].UpperLeft[1])
 
 	g.SetTextProfile(textProfile["portal-header-footer"])
 	g.Text.Draw("2406 Ebiten Ln", 1100, 30)
@@ -268,8 +277,8 @@ func (g *Game) DrawPortalPage(screen *ebiten.Image) {
 		// animate dots filling in password
 		// animate "loading" the portal
 
-		vector.DrawFilledRect(screen, 0, 0, 1280.0, 960.0, white, false)
-		vector.DrawFilledRect(screen, 0, 0, 1280.0, 960.0, portalPurpleSecondary, false)
+		vector.DrawFilledRect(screen, 0, 0, float32(g.Width), float32(g.Height), white, false)
+		vector.DrawFilledRect(screen, 0, 0, float32(g.Width), float32(g.Height), portalPurpleSecondary, false)
 		vector.DrawFilledRect(screen, 398, 181, 484.0, 581.0, portalPurpleSecondary, false)
 		vector.DrawFilledRect(screen, 400, 180, 480.0, 580.0, white, false)
 		g.SetTextProfile(textProfile["portal-page-title"])
@@ -346,7 +355,15 @@ func (g *Game) DrawRequestList(screen *ebiten.Image) {
 	g.Text.Draw("Location", locationCol, y)
 	g.Text.Draw("Reported By", nameCol, y)
 
-	vector.DrawFilledRect(screen, 390, 200, 850.0, 645.0, portalTertiary, false)
+	vector.DrawFilledRect(
+		screen,
+		float32(portalButton["request-details"].UpperLeft[0]),
+		float32(portalButton["request-details"].UpperLeft[1]),
+		float32(portalButton["request-details"].Width),
+		float32(portalButton["request-details"].Height),
+		portalTertiary,
+		false,
+	)
 	g.SetTextProfile(textProfile["request-list"])
 
 	//	pagination := 0 // for when there are > 16 requests, allow navigation to additional requests?
@@ -405,8 +422,24 @@ func (g *Game) DrawRequestDetails(screen *ebiten.Image) {
 	g.Text.Draw(wrapText(g.Building.ActiveRequest.Description, 60), valueCol, y)
 
 	// TODO: draw buttons for "Try to Solve" & "Close Request"
-	vector.DrawFilledRect(screen, 530, 400, 270.0, 70.0, portalPurple, false)
-	vector.DrawFilledRect(screen, 830, 400, 270.0, 70.0, diffRed, false)
+	vector.DrawFilledRect(
+		screen,
+		float32(portalButton["try-to-resolve"].UpperLeft[0]),
+		float32(portalButton["try-to-resolve"].UpperLeft[1]),
+		float32(portalButton["try-to-resolve"].Width),
+		float32(portalButton["try-to-resolve"].Height),
+		portalPurple,
+		false,
+	)
+	vector.DrawFilledRect(
+		screen,
+		float32(portalButton["close-request"].UpperLeft[0]),
+		float32(portalButton["close-request"].UpperLeft[1]),
+		float32(portalButton["close-request"].Width),
+		float32(portalButton["close-request"].Height),
+		diffRed,
+		false,
+	)
 
 	g.SetTextProfile(textProfile["request-resolve-close"])
 	g.Text.Draw("Try to Resolve", 665, 435)
@@ -414,13 +447,20 @@ func (g *Game) DrawRequestDetails(screen *ebiten.Image) {
 }
 
 func (g *Game) DrawSolutions(screen *ebiten.Image) {
-	// TODO: draw label, draw box of height corresponding to # solutions, draw solution text
-
+	// TODO: Draw a label over a box of solutions
 	h := float32(len(g.Building.ActiveRequest.Solutions)+1) * 50.0
-	x := 430
-	y := 430
+	x := portalButton["solutions"].UpperLeft[0] + 30
+	y := portalButton["solutions"].UpperLeft[1]
 
-	vector.DrawFilledRect(screen, 390, 400, 850.0, h, portalPurple, false)
+	vector.DrawFilledRect(
+		screen,
+		390,
+		400,
+		float32(portalButton["solutions"].Width),
+		h,
+		portalPurple,
+		false,
+	)
 	g.SetTextProfile(textProfile["request-solutions"])
 
 	for _, s := range g.Building.ActiveRequest.Solutions {

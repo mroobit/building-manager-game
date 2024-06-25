@@ -104,30 +104,30 @@ func (g *Game) Update() error {
 		}
 
 		switch {
-		case portalClickable["overview"].Hover(cursor):
+		case portalButton["overview"].Hover(cursor):
 			hover = "overview"
-		case portalClickable["request-list"].Hover(cursor):
+		case portalButton["request-list"].Hover(cursor):
 			hover = "request-list"
-		case portalClickable["financial-overview"].Hover(cursor):
+		case portalButton["financial-overview"].Hover(cursor):
 			hover = "financial-overview"
-		case portalClickable["tenants"].Hover(cursor):
+		case portalButton["tenants"].Hover(cursor):
 			hover = "tenants"
 		default:
 			hover = ""
 		}
 		if g.Page == "request-list" {
-			if portalClickable["request-details"].Hover(cursor) {
+			if portalButton["request-details"].Hover(cursor) {
 				hover = "request-details"
 			}
 		}
 		if g.Page == "request-details" {
-			if portalClickable["try-to-resolve"].Hover(cursor) {
+			if portalButton["try-to-resolve"].Hover(cursor) {
 				hover = "try-to-resolve"
-			} else if portalClickable["close-request"].Hover(cursor) {
+			} else if portalButton["close-request"].Hover(cursor) {
 				hover = "close-request"
 			}
 		}
-		if g.Page == "try-to-resolve" && portalClickable["solutions"].Hover(cursor) {
+		if g.Page == "try-to-resolve" && portalButton["solutions"].Hover(cursor) {
 			hover = "solutions"
 		}
 		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) && hover != "" {
@@ -173,9 +173,9 @@ func (g *Game) Update() error {
 		}
 	} else {
 		switch {
-		case titleClickable["play"].Hover(cursor):
+		case titleButton["play"].Hover(cursor):
 			hover = "play"
-		case titleClickable["controls"].Hover(cursor):
+		case titleButton["controls"].Hover(cursor):
 			hover = "controls"
 		default:
 			hover = ""
