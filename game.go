@@ -19,13 +19,26 @@ func (g *Game) GenerateRequest() {
 		t = g.Building.Tenants[rand.IntN(len(g.Building.Tenants))]
 	}
 	blankRequest := g.RequestPool[rand.IntN(len(g.RequestPool))]
+	s := []Solution{}
+	for _, sol := range blankRequest.Solutions {
+		bs := Solution{
+			Action:    sol.Action,
+			Outcome:   sol.Outcome,
+			Cost:      sol.Cost,
+			Efficacy:  sol.Efficacy,
+			Time:      sol.Time,
+			Impact:    sol.Impact,
+			Attempted: false,
+		}
+		s = append(s, bs)
+	}
 	r := Request{
 		Title:       blankRequest.Title,
 		Description: blankRequest.Description,
 		Location:    blankRequest.Location,
 		Tenant:      t,
 		Urgent:      blankRequest.Urgent,
-		Solutions:   blankRequest.Solutions,
+		Solutions:   s,
 		DaysOpen:    0,
 		Closed:      false,
 		Resolved:    false,

@@ -148,11 +148,13 @@ func (g *Game) Update() error {
 				g.Page = "request-list"
 			case "solutions":
 				i := (cursor[1] - 400) / 50
-				if cursor[0] >= 400 && cursor[0] <= 1250 && i < len(g.Building.ActiveRequest.Solutions) {
-					solution := g.Building.ActiveRequest.Solutions[i]
-					cost, time := g.Building.ActiveRequest.Resolve(solution)
+				trueIndices := g.Building.ActiveRequest.AvailableSolutionIndices()
+				if cursor[0] >= 400 && cursor[0] <= 1250 && i < len(trueIndices) {
+					trueIndex := trueIndices[i]
+					//g.Building.ActiveRequest.Solutions[trueIndex].Attempted = true
+					//solution := g.Building.ActiveRequest.Solutions[trueIndex]
+					cost, time := g.Building.ActiveRequest.Resolve(trueIndex)
 					if g.Building.ActiveRequest.ResolutionQuality >= 7 {
-						g.Building.ActiveRequest.Resolved = true
 						g.Building.RequestsAddressed += 1
 					}
 					g.Building.CreditBalance += cost

@@ -88,12 +88,14 @@ func (g *Game) AdvanceDay(t int) {
 					r.Description = "I reopened this request because it was not actually resolved. " + r.Description
 				}
 				r.Closed = false
+				r.Tenant.Satisfaction -= 1
 			} else if r.ResolutionQuality <= 6 {
 				// solution efficacy over time: good or bad?
 				change := rand.IntN(5) - 2
 				r.ResolutionQuality += change
 			} else if r.ResolutionQuality >= 7 {
 				r.Resolved = true
+				r.Tenant.Satisfaction += 1
 				g.Building.RequestsAddressed += 1
 			}
 		}

@@ -451,7 +451,7 @@ func (g *Game) DrawResolveClose(screen *ebiten.Image) {
 
 func (g *Game) DrawSolutions(screen *ebiten.Image) {
 	// TODO: Draw a label over a box of solutions
-	h := float32(len(g.Building.ActiveRequest.Solutions)+1) * 50.0
+	h := float32(g.Building.ActiveRequest.AvailableSolutionsCount()+1) * 50.0
 	x := portalButton["solutions"].UpperLeft[0] + 30
 	y := portalButton["solutions"].UpperLeft[1]
 
@@ -467,9 +467,15 @@ func (g *Game) DrawSolutions(screen *ebiten.Image) {
 	g.SetTextProfile(textProfile["request-solutions"])
 
 	for _, s := range g.Building.ActiveRequest.Solutions {
-		g.Text.Draw(s.Action+" ($"+strconv.Itoa(s.Cost)+")", x, y)
-		y += 50
+		if !s.Attempted {
+			g.Text.Draw(s.Action+" ($"+strconv.Itoa(s.Cost)+")", x, y)
+			y += 50
+		}
 	}
+}
+
+func (g *Game) DrawOutcome(screen *ebiten.Image) {
+	// TODO display story text for the outcome of the solution selected
 }
 
 func wrapText(s string, length int) string {
