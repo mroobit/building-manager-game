@@ -347,8 +347,8 @@ func (g *Game) DrawRequestList(screen *ebiten.Image) {
 
 	issueCol := textX
 	receivedCol := textX + 360
-	locationCol := textX + 470
-	nameCol := textX + 600
+	locationCol := textX + 500
+	nameCol := textX + 630
 
 	vector.DrawFilledRect(screen, 390, 160, 850.0, 40.0, portalPurple, false)
 	g.Text.Draw("Issue", issueCol, y)

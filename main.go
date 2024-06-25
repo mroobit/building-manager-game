@@ -89,7 +89,6 @@ func (g *Game) Update() error {
 		// TODO: Make incrementing of months a function of tasks done(weight) + ticks
 		g.Clock.Tick += 1
 		g.AdvanceDayByTicks()
-		g.CheckDaysInMonth()
 		// TODO: generate problems based on Tick/Day + some randomness
 		g.CreateProblems()
 
@@ -99,6 +98,7 @@ func (g *Game) Update() error {
 			}
 		}
 
+		// TODO remove this, it is just for diagnostic purposes
 		if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
 			g.GenerateRequest()
 		}
@@ -151,6 +151,10 @@ func (g *Game) Update() error {
 				if cursor[0] >= 400 && cursor[0] <= 1250 && i < len(g.Building.ActiveRequest.Solutions) {
 					solution := g.Building.ActiveRequest.Solutions[i]
 					cost, time := g.Building.ActiveRequest.Resolve(solution)
+					if g.Building.ActiveRequest.ResolutionQuality >= 7 {
+						g.Building.ActiveRequest.Resolved = true
+						g.Building.RequestsAddressed += 1
+					}
 					g.Building.CreditBalance += cost
 					g.AdvanceDay(time)
 					// TODO: add a dialgoue about doing the solution and its effect
@@ -166,6 +170,13 @@ func (g *Game) Update() error {
 					g.Page = "request-details"
 				}
 			}
+		}
+	} else if g.State == "monthReport" {
+		// TODO play a little reaction sound, or some music?
+		// add a clickable?
+		if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
+			g.IncrementMonth()
+			g.State = "play"
 		}
 	} else if g.State == "infoControls" {
 		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
@@ -206,6 +217,8 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	} else if g.State == "play" {
 		g.DrawPortal(screen)
 		g.DrawPortalPage(screen)
+	} else if g.State == "monthReport" {
+		g.MonthEndReport(screen)
 	} else {
 		op := &ebiten.DrawImageOptions{}
 		op.GeoM.Scale(0.4, 0.4)

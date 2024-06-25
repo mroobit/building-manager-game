@@ -53,9 +53,6 @@ func NewRequest(title string, description string, location string, tenant *Tenan
 func (r *Request) Resolve(solution Solution) (cost, time int) {
 	r.Attempts = append(r.Attempts, solution.Action)
 	r.ResolutionQuality = solution.Efficacy
-	if r.ResolutionQuality >= 7 {
-		r.Resolved = true
-	}
 	r.Tenant.Impact(solution.Impact)
 	r.Closed = true
 	return solution.Cost, solution.Time

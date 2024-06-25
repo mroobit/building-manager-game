@@ -3,7 +3,11 @@ package main
 import (
 	"fmt"
 	"math/rand/v2"
+	"strconv"
 	"strings"
+
+	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/vector"
 )
 
 type Clock struct {
@@ -35,6 +39,40 @@ func (g *Game) IncrementMonth() {
 	g.Clock.CheckEvents()
 	g.Clock.Days = 0
 	g.Clock.Tick = 0
+	g.Building.RequestsAddressed = 0
+}
+
+func (g *Game) MonthEndReport(screen *ebiten.Image) {
+	vector.DrawFilledRect(
+		screen,
+		0,
+		0,
+		float32(g.Width),
+		float32(g.Height),
+		white,
+		false,
+	)
+
+	g.Text.SetTarget(screen)
+
+	g.SetTextProfile(textProfile["portal-page-title"])
+	g.Text.Draw("Month End Report", 640, 200)
+	g.SetTextProfile(textProfile["request-description"])
+	g.Text.Draw("This month you addressed "+strconv.Itoa(g.Building.RequestsAddressed)+" tenant requests!", 300, 230)
+
+	// TODO: either IncrementMonth() will have to come before this and output numbers
+	// or it will have to be broken apart so that non-payment of rent can be mentioned
+
+	//	g.Text.Draw("You collected "+ strconv.Itoa(
+	//
+	// include
+	// - number of requests addressed
+	// - expenditures
+	// - rent collected (from how many tenants of how many occupied units)
+	// - current balance
+	// - number of vacancies, move-ins, move-outs // not currently tracked
+	// - any emergent events (inspections, etc) // not currently tracked
+	// - building reputation increase/decrease, if any // delta not currently tracked
 }
 
 func (g *Game) AdvanceDay(t int) {
@@ -56,24 +94,19 @@ func (g *Game) AdvanceDay(t int) {
 				r.ResolutionQuality += change
 			} else if r.ResolutionQuality >= 7 {
 				r.Resolved = true
+				g.Building.RequestsAddressed += 1
 			}
 		}
 	}
 	if g.Clock.Days >= 90 {
-		g.IncrementMonth()
+		g.State = "monthReport"
 	}
 }
 
 func (g *Game) AdvanceDayByTicks() {
-	if g.Building.RequestsAddressed < 3 && g.Clock.Tick > 3000 {
+	if (g.Building.RequestsAddressed/(g.Clock.Days+1)) < 3 && g.Clock.Tick > 3000 {
 		g.AdvanceDay(3)
 		g.Clock.Tick = 0
-	}
-}
-
-func (g *Game) CheckDaysInMonth() {
-	if g.Clock.Days >= 93 {
-		g.IncrementMonth()
 	}
 }
 
