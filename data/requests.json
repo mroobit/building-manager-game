@@ -285,5 +285,77 @@
 			"impact": -1
 		}
 	]
+},
+{
+	"title": "Refrigerator eating my food",
+	"description": "For weeks I have been hearing strange sounds from the kitchen, like plastic mashing together, with growling and grunting and gurgling. It was happening again at 4am today and I went into the kitchen without turning the light on, and that's when I realized that the fridge is eating my food. It also explains why my groceries go so fast...",
+	"location": "unit",
+	"urgent": false,
+	"solutions": [
+		{
+			"action": "Tell the tenant to only go out to eat for a few weeks to starve the fridge",
+			"outcome": "The tenant is reluctant at first, but agrees after learning that their renter's insurance covers the food loss and meals out. They stop bringing groceries home and eventually the refrigerator quiets down.",
+			"cost": 0,
+			"efficacy": 6, 
+			"time": 1,
+			"impact": 1
+		},
+		{
+			"action": "Replace the refrigerator",
+			"outcome": "Moving the fridge out of the unit is more difficult than you recall it having been in the past. It's heavier and feels ... reluctant, somehow. You hear it gurgling sadly as you put it in the storage closet.",
+			"cost": 840,
+			"efficacy": 10,
+			"time": 3,
+			"impact": 1
+		},
+		{
+			"action": "Try baiting the fridge with cheese on the adjacent counter", 
+			"outcome": "The cheese disappears by the next day, but nothing else changes.",
+			"cost": 12,
+			"efficacy": 2,
+			"time": 2,
+			"impact": 0
+		},
+		{
+			"action": "Stay in the tenant's kitchen to observe the fridge until it eats again",
+			"outcome": "After 3 days of occasional low grumbles and growls emanating from the fridge, it finally happens: the plastic mashing builds up, getting louder and louder. You open the door. Half-eaten food and liquid oozes onto the floor. The fridgewhines.",
+			"cost": 0,
+			"efficacy": 4,
+			"time": 11,
+			"impact": -2
+		}
+
+	]
+},
+{
+	"title": "No electricity in kitchen",
+	"description": "When I got home I discovered that my kitchen has no power. The refrigerator, range, and microwave are all dead, and the outlet I usually have my electric kettle plugged into also does not work.",
+	"location": "unit",
+	"urgent": true,
+	"solutions": [
+		{
+			"action": "Hire an electrician",
+			"outcome": "The electrician finds the reversed polarity quickly and re-grounds wires in the master outlet for the kitchen before replacing the outlet itself.",
+			"cost": 230,
+			"efficacy": 10,
+			"time": 4,
+			"impact": 2
+		},
+		{
+			"action": "Try to fix the electrical issue yourself",
+			"outcome": "TODO",
+			"cost": 24,
+			"efficacy": 5,
+			"time": 5,
+			"impact": 1
+		},
+		{
+			"action": "Plaster off the kitchen and provide the tenant with a mini-fridge and portable range",
+			"outcome": "The tenant is bewildered and tries to argue with you. You're too busy building up the plaster wall to close off the kitchen to think much about what they're saying.",
+			"cost": 300,
+			"efficacy": 8,
+			"time": 8,
+			"impact": -2
+		}
 }
 ]
