@@ -23,6 +23,7 @@ var (
 	portalPurpleSecondary = color.RGBA{70, 30, 100, 95}
 	portalTertiary        = color.RGBA{200, 200, 200, 255}
 	white                 = color.RGBA{255, 255, 255, 255}
+	black                 = color.RGBA{30, 30, 50, 235}
 	transparentPurple     = color.RGBA{40, 0, 60, 30}
 
 	alertGreen  = color.RGBA{20, 200, 20, 205}
@@ -321,6 +322,13 @@ func (g *Game) DrawPortalPage(screen *ebiten.Image) {
 			button["how-to-play"].Width/2+button["how-to-play"].UpperLeft[0],
 			button["how-to-play"].Height/2+button["how-to-play"].UpperLeft[1],
 		)
+
+		// Below-box buttons
+		g.SetTextProfile(textProfile["login-lower-button"])
+		vector.DrawFilledRect(screen, 480, 850, 140, 50, black, false)
+		g.Text.Draw("Settings", 480+70, 850+25)
+		vector.DrawFilledRect(screen, 660, 850, 140, 50, black, false)
+		g.Text.Draw("About", 660+70, 850+25)
 	case "overview":
 		fallthrough
 	default:

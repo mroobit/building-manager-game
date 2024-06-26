@@ -240,6 +240,14 @@
 	"color": [ 30, 30, 70, 255 ]
 },
 {
+	"name": "login-lower-button",
+	"font": "Liberation Sans",
+	"aligny": "YCenter",
+	"alignx": "XCenter",
+	"size": 20,
+	"color": [ 255, 255, 255, 255 ]
+},
+{
 	"name": "login-label",
 	"font": "Comfortaa Regular",
 	"aligny": "Baseline",

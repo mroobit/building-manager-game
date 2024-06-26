@@ -171,8 +171,6 @@ func (g *Game) Update() error {
 					}
 					g.Building.CreditBalance += cost
 					g.AdvanceDay(time)
-					// TODO: add a dialgoue about doing the solution and its effect
-					// as well as that you've closed the issue
 					g.Page = "resolution-outcome"
 				}
 			case "request-details":
