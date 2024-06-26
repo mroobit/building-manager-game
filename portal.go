@@ -480,16 +480,16 @@ func (g *Game) DrawResolveClose(screen *ebiten.Image) {
 
 func (g *Game) DrawSolutions(screen *ebiten.Image) {
 	// TODO: Draw a label over a box of solutions
-	h := float32(g.Building.ActiveRequest.AvailableSolutionsCount()+1) * 50.0
-	x := button["solutions"].UpperLeft[0] + 30
-	y := button["solutions"].UpperLeft[1]
+	// h := float32(g.Building.ActiveRequest.AvailableSolutionsCount()) * 50.0
+	x := button["solutions"].UpperLeft[0]
+	y := button["solutions"].UpperLeft[1] + 20
 
 	vector.DrawFilledRect(
 		screen,
-		390,
-		400,
+		float32(button["solutions"].UpperLeft[0]),
+		float32(button["solutions"].UpperLeft[1]),
 		float32(button["solutions"].Width),
-		h,
+		float32(button["solutions"].Height),
 		portalPurple,
 		false,
 	)
@@ -498,7 +498,7 @@ func (g *Game) DrawSolutions(screen *ebiten.Image) {
 	for _, s := range g.Building.ActiveRequest.Solutions {
 		if !s.Attempted {
 			g.Text.Draw(s.Action+" ($"+strconv.Itoa(s.Cost)+")", x, y)
-			y += 50
+			y += 60
 		}
 	}
 }

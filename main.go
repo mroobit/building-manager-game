@@ -160,7 +160,7 @@ func (g *Game) Update() error {
 				g.Building.ActiveRequest.Closed = true
 				g.Page = "request-list"
 			case "solutions":
-				i := (cursor[1] - 400) / 50
+				i := (cursor[1] - 400) / 70
 				trueIndices := g.Building.ActiveRequest.AvailableSolutionIndices()
 				if cursor[0] >= 400 && cursor[0] <= 1250 && i < len(trueIndices) {
 					trueIndex := trueIndices[i]

@@ -23,9 +23,14 @@ func (g *Game) GenerateRequest() {
 		LastOpened: 0,
 	}
 	requestPoolIndex := 0
+	c := 0
 	for blankRequest.LastOpened < blankRequest.Cooldown {
 		requestPoolIndex = rand.IntN(len(g.RequestPool))
 		blankRequest = g.RequestPool[requestPoolIndex]
+		c++
+		if c > 4 {
+			return
+		}
 	}
 	g.RequestPool[requestPoolIndex].LastOpened = 0
 	debugIndex = requestPoolIndex
