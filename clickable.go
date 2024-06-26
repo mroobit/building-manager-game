@@ -63,6 +63,23 @@ func initializeClickables() {
 	)
 	button["controls"] = cControls
 
+	// Login Buttons
+	cLoginPlay := NewClickable(
+		[2]int{460, 670},
+		[2]int{820, 710},
+		"login-play",
+		"Play Game",
+	)
+	button["login-play"] = cLoginPlay
+	cHowToPlay := NewClickable(
+		[2]int{460, 715},
+		[2]int{820, 785},
+		"how-to-play",
+		"Learn how to play",
+	)
+	button["how-to-play"] = cHowToPlay
+
+	// Portal Buttons
 	cOverview := NewClickable(
 		[2]int{sidebarButtonLeftX, sidebarButtonLeftY},
 		[2]int{sidebarButtonRightX, sidebarButtonRightY},

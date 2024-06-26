@@ -280,13 +280,17 @@ func (g *Game) DrawPortalPage(screen *ebiten.Image) {
 		// animate dots filling in password
 		// animate "loading" the portal
 
+		// Background
 		vector.DrawFilledRect(screen, 0, 0, float32(g.Width), float32(g.Height), white, false)
 		vector.DrawFilledRect(screen, 0, 0, float32(g.Width), float32(g.Height), portalPurpleSecondary, false)
+
+		// Dropshadow, then Central White Rectangle
 		vector.DrawFilledRect(screen, 398, 161, 484.0, 661.0, portalPurpleSecondary, false)
 		vector.DrawFilledRect(screen, 400, 160, 480.0, 660.0, white, false)
 		g.SetTextProfile(textProfile["portal-page-title"])
 		g.Text.Draw("Building\nManagement\nPortal", 640, 430)
 
+		// Login Boxes, Button, and Link
 		vector.DrawFilledRect(screen, 460, 530, 360.0, 40.0, portalTertiary, false)
 		g.SetTextProfile(textProfile["login-label"])
 		g.Text.Draw("Email", 460, 524)
@@ -299,12 +303,24 @@ func (g *Game) DrawPortalPage(screen *ebiten.Image) {
 		g.SetTextProfile(textProfile["login-password"])
 		g.Text.Draw("●●●●●●●●●●●●●●●●●●", 470, 620)
 
-		vector.DrawFilledRect(screen, 460, 670, 360.0, 40.0, portalPurple, false)
+		vector.DrawFilledRect(
+			screen,
+			float32(button["login-play"].UpperLeft[0]),
+			float32(button["login-play"].UpperLeft[1]),
+			float32(button["login-play"].Width),
+			float32(button["login-play"].Height),
+			portalPurple,
+			false,
+		)
 		g.SetTextProfile(textProfile["login-play"])
 		g.Text.Draw("Play Game", 640, 690)
 
 		g.SetTextProfile(textProfile["login-text-link"])
-		g.Text.Draw("Need to learn how to play?", 640, 750)
+		g.Text.Draw(
+			"Need to learn how to play?",
+			button["how-to-play"].Width/2+button["how-to-play"].UpperLeft[0],
+			button["how-to-play"].Height/2+button["how-to-play"].UpperLeft[1],
+		)
 	case "overview":
 		fallthrough
 	default:

@@ -4,7 +4,6 @@ import (
 	"embed"
 	"image/color"
 	"log"
-	"strconv"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/audio"
@@ -93,12 +92,6 @@ func (g *Game) Update() error {
 		// TODO: generate problems based on Tick/Day + some randomness
 		g.CreateProblems()
 
-		if g.Page == "login" {
-			if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
-				g.Page = "overview"
-			}
-		}
-
 		// TODO remove this, it is just for diagnostic purposes
 		if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
 			g.GenerateRequest()
@@ -115,6 +108,15 @@ func (g *Game) Update() error {
 			hover = "tenants"
 		default:
 			hover = ""
+		}
+
+		if g.Page == "login" {
+			switch {
+			case button["login-play"].Hover(cursor):
+				hover = "login-play"
+			case button["how-to-play"].Hover(cursor):
+				hover = "how-to-play"
+			}
 		}
 		if g.Page == "request-list" {
 			if button["request-details"].Hover(cursor) {
@@ -139,6 +141,11 @@ func (g *Game) Update() error {
 		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) && hover != "" {
 
 			switch hover {
+			case "login-play":
+				g.Page = "overview"
+			//case "how-to-play":
+			// TODO
+			// g.Page = "how-to-play"
 			case "overview":
 				g.Page = "overview"
 			case "request-list":
