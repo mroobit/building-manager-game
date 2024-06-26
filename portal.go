@@ -40,8 +40,8 @@ func (g *Game) DrawPortal(screen *ebiten.Image) {
 
 	g.SetTextProfile(textProfile["portal-button"])
 	g.Text.SetTarget(screen)
-	g.Text.Draw("Overview", 30, portalButton["overview"].UpperLeft[1])
-	g.Text.Draw("Requests", 30, portalButton["request-list"].UpperLeft[1])
+	g.Text.Draw("Overview", 30, button["overview"].UpperLeft[1])
+	g.Text.Draw("Requests", 30, button["request-list"].UpperLeft[1])
 
 	// TODO: improve alert circle logic
 	// TODO: improve alert circle appearance
@@ -62,8 +62,8 @@ func (g *Game) DrawPortal(screen *ebiten.Image) {
 	g.Text.Draw(strconv.Itoa(g.Building.OpenRequestCount()), 290, 180)
 
 	g.SetTextProfile(textProfile["portal-button"])
-	g.Text.Draw("Tenants", 30, portalButton["tenants"].UpperLeft[1])
-	g.Text.Draw("Financial Picture", 30, portalButton["financial-overview"].UpperLeft[1])
+	g.Text.Draw("Tenants", 30, button["tenants"].UpperLeft[1])
+	g.Text.Draw("Financial Picture", 30, button["financial-overview"].UpperLeft[1])
 
 	g.SetTextProfile(textProfile["portal-header-footer"])
 	g.Text.Draw("2406 Ebiten Ln", 1100, 30)
@@ -363,10 +363,10 @@ func (g *Game) DrawRequestList(screen *ebiten.Image) {
 
 	vector.DrawFilledRect(
 		screen,
-		float32(portalButton["request-details"].UpperLeft[0]),
-		float32(portalButton["request-details"].UpperLeft[1]),
-		float32(portalButton["request-details"].Width),
-		float32(portalButton["request-details"].Height),
+		float32(button["request-details"].UpperLeft[0]),
+		float32(button["request-details"].UpperLeft[1]),
+		float32(button["request-details"].Width),
+		float32(button["request-details"].Height),
 		portalTertiary,
 		false,
 	)
@@ -432,19 +432,19 @@ func (g *Game) DrawRequestDetails(screen *ebiten.Image) {
 func (g *Game) DrawResolveClose(screen *ebiten.Image) {
 	vector.DrawFilledRect(
 		screen,
-		float32(portalButton["try-to-resolve"].UpperLeft[0]),
-		float32(portalButton["try-to-resolve"].UpperLeft[1]),
-		float32(portalButton["try-to-resolve"].Width),
-		float32(portalButton["try-to-resolve"].Height),
+		float32(button["try-to-resolve"].UpperLeft[0]),
+		float32(button["try-to-resolve"].UpperLeft[1]),
+		float32(button["try-to-resolve"].Width),
+		float32(button["try-to-resolve"].Height),
 		portalPurple,
 		false,
 	)
 	vector.DrawFilledRect(
 		screen,
-		float32(portalButton["close-request"].UpperLeft[0]),
-		float32(portalButton["close-request"].UpperLeft[1]),
-		float32(portalButton["close-request"].Width),
-		float32(portalButton["close-request"].Height),
+		float32(button["close-request"].UpperLeft[0]),
+		float32(button["close-request"].UpperLeft[1]),
+		float32(button["close-request"].Width),
+		float32(button["close-request"].Height),
 		diffRed,
 		false,
 	)
@@ -457,14 +457,14 @@ func (g *Game) DrawResolveClose(screen *ebiten.Image) {
 func (g *Game) DrawSolutions(screen *ebiten.Image) {
 	// TODO: Draw a label over a box of solutions
 	h := float32(g.Building.ActiveRequest.AvailableSolutionsCount()+1) * 50.0
-	x := portalButton["solutions"].UpperLeft[0] + 30
-	y := portalButton["solutions"].UpperLeft[1]
+	x := button["solutions"].UpperLeft[0] + 30
+	y := button["solutions"].UpperLeft[1]
 
 	vector.DrawFilledRect(
 		screen,
 		390,
 		400,
-		float32(portalButton["solutions"].Width),
+		float32(button["solutions"].Width),
 		h,
 		portalPurple,
 		false,

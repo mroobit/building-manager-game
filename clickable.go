@@ -10,8 +10,7 @@ const (
 )
 
 var (
-	titleButton  map[string]*Clickable
-	portalButton map[string]*Clickable
+	button map[string]*Clickable
 
 	sidebarButtonLeftY  = 100
 	sidebarButtonRightY = sidebarButtonLeftY + 40
@@ -48,30 +47,29 @@ func (c *Clickable) Hover(cursor [2]int) bool {
 
 func initializeClickables() {
 	// TODO: load from json/csv/whatever later
-	titleButton = make(map[string]*Clickable)
+	button = make(map[string]*Clickable)
 	cPlay := NewClickable(
 		[2]int{100, 300},
 		[2]int{400, 360},
 		"play",
 		"Start Game",
 	)
-	titleButton["play"] = cPlay
+	button["play"] = cPlay
 	cControls := NewClickable(
 		[2]int{100, 400},
 		[2]int{400, 465},
 		"controls",
 		"Display Control Info",
 	)
-	titleButton["controls"] = cControls
+	button["controls"] = cControls
 
-	portalButton = make(map[string]*Clickable)
 	cOverview := NewClickable(
 		[2]int{sidebarButtonLeftX, sidebarButtonLeftY},
 		[2]int{sidebarButtonRightX, sidebarButtonRightY},
 		"overview",
 		"Display Portal Overview",
 	)
-	portalButton["overview"] = cOverview
+	button["overview"] = cOverview
 	sidebarButtonLeftY += sidebarHeightIncrement
 	sidebarButtonRightY += sidebarHeightIncrement
 	cRequestList := NewClickable(
@@ -80,7 +78,7 @@ func initializeClickables() {
 		"request-list",
 		"Display Open Tenant Requests",
 	)
-	portalButton["request-list"] = cRequestList
+	button["request-list"] = cRequestList
 	sidebarButtonLeftY += sidebarHeightIncrement
 	sidebarButtonRightY += sidebarHeightIncrement
 	cTenant := NewClickable(
@@ -89,7 +87,7 @@ func initializeClickables() {
 		"tenants",
 		"Display Tenant Overview",
 	)
-	portalButton["tenants"] = cTenant
+	button["tenants"] = cTenant
 	sidebarButtonLeftY += sidebarHeightIncrement
 	sidebarButtonRightY += sidebarHeightIncrement
 	cFinancial := NewClickable(
@@ -98,7 +96,7 @@ func initializeClickables() {
 		"financial-overview",
 		"Display Financial Overview",
 	)
-	portalButton["financial-overview"] = cFinancial
+	button["financial-overview"] = cFinancial
 
 	cDetails := NewClickable(
 		[2]int{int(portalSidebarWidth) + requestListXMargin, 200},
@@ -106,21 +104,21 @@ func initializeClickables() {
 		"request-details",
 		"Display Individual Tenant Request",
 	)
-	portalButton["request-details"] = cDetails
+	button["request-details"] = cDetails
 	cResolve := NewClickable(
 		[2]int{530, 400},
 		[2]int{800, 470},
 		"try-to-resolve",
 		"Display Possible Solutions",
 	)
-	portalButton["try-to-resolve"] = cResolve
+	button["try-to-resolve"] = cResolve
 	cClose := NewClickable(
 		[2]int{830, 400},
 		[2]int{1100, 470},
 		"close-request",
 		"Close Active Request",
 	)
-	portalButton["close-request"] = cClose
+	button["close-request"] = cClose
 
 	cSolutions := NewClickable(
 		[2]int{400, 430},
@@ -128,7 +126,7 @@ func initializeClickables() {
 		"solutions",
 		"Resolve Request with Selected Solution",
 	)
-	portalButton["solutions"] = cSolutions
+	button["solutions"] = cSolutions
 
 }
 
