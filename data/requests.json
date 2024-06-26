@@ -4,6 +4,7 @@
 	"description": "The bathroom sink is clogged. It takes 2 hours to drain.",
 	"location": "unit",
 	"urgent": false,
+	"cooldown": 3,
 	"solutions": [
 		{
 			"action": "Call a plumber",
@@ -51,6 +52,7 @@
 	"description": "The hot water handle on the tub has broken off. It can still be turned, but it is difficult due to the lack of a handle. Could you please put a new handle on the tub?",
 	"location": "unit",
 	"urgent": false,
+	"cooldown": 6,
 	"solutions": [
 		{
 			"action": "Replace the entire tub spout",
@@ -61,7 +63,7 @@
 			"impact": 1
 		},
 		{
-			"action": "Improvise by gluing a laser pointer in the handle's place",
+			"action": "Glue a laser pointer in the handle's place",
 			"outcome": "This fits perfectly! No one will be able to tell the difference.",
 			"cost": 0,
 			"efficacy": -1,
@@ -75,6 +77,7 @@
 	"description": "The window pane has come out of the frame and is open by about 2 inches at the widest point. Bugs and pests can easily come in.",
 	"location": "unit",
 	"urgent": true,
+	"cooldown": 4,
 	"solutions": [
 		{
 			"action": "Hire a contractor to replace the window",
@@ -115,6 +118,7 @@
 	"description": "The leftmost washing machine is broken. You can select settings and insert coins, but when you start it it just fills with water but doesn't spin.",
 	"location": "basement",
 	"urgent": false,
+	"cooldown": 7,
 	"solutions": [
 		{
 			"action": "Call HappyWash to service the machine",
@@ -147,6 +151,7 @@
 	"description": "Slugs keep crawling into my unit from under the door to the hallway.",
 	"location": "unit",
 	"urgent": true,
+	"cooldown": 2,
 	"solutions": [
 		{
 			"action": "Call pest control",
@@ -179,6 +184,7 @@
 	"description": "A golfball smashed through the window, shattering most of the pane.",
 	"location": "unit",
 	"urgent": true,
+	"cooldown": 4,
 	"solutions": [
 		{
 			"action": "Hire a contractor to replace the window pane",
@@ -219,6 +225,7 @@
 	"description": "For the last several days I've been hearing strange bustling and whistling sounds coming from next door. When I knock, the sound stops, but no one answers. It isn't a human whistling sound.",
 	"location": "unit",
 	"urgent": false,
+	"cooldown": 6,
 	"solutions": [
 		{
 			"action": "Investigate the sounds",
@@ -229,8 +236,8 @@
 			"impact": 2
 		},
 		{
-			"action": "Install a white noise machine in the hallway to dampen sound travel",
-			"outcome": "That didn't do much, but hey, you can't hear anyone when you run into them in the hallway now.",
+			"action": "Install a white noise machine in the hallway",
+			"outcome": "The sounds are still there, but hey, now you can't hear anyone when you run into them in the hallway.",
 			"cost": 180,
 			"efficacy": 3,
 			"time": 4,
@@ -251,6 +258,7 @@
 	"description": "Hello, I have lost my key and am locked out of my unit. Could you please let me back in?",
 	"location": "unit",
 	"urgent": true,
+	"cooldown": 8,
 	"solutions": [
 		{
 			"action": "Hire a locksmith to re-key the door",
@@ -291,9 +299,10 @@
 	"description": "For weeks I have been hearing strange sounds from the kitchen, like plastic mashing together, with growling and grunting and gurgling. It was happening again at 4am today and I went into the kitchen without turning the light on, and that's when I realized that the fridge is eating my food. It also explains why my groceries go so fast...",
 	"location": "unit",
 	"urgent": false,
+	"cooldown": 18,
 	"solutions": [
 		{
-			"action": "Tell the tenant to only go out to eat for a few weeks to starve the fridge",
+			"action": "Tell the tenant to go out to eat for a few weeks to starve the fridge",
 			"outcome": "The tenant is reluctant at first, but agrees after learning that their renter's insurance covers the food loss and meals out. They stop bringing groceries home and eventually the refrigerator quiets down.",
 			"cost": 0,
 			"efficacy": 6, 
@@ -309,7 +318,7 @@
 			"impact": 1
 		},
 		{
-			"action": "Try baiting the fridge with cheese on the adjacent counter", 
+			"action": "Try baiting the fridge with cheese", 
 			"outcome": "The cheese disappears by the next day, but nothing else changes.",
 			"cost": 12,
 			"efficacy": 2,
@@ -317,7 +326,7 @@
 			"impact": 0
 		},
 		{
-			"action": "Stay in the tenant's kitchen to observe the fridge until it eats again",
+			"action": "Observe the fridge until it eats again",
 			"outcome": "After 3 days of occasional low grumbles and growls emanating from the fridge, it finally happens: the plastic mashing builds up, getting louder and louder. You open the door. Half-eaten food and liquid oozes onto the floor. The fridgewhines.",
 			"cost": 0,
 			"efficacy": 4,
@@ -332,6 +341,7 @@
 	"description": "When I got home I discovered that my kitchen has no power. The refrigerator, range, and microwave are all dead, and the outlet I usually have my electric kettle plugged into also does not work.",
 	"location": "unit",
 	"urgent": true,
+	"cooldown": 15,
 	"solutions": [
 		{
 			"action": "Hire an electrician",
@@ -343,19 +353,103 @@
 		},
 		{
 			"action": "Try to fix the electrical issue yourself",
-			"outcome": "TODO",
+			"outcome": "You try replacing the outlet and it works briefly before melting the cable you plugged into it. After a day and some googling you figure out the polarity is reversed and try fixing it. It seems okay.",
 			"cost": 24,
 			"efficacy": 5,
-			"time": 5,
+			"time": 6,
 			"impact": 1
 		},
 		{
-			"action": "Plaster off the kitchen and provide the tenant with a mini-fridge and portable range",
-			"outcome": "The tenant is bewildered and tries to argue with you. You're too busy building up the plaster wall to close off the kitchen to think much about what they're saying.",
+			"action": "Plaster off the kitchen",
+			"outcome": "You provide the tenant a mini-fridge and portable range before starting your work. Bewildered, they argue with you, but you're preoccupied with building up the plaster wall and ignore them.",
 			"cost": 300,
 			"efficacy": 8,
 			"time": 8,
 			"impact": -2
 		}
+	]
+},
+{
+	"title": "Window stuck open (rain)",
+	"description": "Hi, I opened my window and can't seem to shut it. It's starting to rain, so this is kind of urgent. Thanks.",
+	"location": "unit",
+	"urgent": true,
+	"cooldown": 3,
+	"solutions": [
+		{
+			"action": "Go over to shut the window yourself",
+			"outcome": "With effort, you're able to shut the window. The apartment reeks though, and you almost want to reopen the window, just a tiny bit...",
+			"cost": 2,
+			"efficacy": 8, 
+			"time": 2,
+			"impact": 1
+		},
+		{
+			"action": "Send another tenant you think is stronger to shut the window",
+			"outcome": "You don't hear back from either tenant. It's probably fine.",
+			"cost": 0,
+			"efficacy": 5,
+			"time": 1,
+			"impact": -2
+		}
+	]
+},
+{
+	"title": "No warm water",
+	"description": "There is no warm water in my apartment, either coming from the kitchen skin or from either faucet in the bathroom.",
+	"location": "unit",
+	"urgent": true,
+	"cooldown": 6,
+	"solutions": [
+		{
+			"action": "Check the water heater", 
+			"outcome": "Looks like someone turned the upper temperature on the heater down by 30%. You turn it back up.",
+			"cost": 0,
+			"efficacy": 10, 
+			"time": 2,
+			"impact": 1
+		},
+		{
+			"action": "Suggest the tenant use an electric kettle", 
+			"outcome": "The tenant sends you an angry text message. Maybe they don't have a kettle?",
+			"cost": 0,
+			"efficacy": 0,
+			"time": 1,
+			"impact": -2
+		}
+	]
+},
+{
+	"title": "Silkworms",
+	"description": "Silkworms have been getting into my apartment! I think they're getting in through a crack in the wall. It's so gross.",
+	"location": "unit",
+	"urgent": true,
+	"cooldown": 5,
+	"solutions": [
+		{
+			"action": "Gift the tenant a potted mulberry tree for their new pets",
+			"outcome": "As you hand the tenant the mulberry tree, you explain that mulberry leaves are the main thing that silkworms eat. It is important to keep your silkworms hydrated.",
+			"cost": 120,
+			"efficacy": 5,
+			"time": 2,
+			"impact": 0
+		},
+		{
+			"action": "Plaster the crack in the wall", 
+			"outcome": "The crack in the wall turns out to be a 5-inch gap. The tenant is lucky they aren't getting bats or something. You plaster it shut as best you can.",
+			"cost": 10,
+			"efficacy": 5,
+			"time": 2,
+			"impact": 1
+		},
+		{
+			"action": "Collect the silkworms from the unit",
+			"outcome": "One by one, you pluck up the silkworms from the unit, collectin them in a small wicker basket. Some of them climb out, but you coax them back in with mulberry leaves. You thank the tenant when you leave.",
+			"cost": 5,
+			"efficacy": 5,
+			"time": 3,
+			"impact": 0
+		}
+	]
 }
 ]

@@ -15,6 +15,8 @@ type Request struct {
 	Location          string `json:"location"`
 	Tenant            *Tenant
 	Urgent            bool       `json:"urgent"`
+	Cooldown          int        `json:"cooldown"`
+	LastOpened        int        // only applies in RequestPool, decrement with day increment, check against cooldown
 	Solutions         []Solution `json:"solutions"`
 	Attempts          []int      // solutions that have been attempted
 	DaysOpen          int        // this increments regularly
@@ -77,6 +79,9 @@ func (g *Game) initializeRequestPool(fs embed.FS) {
 	}
 
 	g.RequestPool = rawRequestPool
+	for _, r := range g.RequestPool {
+		r.LastOpened = r.Cooldown
+	}
 }
 
 func (r *Request) AvailableSolutionIndices() []int {

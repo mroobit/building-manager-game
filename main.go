@@ -19,6 +19,7 @@ var (
 	hover        = ""
 	cursor       [2]int
 	rentIncrease = 3 // percentage increase at renewal
+	debugIndex   int
 
 	//go:embed audio
 	//go:embed data

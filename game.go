@@ -18,7 +18,17 @@ func (g *Game) GenerateRequest() {
 	for t.Name == "" {
 		t = g.Building.Tenants[rand.IntN(len(g.Building.Tenants))]
 	}
-	blankRequest := g.RequestPool[rand.IntN(len(g.RequestPool))]
+	blankRequest := &Request{
+		Cooldown:   1,
+		LastOpened: 0,
+	}
+	requestPoolIndex := 0
+	for blankRequest.LastOpened < blankRequest.Cooldown {
+		requestPoolIndex = rand.IntN(len(g.RequestPool))
+		blankRequest = g.RequestPool[requestPoolIndex]
+	}
+	g.RequestPool[requestPoolIndex].LastOpened = 0
+	debugIndex = requestPoolIndex
 	s := []Solution{}
 	for _, sol := range blankRequest.Solutions {
 		bs := Solution{

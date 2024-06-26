@@ -102,6 +102,12 @@ func (g *Game) AdvanceDay(t int) {
 			}
 		}
 	}
+	// increment LastOpened against the cooldown period
+	for _, r := range g.RequestPool {
+		if r.LastOpened < r.Cooldown {
+			r.LastOpened += t / 3
+		}
+	}
 	if g.Clock.Days >= 90 {
 		g.State = "monthReport"
 	}
