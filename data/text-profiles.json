@@ -232,6 +232,14 @@
 	"color": [ 30, 30, 70, 255 ]
 },
 {
+	"name": "login-text-link",
+	"font": "Liberation Sans",
+	"aligny": "YCenter",
+	"alignx": "XCenter",
+	"size": 20,
+	"color": [ 30, 30, 70, 255 ]
+},
+{
 	"name": "login-label",
 	"font": "Comfortaa Regular",
 	"aligny": "Baseline",

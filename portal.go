@@ -282,26 +282,29 @@ func (g *Game) DrawPortalPage(screen *ebiten.Image) {
 
 		vector.DrawFilledRect(screen, 0, 0, float32(g.Width), float32(g.Height), white, false)
 		vector.DrawFilledRect(screen, 0, 0, float32(g.Width), float32(g.Height), portalPurpleSecondary, false)
-		vector.DrawFilledRect(screen, 398, 181, 484.0, 581.0, portalPurpleSecondary, false)
-		vector.DrawFilledRect(screen, 400, 180, 480.0, 580.0, white, false)
+		vector.DrawFilledRect(screen, 398, 161, 484.0, 661.0, portalPurpleSecondary, false)
+		vector.DrawFilledRect(screen, 400, 160, 480.0, 660.0, white, false)
 		g.SetTextProfile(textProfile["portal-page-title"])
 		g.Text.Draw("Building\nManagement\nPortal", 640, 430)
 
 		vector.DrawFilledRect(screen, 460, 530, 360.0, 40.0, portalTertiary, false)
 		g.SetTextProfile(textProfile["login-label"])
-		g.Text.Draw("Email", 460, 528)
+		g.Text.Draw("Email", 460, 524)
 		g.SetTextProfile(textProfile["login"])
 		g.Text.Draw("manager@ebitenbldg.com", 470, 540)
 
 		vector.DrawFilledRect(screen, 460, 610, 360.0, 40.0, portalTertiary, false)
 		g.SetTextProfile(textProfile["login-label"])
-		g.Text.Draw("Password", 460, 608)
+		g.Text.Draw("Password", 460, 604)
 		g.SetTextProfile(textProfile["login-password"])
 		g.Text.Draw("●●●●●●●●●●●●●●●●●●", 470, 620)
 
-		vector.DrawFilledRect(screen, 460, 690, 360.0, 40.0, portalPurple, false)
+		vector.DrawFilledRect(screen, 460, 670, 360.0, 40.0, portalPurple, false)
 		g.SetTextProfile(textProfile["login-play"])
-		g.Text.Draw("Play Game", 640, 710)
+		g.Text.Draw("Play Game", 640, 690)
+
+		g.SetTextProfile(textProfile["login-text-link"])
+		g.Text.Draw("Need to learn how to play?", 640, 750)
 	case "overview":
 		fallthrough
 	default:
