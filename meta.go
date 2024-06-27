@@ -1,6 +1,8 @@
 package main
 
 import (
+	"strconv"
+
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/vector"
 )
@@ -103,12 +105,13 @@ func (g *Game) DrawMeta(screen *ebiten.Image) {
 		g.Text.Draw("x", g.Width-40, 40)
 	case "about":
 		// TODO
-		g.SetTextProfile(textProfile["portal-page-title"])
+		g.SetTextProfile(textProfile["about"])
 		g.Text.Draw(
-			wrapText("This game was created by Shannon Dybvig for the Ebitengine Game Jam 2024 (theme: Building).\n \nDesign, writing, art, audio, and programming are all by Shannon Dybvig.\n \nEbitengine is a 2D game engine created by Hajime Hoshi.", 30),
+			wrapText("This game was created by Shannon Dybvig for the Ebitengine Game Jam 2024\nThe theme was \"Building.\"\n \nProgramming, design, writing, art, and audio are all by Shannon Dybvig.\n \nEbitengine is a 2D game engine created by Hajime Hoshi.", 30),
 			g.Width/2,
 			g.Height/2,
 		)
+		g.SetTextProfile(textProfile["portal-page-title"])
 		g.Text.Draw("x", g.Width-40, 40)
 
 	case "settings":
@@ -117,7 +120,25 @@ func (g *Game) DrawMeta(screen *ebiten.Image) {
 		g.Text.Draw("This is the Settings Page", 400, 400)
 		g.Text.Draw("x", g.Width-40, 40)
 	case "ending":
-		// TODO
+		g.SetTextProfile(textProfile["ending"])
+		if g.Building.Money > 0 {
+			g.Text.Draw(
+				wrapText("After amassing $"+strconv.Itoa(g.Building.Money)+" during your time managing the Ebiten apartment, you decide it's time to retire to a remote island where you can enjoy your riches, lounging on a beach and taking in the sounds of the ocean.", 40),
+				g.Width/2,
+				g.Height/2,
+			)
+		} else {
+			g.Text.Draw(
+				wrapText("After depleting your bank account and going into $"+strconv.Itoa(g.Building.CreditBalance)+" worth of debt during your time managing the Ebiten apartment, you decide it's time to cut your losses and sell the building.", 40),
+				g.Width/2,
+				g.Height/2,
+			)
+		}
+		g.SetTextProfile(textProfile["portal-page-title"])
+		g.Text.Draw("x", g.Width-40, 40)
+		g.Text.Draw("The End", g.Width/2, g.Height-160)
+		g.SetTextProfile(textProfile["about"])
+		g.Text.Draw("Play Again?", g.Width/2, g.Height-100)
 	}
 }
 

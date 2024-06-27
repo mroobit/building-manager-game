@@ -100,7 +100,7 @@ func (g *Game) Update() error {
 				hover = ""
 			}
 		}
-		if g.Page == "settings" || g.Page == "about" || g.Page == "how-to-play" {
+		if g.Page == "settings" || g.Page == "about" || g.Page == "how-to-play" || g.Page == "ending" {
 			if button["upper-x"].Hover(cursor) {
 				hover = "upper-x"
 			}
@@ -133,6 +133,10 @@ func (g *Game) Update() error {
 		// TODO remove this, it is just for diagnostic purposes
 		if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
 			g.GenerateRequest()
+		}
+		if inpututil.IsKeyJustPressed(ebiten.KeySpace) {
+			g.Page = "ending"
+			g.State = "meta"
 		}
 
 		switch {

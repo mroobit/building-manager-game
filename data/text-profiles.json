@@ -264,11 +264,19 @@
 	"color": [ 10, 10, 10, 255 ]
 },
 {
+	"name": "ending",
+	"font": "Comfortaa Regular",
+	"aligny": "YCenter",
+	"alignx": "XCenter",
+	"size": 32,
+	"color": [ 10, 10, 10, 255 ]
+},
+{
 	"name": "about",
 	"font": "Comfortaa Regular",
 	"aligny": "YCenter",
 	"alignx": "XCenter",
-	"size": 24,
+	"size": 28,
 	"color": [ 10, 10, 10, 255 ]
 }
 ]
