@@ -90,14 +90,32 @@ func (g *Game) DrawMeta(screen *ebiten.Image) {
 		// TODO
 		g.DrawPortal(screen)
 		vector.DrawFilledRect(screen, 0, 0, float32(g.Width), float32(g.Height), whiteScreen, false)
+		vector.DrawFilledRect(
+			screen,
+			float32(button["upper-x"].UpperLeft[0]),
+			float32(button["upper-x"].UpperLeft[1]),
+			float32(button["upper-x"].Width),
+			float32(button["upper-x"].Height),
+			white,
+			false,
+		)
+		g.SetTextProfile(textProfile["portal-page-title"])
+		g.Text.Draw("x", g.Width-40, 40)
 	case "about":
 		// TODO
 		g.SetTextProfile(textProfile["portal-page-title"])
-		g.Text.Draw("This is the About Page", 400, 400)
+		g.Text.Draw(
+			wrapText("This game was created by Shannon Dybvig for the Ebitengine Game Jam 2024 (theme: Building).\n \nDesign, writing, art, audio, and programming are all by Shannon Dybvig.\n \nEbitengine is a 2D game engine created by Hajime Hoshi.", 30),
+			g.Width/2,
+			g.Height/2,
+		)
+		g.Text.Draw("x", g.Width-40, 40)
+
 	case "settings":
 		// TODO
 		g.SetTextProfile(textProfile["portal-page-title"])
 		g.Text.Draw("This is the Settings Page", 400, 400)
+		g.Text.Draw("x", g.Width-40, 40)
 	case "ending":
 		// TODO
 	}

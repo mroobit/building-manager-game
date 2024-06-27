@@ -92,6 +92,13 @@ func initializeClickables() {
 		"About the game",
 	)
 	button["about"] = cAbout
+	cUpperX := NewClickable(
+		[2]int{1220, 20},
+		[2]int{1260, 60},
+		"upper-x",
+		"Return to previous screen",
+	)
+	button["upper-x"] = cUpperX
 
 	// Portal Buttons
 	cOverview := NewClickable(

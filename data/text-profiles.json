@@ -262,5 +262,13 @@
 	"alignx": "XCenter",
 	"size": 36,
 	"color": [ 10, 10, 10, 255 ]
+},
+{
+	"name": "about",
+	"font": "Comfortaa Regular",
+	"aligny": "YCenter",
+	"alignx": "XCenter",
+	"size": 24,
+	"color": [ 10, 10, 10, 255 ]
 }
 ]

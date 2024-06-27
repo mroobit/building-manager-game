@@ -96,6 +96,13 @@ func (g *Game) Update() error {
 				hover = "settings"
 			case button["about"].Hover(cursor):
 				hover = "about"
+			default:
+				hover = ""
+			}
+		}
+		if g.Page == "settings" || g.Page == "about" || g.Page == "how-to-play" {
+			if button["upper-x"].Hover(cursor) {
+				hover = "upper-x"
 			}
 		}
 		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) && hover != "" {
@@ -112,6 +119,8 @@ func (g *Game) Update() error {
 			case "about":
 				// TODO
 				g.Page = "about"
+			case "upper-x":
+				g.Page = "login"
 			}
 		}
 	} else if g.State == "play" {
