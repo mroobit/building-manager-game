@@ -78,6 +78,20 @@ func initializeClickables() {
 		"Learn how to play",
 	)
 	button["how-to-play"] = cHowToPlay
+	cSettings := NewClickable(
+		[2]int{480, 850},
+		[2]int{620, 900},
+		"settings",
+		"Adjust settings",
+	)
+	button["settings"] = cSettings
+	cAbout := NewClickable(
+		[2]int{660, 850},
+		[2]int{800, 900},
+		"about",
+		"About the game",
+	)
+	button["about"] = cAbout
 
 	// Portal Buttons
 	cOverview := NewClickable(
@@ -138,7 +152,7 @@ func initializeClickables() {
 	button["close-request"] = cClose
 
 	cSolutions := NewClickable(
-		[2]int{400, 430},
+		[2]int{400, 480},
 		[2]int{1250, 850},
 		"solutions",
 		"Resolve Request with Selected Solution",

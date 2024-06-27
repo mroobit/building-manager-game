@@ -81,9 +81,38 @@ func (g *Game) Update() error {
 		// g.AudioPlayer = auntJosLetter
 		// g.AudioPlayer.Play()
 		if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
-			g.State = "play"
+			g.State = "meta"
 			g.Page = "login"
 			g.AudioPlayer.Pause()
+		}
+	} else if g.State == "meta" {
+		if g.Page == "login" {
+			switch {
+			case button["login-play"].Hover(cursor):
+				hover = "login-play"
+			case button["how-to-play"].Hover(cursor):
+				hover = "how-to-play"
+			case button["settings"].Hover(cursor):
+				hover = "settings"
+			case button["about"].Hover(cursor):
+				hover = "about"
+			}
+		}
+		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) && hover != "" {
+			switch hover {
+			case "login-play":
+				g.Page = "overview"
+				g.State = "play"
+			case "how-to-play":
+				// TODO
+				g.Page = "how-to-play"
+			case "settings":
+				// TODO
+				g.Page = "settings"
+			case "about":
+				// TODO
+				g.Page = "about"
+			}
 		}
 	} else if g.State == "play" {
 		// TODO: Make incrementing of months a function of tasks done(weight) + ticks
@@ -110,14 +139,6 @@ func (g *Game) Update() error {
 			hover = ""
 		}
 
-		if g.Page == "login" {
-			switch {
-			case button["login-play"].Hover(cursor):
-				hover = "login-play"
-			case button["how-to-play"].Hover(cursor):
-				hover = "how-to-play"
-			}
-		}
 		if g.Page == "request-list" {
 			if button["request-details"].Hover(cursor) {
 				hover = "request-details"
@@ -141,11 +162,6 @@ func (g *Game) Update() error {
 		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) && hover != "" {
 
 			switch hover {
-			case "login-play":
-				g.Page = "overview"
-			//case "how-to-play":
-			// TODO
-			// g.Page = "how-to-play"
 			case "overview":
 				g.Page = "overview"
 			case "request-list":
@@ -160,9 +176,9 @@ func (g *Game) Update() error {
 				g.Building.ActiveRequest.Closed = true
 				g.Page = "request-list"
 			case "solutions":
-				i := (cursor[1] - 400) / 70
+				i := (cursor[1] - button["solutions"].UpperLeft[1] + 20) / 70
 				trueIndices := g.Building.ActiveRequest.AvailableSolutionIndices()
-				if cursor[0] >= 400 && cursor[0] <= 1250 && i < len(trueIndices) {
+				if cursor[0] >= button["solutions"].UpperLeft[0] && cursor[0] <= button["solutions"].LowerRight[0] && i < len(trueIndices) {
 					trueIndex := trueIndices[i]
 					//g.Building.ActiveRequest.Solutions[trueIndex].Attempted = true
 					cost, time := g.Building.ActiveRequest.Resolve(trueIndex)
@@ -226,6 +242,8 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	if g.State == "load" {
 	} else if g.State == "story" {
 		g.IntroStory(screen)
+	} else if g.State == "meta" {
+		g.DrawMeta(screen)
 	} else if g.State == "play" {
 		g.DrawPortal(screen)
 		g.DrawPortalPage(screen)

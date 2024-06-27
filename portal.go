@@ -23,8 +23,10 @@ var (
 	portalPurpleSecondary = color.RGBA{70, 30, 100, 95}
 	portalTertiary        = color.RGBA{200, 200, 200, 255}
 	white                 = color.RGBA{255, 255, 255, 255}
+	whiteScreen           = color.RGBA{75, 75, 75, 95}
 	black                 = color.RGBA{30, 30, 50, 235}
 	transparentPurple     = color.RGBA{40, 0, 60, 30}
+	rowColor              = []color.Color{black, portalPurpleSecondary}
 
 	alertGreen  = color.RGBA{20, 200, 20, 205}
 	alertYellow = color.RGBA{255, 190, 75, 205}
@@ -272,63 +274,6 @@ func (g *Game) DrawPortalPage(screen *ebiten.Image) {
 				rectY = float32(titleY + 50)
 			}
 		}
-	case "login":
-		// TODO: quick little login screen cuteness
-		// rectangle background
-		// login rectangle
-		// animate username getting filled in with "manager"
-		// include audio for typing on both of these animations!!
-		// animate dots filling in password
-		// animate "loading" the portal
-
-		// Background
-		vector.DrawFilledRect(screen, 0, 0, float32(g.Width), float32(g.Height), white, false)
-		vector.DrawFilledRect(screen, 0, 0, float32(g.Width), float32(g.Height), portalPurpleSecondary, false)
-
-		// Dropshadow, then Central White Rectangle
-		vector.DrawFilledRect(screen, 398, 161, 484.0, 661.0, portalPurpleSecondary, false)
-		vector.DrawFilledRect(screen, 400, 160, 480.0, 660.0, white, false)
-		g.SetTextProfile(textProfile["portal-page-title"])
-		g.Text.Draw("Building\nManagement\nPortal", 640, 430)
-
-		// Login Boxes, Button, and Link
-		vector.DrawFilledRect(screen, 460, 530, 360.0, 40.0, portalTertiary, false)
-		g.SetTextProfile(textProfile["login-label"])
-		g.Text.Draw("Email", 460, 524)
-		g.SetTextProfile(textProfile["login"])
-		g.Text.Draw("manager@ebitenbldg.com", 470, 540)
-
-		vector.DrawFilledRect(screen, 460, 610, 360.0, 40.0, portalTertiary, false)
-		g.SetTextProfile(textProfile["login-label"])
-		g.Text.Draw("Password", 460, 604)
-		g.SetTextProfile(textProfile["login-password"])
-		g.Text.Draw("●●●●●●●●●●●●●●●●●●", 470, 620)
-
-		vector.DrawFilledRect(
-			screen,
-			float32(button["login-play"].UpperLeft[0]),
-			float32(button["login-play"].UpperLeft[1]),
-			float32(button["login-play"].Width),
-			float32(button["login-play"].Height),
-			portalPurple,
-			false,
-		)
-		g.SetTextProfile(textProfile["login-play"])
-		g.Text.Draw("Play Game", 640, 690)
-
-		g.SetTextProfile(textProfile["login-text-link"])
-		g.Text.Draw(
-			"Need to learn how to play?",
-			button["how-to-play"].Width/2+button["how-to-play"].UpperLeft[0],
-			button["how-to-play"].Height/2+button["how-to-play"].UpperLeft[1],
-		)
-
-		// Below-box buttons
-		g.SetTextProfile(textProfile["login-lower-button"])
-		vector.DrawFilledRect(screen, 480, 850, 140, 50, black, false)
-		g.Text.Draw("Settings", 480+70, 850+25)
-		vector.DrawFilledRect(screen, 660, 850, 140, 50, black, false)
-		g.Text.Draw("About", 660+70, 850+25)
 	case "overview":
 		fallthrough
 	default:
@@ -481,24 +426,29 @@ func (g *Game) DrawResolveClose(screen *ebiten.Image) {
 func (g *Game) DrawSolutions(screen *ebiten.Image) {
 	// TODO: Draw a label over a box of solutions
 	// h := float32(g.Building.ActiveRequest.AvailableSolutionsCount()) * 50.0
-	x := button["solutions"].UpperLeft[0]
-	y := button["solutions"].UpperLeft[1] + 20
+	x := button["solutions"].UpperLeft[0] + 10
+	y := button["solutions"].UpperLeft[1] + 30
+	solutionSpacing := 60
 
-	vector.DrawFilledRect(
-		screen,
-		float32(button["solutions"].UpperLeft[0]),
-		float32(button["solutions"].UpperLeft[1]),
-		float32(button["solutions"].Width),
-		float32(button["solutions"].Height),
-		portalPurple,
-		false,
-	)
 	g.SetTextProfile(textProfile["request-solutions"])
 
+	spaceY := 0
+	rowI := 0
 	for _, s := range g.Building.ActiveRequest.Solutions {
 		if !s.Attempted {
+			vector.DrawFilledRect(
+				screen,
+				float32(button["solutions"].UpperLeft[0]),
+				float32(button["solutions"].UpperLeft[1]+spaceY),
+				float32(button["solutions"].Width),
+				60.0,
+				rowColor[rowI],
+				false,
+			)
 			g.Text.Draw(s.Action+" ($"+strconv.Itoa(s.Cost)+")", x, y)
-			y += 60
+			y += solutionSpacing
+			spaceY += solutionSpacing
+			rowI = (rowI + 1) % 2
 		}
 	}
 }

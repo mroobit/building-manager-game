@@ -34,7 +34,7 @@
 {
 	"name": "request-solutions",
 	"font": "Liberation Sans",
-	"aligny": "Top",
+	"aligny": "YCenter",
 	"alignx": "Left",
 	"size": 24,
 	"color": [ 10, 10, 10, 255 ]

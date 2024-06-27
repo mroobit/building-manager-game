@@ -1,6 +1,8 @@
 package main
 
-import "math/rand/v2"
+import (
+	"math/rand/v2"
+)
 
 func (g *Game) CreateProblems() {
 	// Problems arise as a function of time with some randomness
