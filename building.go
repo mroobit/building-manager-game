@@ -1,12 +1,15 @@
 package main
 
 import (
+	"fmt"
+	"math/rand/v2"
+	"strconv"
+
 	"github.com/google/uuid"
 )
 
 var (
-	inspectionCycle     = 12 // frequency of inspections in months
-	monthlyBuildingCost = 1000
+	inspectionCycle = 12 // frequency of inspections in months
 )
 
 type Building struct {
@@ -14,6 +17,7 @@ type Building struct {
 	Money             int
 	CreditBalance     int
 	Reputation        int
+	BaseRent          int
 	Tenants           []*Tenant
 	Requests          []*Request
 	RequestMap        map[uuid.UUID]*Request
@@ -26,14 +30,21 @@ type Building struct {
 func (g *Game) initializeBuilding() {
 	r := make([]*Request, 0, 30)
 	m := make(map[uuid.UUID]*Request)
+	t := make([]*Tenant, 10, 10)
+
+	initialMoney := 10 * (rand.IntN(50) + 30)
+	initialReputation := rand.IntN(4) + 4
+	initialFixedCosts := 10 * (rand.IntN(50) + 100)
+	baseRent := 10 * (rand.IntN(40) + 40)
 
 	g.Building = &Building{
-		Money:      1000,
-		Reputation: 7,
-		Tenants:    tenants,
+		Money:      initialMoney,
+		Reputation: initialReputation,
+		BaseRent:   baseRent,
+		Tenants:    t,
 		Requests:   r,
 		RequestMap: m,
-		FixedCosts: monthlyBuildingCost,
+		FixedCosts: initialFixedCosts,
 		Inspection: 10,
 	}
 }
@@ -72,10 +83,13 @@ func (b *Building) OpenIndices() []int {
 func (b *Building) Vacancies() int {
 	count := 0
 	for _, t := range b.Tenants {
-		if t.Name != "" {
+		fmt.Println("Tenant - name, unit: " + t.Name + ", " + t.Unit)
+		if t.Name == "" {
+			fmt.Println("Name not empty!")
 			count += 1
 		}
 	}
+	fmt.Println("Count: " + strconv.Itoa(count))
 	return count
 }
 

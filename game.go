@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"math/rand/v2"
 )
 
@@ -13,12 +14,15 @@ func (g *Game) CreateProblems() {
 }
 
 func (g *Game) GenerateRequest() {
+	fmt.Println("Attempting to generate request")
 	if g.Building.Vacancies() == len(g.Building.Tenants) {
+		fmt.Println("Empty building")
 		return
 	}
-	t := NewTenant("", "", 0, 0)
+	t := NewTenant("", "", 0, 0, 0)
 	for t.Name == "" {
 		t = g.Building.Tenants[rand.IntN(len(g.Building.Tenants))]
+		fmt.Println("Attempting to assign tenant to request")
 	}
 	blankRequest := &Request{
 		Cooldown:   1,

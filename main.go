@@ -53,6 +53,7 @@ type Game struct {
 	Page        string
 	Building    *Building
 	RequestPool []*Request
+	TenantPool  []*Tenant
 	Text        *etxt.Renderer
 	Clock       *Clock
 	AudioPlayer *audio.Player
@@ -67,9 +68,10 @@ func (g *Game) Update() error {
 
 	if g.State == "load" {
 		initializeClickables()
-		initializeTenants(tenants)
 		g.initializeClock()
 		g.initializeBuilding()
+		g.initializeTenantPool(FileSystem)
+		g.initializeTenants()
 		g.initializeRequestPool(FileSystem)
 		g.ConfigureTextRenderer()
 		g.ConfigureAudio()
