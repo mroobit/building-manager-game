@@ -36,6 +36,7 @@ func (g *Game) IncrementMonth() {
 		g.Clock.Recurring[key] = update
 	}
 	g.ProcessPayments()
+	g.Building.DecrementLeases()
 	g.Clock.CheckEvents()
 	g.Clock.Days = 0
 	g.Clock.Tick = 0
