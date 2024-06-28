@@ -419,8 +419,16 @@ func (g *Game) DrawResolveClose(screen *ebiten.Image) {
 	)
 
 	g.SetTextProfile(textProfile["request-resolve-close"])
-	g.Text.Draw("Try to Resolve", 665, 435)
-	g.Text.Draw("Close Request", 965, 435)
+	g.Text.Draw(
+		"Try to Resolve",
+		button["try-to-resolve"].Width/2+button["try-to-resolve"].UpperLeft[0],
+		button["try-to-resolve"].Height/2+button["try-to-resolve"].UpperLeft[1],
+	)
+	g.Text.Draw(
+		"Close Request",
+		button["close-request"].Width/2+button["close-request"].UpperLeft[0],
+		button["close-request"].Height/2+button["close-request"].UpperLeft[1],
+	)
 }
 
 func (g *Game) DrawSolutions(screen *ebiten.Image) {

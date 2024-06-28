@@ -13,7 +13,7 @@ func (g *Game) CreateProblems() {
 }
 
 func (g *Game) GenerateRequest() {
-	if g.Building.Vacancies() == len(g.Building.Tenants) {
+	if g.Building.Vacancies() == len(g.Building.Tenants) || len(g.Building.Requests) == 16 {
 		return
 	}
 	t := NewTenant("", "", 0, 0, 0)

@@ -144,15 +144,15 @@ func initializeClickables() {
 	)
 	button["request-details"] = cDetails
 	cResolve := NewClickable(
-		[2]int{530, 400},
-		[2]int{800, 470},
+		[2]int{530, 500},
+		[2]int{800, 570},
 		"try-to-resolve",
 		"Display Possible Solutions",
 	)
 	button["try-to-resolve"] = cResolve
 	cClose := NewClickable(
-		[2]int{830, 400},
-		[2]int{1100, 470},
+		[2]int{830, 500},
+		[2]int{1100, 570},
 		"close-request",
 		"Close Active Request",
 	)
