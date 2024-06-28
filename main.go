@@ -87,6 +87,11 @@ func (g *Game) Update() error {
 			g.Page = "login"
 			g.AudioPlayer.Pause()
 		}
+		if button["continue"].Hover(cursor) && inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
+			g.State = "meta"
+			g.Page = "login"
+			g.AudioPlayer.Pause()
+		}
 	} else if g.State == "meta" {
 		if g.Page == "login" {
 			switch {
@@ -175,7 +180,7 @@ func (g *Game) Update() error {
 			hover = "solutions"
 		}
 		if g.Page == "resolution-outcome" {
-			if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
+			if button["continue"].Hover(cursor) && inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 				g.Page = "request-list"
 			}
 		}

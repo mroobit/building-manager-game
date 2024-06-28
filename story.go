@@ -17,7 +17,6 @@ var (
 
 func (g *Game) IntroStory(screen *ebiten.Image) {
 	// TODO: display building hand-over "paperwork" declaring Number of Tenants, etc
-	// TODO: display "Skip" button
 
 	vector.DrawFilledRect(screen, 0, 0, 1280.0, 980.0, letterBackground, false)
 	vector.DrawFilledRect(screen, 40, 40, 1200.0, 880.0, white, false)
@@ -25,6 +24,8 @@ func (g *Game) IntroStory(screen *ebiten.Image) {
 	g.SetTextProfile(textProfile["aunt-jos-letter"])
 	g.Text.SetTarget(screen)
 	g.Text.Draw(storyText, 90, 55)
+
+	g.DrawContinueButton(screen, "continue")
 }
 
 func loadLetter(fs embed.FS) {

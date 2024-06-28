@@ -166,7 +166,14 @@ func initializeClickables() {
 	)
 	button["solutions"] = cSolutions
 
-	// General "back" button
+	// General "continue" and "back" buttons
+	cContinue := NewClickable(
+		[2]int{460, 795},
+		[2]int{820, 865},
+		"continue",
+		"Continue to next screen",
+	)
+	button["continue"] = cContinue
 	cBack := NewClickable(
 		[2]int{460, 715},
 		[2]int{820, 800},

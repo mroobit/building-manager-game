@@ -477,6 +477,8 @@ func (g *Game) DrawOutcome(screen *ebiten.Image) {
 
 	g.SetTextProfile(textProfile["portal-calendar"])
 	g.Text.Draw(wrapText(outcome, 30), g.Width/2, g.Height/2)
+
+	g.DrawContinueButton(screen, "continue")
 }
 
 func wrapText(s string, length int) string {

@@ -186,3 +186,21 @@ func (g *Game) DrawBackButton(screen *ebiten.Image, buttonText string) {
 		button["back"].Height/2+button["back"].UpperLeft[1],
 	)
 }
+
+func (g *Game) DrawContinueButton(screen *ebiten.Image, buttonText string) {
+	vector.DrawFilledRect(
+		screen,
+		float32(button["continue"].UpperLeft[0]),
+		float32(button["continue"].UpperLeft[1]),
+		float32(button["continue"].Width),
+		float32(button["continue"].Height),
+		portalPurpleSecondary,
+		false,
+	)
+	g.SetTextProfile(textProfile["portal-page-title"])
+	g.Text.Draw(
+		buttonText,
+		button["continue"].Width/2+button["continue"].UpperLeft[0],
+		button["continue"].Height/2+button["continue"].UpperLeft[1],
+	)
+}
