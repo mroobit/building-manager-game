@@ -5,13 +5,10 @@ import (
 	"log"
 
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/hajimehoshi/ebiten/v2/audio"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 	"github.com/hajimehoshi/ebiten/v2/vector"
 	"github.com/tinne26/etxt"
 )
-
-const SampleRate = 44100
 
 var (
 	hover        = ""
@@ -55,7 +52,6 @@ type Game struct {
 	TenantPool  []*Tenant
 	Text        *etxt.Renderer
 	Clock       *Clock
-	AudioPlayer *audio.Player
 }
 
 func (g *Game) Layout(outsideWidth int, outsideHeight int) (screenWidth int, screenHeight int) {
@@ -73,24 +69,24 @@ func (g *Game) Update() error {
 		g.initializeTenants()
 		g.initializeRequestPool(FileSystem)
 		g.ConfigureTextRenderer()
-		g.ConfigureAudio()
 		loadLetter(FileSystem)
 		g.CreateProblems()
 		g.State = "title"
 	} else if g.State == "story" {
-		//g.AudioPlayer = auntJosLetter
-		g.AudioPlayer.Play()
+		auntJosLetter.Play()
 		if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
 			g.State = "meta"
 			g.Page = "login"
-			g.AudioPlayer.Pause()
+			auntJosLetter.Pause()
 		}
 		if button["continue"].Hover(cursor) && inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 			g.State = "meta"
 			g.Page = "login"
-			g.AudioPlayer.Pause()
+			auntJosLetter.Pause()
 		}
 	} else if g.State == "meta" {
+		loop0.Play()
+
 		if g.Page == "login" {
 			switch {
 			case button["login-play"].Hover(cursor):
@@ -118,6 +114,7 @@ func (g *Game) Update() error {
 			case "login-play":
 				g.Page = "overview"
 				g.State = "play"
+				loop0.Pause()
 			case "how-to-play":
 				g.Page = "how-to-play"
 			case "settings":
@@ -131,6 +128,8 @@ func (g *Game) Update() error {
 			}
 		}
 	} else if g.State == "play" {
+		loop1.Play()
+		loop2.Play()
 		// TODO: Make incrementing of months a function of tasks done(weight) + ticks
 		g.Clock.Tick += 1
 		g.AdvanceDayByTicks()
@@ -138,15 +137,11 @@ func (g *Game) Update() error {
 		g.CreateProblems()
 
 		// TODO remove this, it is just for diagnostic purposes
-		if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
-			g.GenerateRequest()
-		}
 		if inpututil.IsKeyJustPressed(ebiten.KeySpace) {
+			loop1.Pause()
+			loop2.Pause()
 			g.Page = "ending"
 			g.State = "meta"
-		}
-		if inpututil.IsKeyJustPressed(ebiten.KeyH) {
-			g.Clock.Days = 50
 		}
 
 		switch {

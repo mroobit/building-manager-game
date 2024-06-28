@@ -15,6 +15,8 @@ import (
 	"github.com/tinne26/etxt"
 )
 
+const SampleRate = 44100
+
 var (
 	fonts           *etxt.FontLibrary
 	titleBackground *ebiten.Image
@@ -24,14 +26,23 @@ var (
 
 	background  map[string]*ebiten.Image
 	textProfile map[string]*TextProfile
+
+	audioContext = audio.NewContext(SampleRate)
+
+	auntJosLetter *audio.Player
+	loop0         *audio.Player
+	loop1         *audio.Player
+	loop2         *audio.Player
+
+	voiceVolume = 0.6
+	musicVolume = 0.75
 )
 
 func loadAssets() {
 	loadImages()
 	loadFonts()
 	loadTextProfiles()
-	// TODO
-	// loadSounds()
+	loadAudio()
 }
 
 func loadImages() {
@@ -132,14 +143,14 @@ func loadTextProfiles() {
 
 func loadAudio() {
 	// TODO: load each audio file into its own audioPlayer
-	// auntJosLetter := loadAudioPlayer("audio/aunt-jos-letter.ogg")
-	// yuck0 := loadAudioPlayer("audio/yuck0.ogg")
-	// yuck1 := loadAudioPlayer("audio/yuck1.ogg")
-	// yuck2 := loadAudioPlayer("audio/yuck2.ogg")
-	// yuck := []*audio.Player{yuck0, yuck1, yuck2}
+	auntJosLetter = loadAudioPlayer("audio/aunt-jos-letter.ogg", "single-play")
+	loop0 = loadAudioPlayer("audio/loop-0.ogg", "loop")
+	loop1 = loadAudioPlayer("audio/loop-1.ogg", "loop")
+	loop2 = loadAudioPlayer("audio/loop-2.ogg", "loop")
+
 }
 
-func loadAudioPlayer(path string) *audio.Player {
+func loadAudioPlayer(path string, pType string) *audio.Player {
 	audioRaw, err := FileSystem.ReadFile(path)
 	if err != nil {
 		log.Fatalf("Error opening file %s: %v\n", path, err)
@@ -148,15 +159,21 @@ func loadAudioPlayer(path string) *audio.Player {
 	if err != nil {
 		log.Fatalf("Error creating audio stream for %s: %v\n", path, err)
 	}
-	player, err := audio.CurrentContext().NewPlayer(audioBytes)
-	if err != nil {
-		log.Fatalf("Error creating new audio player for %s: %v\n", path, err)
-	}
-	return player
-}
+	if pType == "single-play" {
+		player, err := audio.CurrentContext().NewPlayer(audioBytes)
+		if err != nil {
+			log.Fatalf("Error creating new audio player for %s: %v\n", path, err)
+		}
+		player.SetVolume(voiceVolume)
+		return player
+	} else {
+		infiniteReader := audio.NewInfiniteLoop(audioBytes, audioBytes.Length())
+		player, err := audioContext.NewPlayer(infiniteReader)
+		if err != nil {
+			log.Fatalf("Error while creating infinite player: %s: %v\n", path, err)
+		}
+		player.SetVolume(musicVolume)
+		return player
 
-func (g *Game) ConfigureAudio() {
-	_ = audio.NewContext(SampleRate)
-	auntJosLetter := loadAudioPlayer("audio/aunt-jos-letter.ogg")
-	g.AudioPlayer = auntJosLetter
+	}
 }
