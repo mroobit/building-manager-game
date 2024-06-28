@@ -166,6 +166,15 @@ func initializeClickables() {
 	)
 	button["solutions"] = cSolutions
 
+	// General "back" button
+	cBack := NewClickable(
+		[2]int{460, 715},
+		[2]int{820, 800},
+		"back",
+		"Return to previous screen",
+	)
+	button["back"] = cBack
+
 }
 
 func (c *Clickable) DrawHoverEffect(screen ebiten.Image) {

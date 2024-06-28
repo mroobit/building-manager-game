@@ -71,18 +71,27 @@ func (g *Game) DrawMonthEndReport(screen *ebiten.Image) {
 	g.Text.Draw(wrapText("You collected $"+strconv.Itoa(g.Building.LastMonth.RentCollected)+" from "+strconv.Itoa(g.Building.LastMonth.PayingCount)+" tenants", 50), g.Width/2, y)
 	y += yIncr
 	g.Text.Draw(wrapText("You paid $"+strconv.Itoa(g.Building.LastMonth.CCPayment)+" off on your credit card and have $"+strconv.Itoa(g.Building.Money)+" in your building bank account", 50), g.Width/2, y)
-
-	// TODO: either IncrementMonth() will have to come before this and output numbers
-	// or it will have to be broken apart so that non-payment of rent can be mentioned
-
-	//	g.Text.Draw("You collected "+ strconv.Itoa(
-	//
-	// include
-	// - number of requests addressed
-	// - expenditures
-	// - rent collected (from how many tenants of how many occupied units)
-	// - current balance
-	// - number of vacancies, move-ins, move-outs // not currently tracked
+	y += yIncr
+	g.Text.Draw("There are "+strconv.Itoa(g.Building.Vacancies())+" empty units", g.Width/2, y)
+	y += yIncr
+	if g.Building.LastMonth.MoveOuts > 0 {
+		y += yIncr
+		if g.Building.LastMonth.MoveOuts == 1 {
+			g.Text.Draw(strconv.Itoa(g.Building.LastMonth.MoveOuts)+" tenant moved out", g.Width/2, y)
+		} else {
+			g.Text.Draw(strconv.Itoa(g.Building.LastMonth.MoveOuts)+" tenants moved out", g.Width/2, y)
+		}
+	}
+	if g.Building.LastMonth.Renewals > 0 {
+		y += yIncr
+		if g.Building.LastMonth.Renewals == 1 {
+			g.Text.Draw(strconv.Itoa(g.Building.LastMonth.MoveOuts)+" tenant renewed their lease", g.Width/2, y)
+		} else {
+			g.Text.Draw(strconv.Itoa(g.Building.LastMonth.MoveOuts)+" tenants renewed their leases", g.Width/2, y)
+		}
+	}
+	g.DrawBackButton(screen, "okay")
+	// TODO: include
 	// - any emergent events (inspections, etc) // not currently tracked
 	// - building reputation increase/decrease, if any // delta not currently tracked
 }

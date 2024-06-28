@@ -26,7 +26,7 @@ var (
 	whiteScreen           = color.RGBA{75, 75, 75, 95}
 	black                 = color.RGBA{30, 30, 50, 235}
 	transparentPurple     = color.RGBA{40, 0, 60, 30}
-	rowColor              = []color.Color{black, portalPurpleSecondary}
+	rowColor              = []color.Color{portalPurple, portalPurpleSecondary}
 
 	alertGreen  = color.RGBA{20, 200, 20, 205}
 	alertYellow = color.RGBA{255, 190, 75, 205}
@@ -425,7 +425,6 @@ func (g *Game) DrawResolveClose(screen *ebiten.Image) {
 
 func (g *Game) DrawSolutions(screen *ebiten.Image) {
 	// TODO: Draw a label over a box of solutions
-	// h := float32(g.Building.ActiveRequest.AvailableSolutionsCount()) * 50.0
 	x := button["solutions"].UpperLeft[0] + 10
 	y := button["solutions"].UpperLeft[1] + 30
 	solutionSpacing := 60

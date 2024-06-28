@@ -103,6 +103,8 @@ func (g *Game) DrawMeta(screen *ebiten.Image) {
 		)
 		g.SetTextProfile(textProfile["portal-page-title"])
 		g.Text.Draw("x", g.Width-40, 40)
+
+		g.DrawBackButton(screen, "go back")
 	case "about":
 		// TODO
 		g.SetTextProfile(textProfile["about"])
@@ -114,11 +116,31 @@ func (g *Game) DrawMeta(screen *ebiten.Image) {
 		g.SetTextProfile(textProfile["portal-page-title"])
 		g.Text.Draw("x", g.Width-40, 40)
 
+		g.DrawBackButton(screen, "go back")
+		/*
+			vector.DrawFilledRect(
+				screen,
+				float32(button["back"].UpperLeft[0]),
+				float32(button["back"].UpperLeft[1]),
+				float32(button["back"].Width),
+				float32(button["back"].Height),
+				portalPurpleSecondary,
+				false,
+			)
+			g.SetTextProfile(textProfile["portal-page-title"])
+			g.Text.Draw(
+				"go back",
+				button["back"].Width/2+button["back"].UpperLeft[0],
+				button["back"].Height/2+button["back"].UpperLeft[1],
+			)
+		*/
 	case "settings":
 		// TODO
 		g.SetTextProfile(textProfile["portal-page-title"])
 		g.Text.Draw("This is the Settings Page", 400, 400)
 		g.Text.Draw("x", g.Width-40, 40)
+		g.SetTextProfile(textProfile["portal-page-title"])
+		g.DrawBackButton(screen, "go back")
 	case "ending":
 		g.SetTextProfile(textProfile["ending"])
 		if g.Building.Money > 0 {
@@ -136,9 +158,8 @@ func (g *Game) DrawMeta(screen *ebiten.Image) {
 		}
 		g.SetTextProfile(textProfile["portal-page-title"])
 		g.Text.Draw("x", g.Width-40, 40)
-		g.Text.Draw("The End", g.Width/2, g.Height-160)
-		g.SetTextProfile(textProfile["about"])
-		g.Text.Draw("Play Again?", g.Width/2, g.Height-100)
+
+		g.DrawBackButton(screen, "play again?")
 	}
 }
 
@@ -170,4 +191,22 @@ func (g *Game) DrawLogin(screen *ebiten.Image) {
 
 func (g *Game) DrawEnding(screen *ebiten.Image) {
 	// draw ending of game based on game/building end-stats
+}
+
+func (g *Game) DrawBackButton(screen *ebiten.Image, buttonText string) {
+	vector.DrawFilledRect(
+		screen,
+		float32(button["back"].UpperLeft[0]),
+		float32(button["back"].UpperLeft[1]),
+		float32(button["back"].Width),
+		float32(button["back"].Height),
+		portalPurpleSecondary,
+		false,
+	)
+	g.SetTextProfile(textProfile["portal-page-title"])
+	g.Text.Draw(
+		buttonText,
+		button["back"].Width/2+button["back"].UpperLeft[0],
+		button["back"].Height/2+button["back"].UpperLeft[1],
+	)
 }
