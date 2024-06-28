@@ -103,8 +103,11 @@ func (g *Game) Update() error {
 			}
 		}
 		if g.Page == "settings" || g.Page == "about" || g.Page == "how-to-play" || g.Page == "ending" {
-			if button["upper-x"].Hover(cursor) {
+			switch {
+			case button["upper-x"].Hover(cursor):
 				hover = "upper-x"
+			case button["back"].Hover(cursor):
+				hover = "back"
 			}
 		}
 		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) && hover != "" {
@@ -113,15 +116,14 @@ func (g *Game) Update() error {
 				g.Page = "overview"
 				g.State = "play"
 			case "how-to-play":
-				// TODO
 				g.Page = "how-to-play"
 			case "settings":
-				// TODO
 				g.Page = "settings"
 			case "about":
-				// TODO
 				g.Page = "about"
 			case "upper-x":
+				g.Page = "login"
+			case "back":
 				g.Page = "login"
 			}
 		}
