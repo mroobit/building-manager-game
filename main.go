@@ -130,14 +130,20 @@ func (g *Game) Update() error {
 	} else if g.State == "play" {
 		loop1.Play()
 		loop2.Play()
-		// TODO: Make incrementing of months a function of tasks done(weight) + ticks
 		g.Clock.Tick += 1
 		g.AdvanceDayByTicks()
-		// TODO: generate problems based on Tick/Day + some randomness
 		g.CreateProblems()
+		g.CheckEndOfMonth()
 
 		// TODO remove this, it is just for diagnostic purposes
 		if inpututil.IsKeyJustPressed(ebiten.KeySpace) {
+			loop1.Pause()
+			loop2.Pause()
+			g.Page = "ending"
+			g.State = "meta"
+		}
+
+		if (g.Building.Money == 0 && g.Building.CreditBalance > 6000 && g.UpcomingPayments() < 0) || g.Building.Vacancies() == len(g.Building.Tenants) || (g.Building.Money > 10000) {
 			loop1.Pause()
 			loop2.Pause()
 			g.Page = "ending"
@@ -198,14 +204,13 @@ func (g *Game) Update() error {
 				trueIndices := g.Building.ActiveRequest.AvailableSolutionIndices()
 				if cursor[0] >= button["solutions"].UpperLeft[0] && cursor[0] <= button["solutions"].LowerRight[0] && i < len(trueIndices) {
 					trueIndex := trueIndices[i]
-					//g.Building.ActiveRequest.Solutions[trueIndex].Attempted = true
 					cost, time := g.Building.ActiveRequest.Resolve(trueIndex)
 					if g.Building.ActiveRequest.ResolutionQuality >= 7 {
 						g.Building.RequestsAddressed += 1
 					}
 					g.Building.CreditBalance += cost
-					g.AdvanceDay(time)
 					g.Page = "resolution-outcome"
+					g.AdvanceDay(time)
 				}
 			case "request-details":
 				i := (cursor[1] - 200) / 40

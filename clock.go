@@ -129,7 +129,10 @@ func (g *Game) AdvanceDay(t int) {
 			r.LastOpened += t / 3
 		}
 	}
-	if g.Clock.Days >= 60 {
+}
+
+func (g *Game) CheckEndOfMonth() {
+	if g.Clock.Days >= 60 && g.Page != "resolution-outcome" {
 		g.IncrementMonth()
 		g.State = "monthReport"
 	}

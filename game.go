@@ -6,7 +6,7 @@ import (
 
 func (g *Game) CreateProblems() {
 	// Problems arise as a function of time with some randomness
-	variance := 100 * (rand.IntN(7) + 2)
+	variance := 100 * (rand.IntN(7) + 1)
 	if g.Clock.Tick%variance == 0 {
 		g.GenerateRequest()
 	}

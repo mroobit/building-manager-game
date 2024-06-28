@@ -147,7 +147,6 @@ func loadAudio() {
 	loop0 = loadAudioPlayer("audio/loop-0.ogg", "loop")
 	loop1 = loadAudioPlayer("audio/loop-1.ogg", "loop")
 	loop2 = loadAudioPlayer("audio/loop-2.ogg", "loop")
-
 }
 
 func loadAudioPlayer(path string, pType string) *audio.Player {
@@ -174,6 +173,5 @@ func loadAudioPlayer(path string, pType string) *audio.Player {
 		}
 		player.SetVolume(musicVolume)
 		return player
-
 	}
 }
