@@ -24,6 +24,7 @@ var (
 	portalTertiary        = color.RGBA{200, 200, 200, 255}
 	white                 = color.RGBA{255, 255, 255, 255}
 	whiteScreen           = color.RGBA{75, 75, 75, 95}
+	whiteTranslucent      = color.RGBA{205, 205, 205, 205}
 	black                 = color.RGBA{30, 30, 50, 235}
 	transparentPurple     = color.RGBA{40, 0, 60, 30}
 	rowColor              = []color.Color{portalPurple, portalPurpleSecondary}

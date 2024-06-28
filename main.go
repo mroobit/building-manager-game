@@ -262,7 +262,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 			float32(button["start"].UpperLeft[1]),
 			float32(button["start"].Width),
 			float32(button["start"].Height),
-			whiteScreen,
+			whiteTranslucent,
 			false,
 		)
 		g.Text.Draw(
@@ -278,7 +278,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 			float32(button["skip"].UpperLeft[1]),
 			float32(button["skip"].Width),
 			float32(button["skip"].Height),
-			whiteScreen,
+			whiteTranslucent,
 			false,
 		)
 		g.Text.Draw(

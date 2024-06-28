@@ -50,15 +50,15 @@ func initializeClickables() {
 	button = make(map[string]*Clickable)
 
 	cStart := NewClickable(
-		[2]int{100, 300},
-		[2]int{400, 360},
+		[2]int{900, 100},
+		[2]int{1180, 160},
 		"start",
 		"Start Game",
 	)
 	button["start"] = cStart
 	cSkip := NewClickable(
-		[2]int{100, 400},
-		[2]int{400, 465},
+		[2]int{900, 200},
+		[2]int{1180, 260},
 		"skip",
 		"Skip story and go to login",
 	)

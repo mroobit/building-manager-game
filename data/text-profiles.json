@@ -281,7 +281,7 @@
 },
 {
 	"name": "title-button",
-	"font": "Comfortaa Regular",
+	"font": "Comfortaa Bold",
 	"aligny": "YCenter",
 	"alignx": "XCenter",
 	"size": 32,
