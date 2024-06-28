@@ -484,5 +484,137 @@
 			"impact": -2
 		}
 	]
+},
+{
+	"title": "I'd like a pool!",
+	"description": "The summer heat is getting really intense! Could we get a pool installed? Thanks!",
+	"location": "building",
+	"urgent": false,
+	"cooldown": 20,
+	"solutions": [
+		{
+			"action": "Install a small wading pool in front of the building",
+			"outcome": "The tenant is underwhelmed. They can't even swim in this! What about another pool behind the building in the parking lot?",
+			"cost": 4000,
+			"efficacy": 9,
+			"time": 20,
+			"impact": 0
+		},
+		{
+			"action": "Set up a kiddie pool outside with a hose",
+			"outcome": "The tenant seems initially satisfied, until they realize that this is all you plan to do as far as pool installation goes.",
+			"cost": 50,
+			"efficacy": 4,
+			"time": 5,
+			"impact": 0
+		},
+		{
+			"action": "Offer to set up timed sprinklers in front of the building", 
+			"outcome": "It takes far longer than you could have anticipated to set up timed sprinklers, but the effect is magnificent. The tenant had been skeptical at first, but seems satisfied.",
+			"cost": 120,
+			"efficacy": 10,
+			"time": 8,
+			"impact": 1
+		}
+	]
+},
+{
+	"title": "COCKROACHES",
+	"description": "An enormous cockroach just crawled out from underneath the fridge. This thing was nearly the size of a kumquat, EW! Please spray the building and get pest control.",
+	"location": "unit",
+	"urgent": true,
+	"cooldown": 10,
+	"solutions": [
+		{
+			"action": "Send pest control",
+			"outcome": "Pest control sets out bait traps throughout the building. The tenant is still rattled, but seems contented with the swiftness of your action.",
+			"cost": 300,
+			"efficacy": 10,
+			"time": 5,
+			"impact": 1
+		},
+		{
+			"action": "Set bait traps yourself and monitor the situation",
+			"outcome": "Either the traps aren't effective or there just weren't that many roaches. It's entirely possible that the cockroach the tenant saw had just been disturbed from its prefered home by nearby construction.",
+			"cost": 60,
+			"efficacy": 6,
+			"time": 6,
+			"impact": 1
+		},
+		{
+			"action": "Assure the tenant that those are just palmetto bugs - nothing to worry about", 
+			"outcome": "The tenant is skeptical",
+			"cost": 0,
+			"efficacy": 4,
+			"time": 2,
+			"impact": -1
+		}
+	]
+},
+{
+	"title": "Squirrels in the dumpster",
+	"description": "A squirrel leapt out of the dumpster and nearly landed on my face when I took out my trash this morning. Could you please get rid of them?!!",
+	"location": "dumpster",
+	"urgent": true,
+	"cooldown": 6,
+	"solutions": [
+		{
+			"action": "Tell the tenant there's nothing you can do, the dumpsters are the city's jurisdiction",
+			"outcome": "The tenant doesn't reply",
+			"cost": 0,
+			"efficacy": 4, 
+			"time": 2,
+			"impact": -1
+		},
+		{
+			"action": "Hire pest control",
+			"outcome": "Pest control comes by to have a look. They can't do much because the squirrels aren't living in the dumpster, but you might want to have your roof checked..",
+			"cost": 280,
+			"efficacy": 7,
+			"time": 5,
+			"impact": 0
+		},
+		{
+			"action": "Build a house for the squirrels",
+			"outcome": "You build a small house for the squirrels and place it in a nearby tree. You let the tenant know that there's a dedicated habitat for the squirrels and suggest they leave small pieces of food trash near it to entice the squirrels.",
+			"cost": 80,
+			"efficacy": 6,
+			"time": 10,
+			"impact": -1
+		}
+	]
+},
+{
+	"title": "Talking trees",
+	"description": "The trees just outside my window (on the side) talk loudly and long into the night. I've tried to shush them, but they don't understand human language. Could you please get them to quiet down while I'm trying to sleep?",
+	"location": "grounds",
+	"urgent": false,
+	"cooldown": 12,
+	"solutions": [
+		{
+			"action": "Hire a witch to ask the trees to respect quiet hours",
+			"outcome": "The witch goes to talk to the trees and ends up gossiping with them into the wee hours of the night. At the end she thanks you for inviting her to chat with them, then goes on her way.",
+			"cost": 190,
+			"efficacy": 4,
+			"time": 7,
+			"impact": 0
+		},
+		{
+			"action": "Go talk to the trees",
+			"outcome": "The trees become quite still as you approach. You try to greet them politely, but they do not respond. After a few hours you give up. From a distance you hear them beginning to whisper again.",
+			"cost": 0,
+			"efficacy": 2, 
+			"time": 6,
+			"impact": 1
+		},
+		{
+			"action": "Suggest the tenant take a tree language course",
+			"outcome": "When you next hear from the tenant, you find out that the trees have simply been very excited about all the baby birds being born in or near them and like telling them stories late into the night.",
+			"cost": 0,
+			"efficacy": 8,
+			"time": 5,
+			"impact": 1
+		}
+	]
 }
 ]
