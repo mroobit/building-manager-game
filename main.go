@@ -2,13 +2,12 @@ package main
 
 import (
 	"embed"
-	"image/color"
 	"log"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/audio"
-	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
+	"github.com/hajimehoshi/ebiten/v2/vector"
 	"github.com/tinne26/etxt"
 )
 
@@ -76,6 +75,7 @@ func (g *Game) Update() error {
 		g.ConfigureTextRenderer()
 		g.ConfigureAudio()
 		loadLetter(FileSystem)
+		g.CreateProblems()
 		g.State = "title"
 	} else if g.State == "story" {
 		//g.AudioPlayer = auntJosLetter
@@ -229,30 +229,14 @@ func (g *Game) Update() error {
 			g.State = "play"
 		}
 
-	} else if g.State == "infoControls" {
-		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
-			g.State = ""
+	} else if g.State == "title" {
+		if button["start"].Hover(cursor) && inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
+			g.State = "story"
 		}
-	} else {
-		switch {
-		case button["play"].Hover(cursor):
-			hover = "play"
-		case button["controls"].Hover(cursor):
-			hover = "controls"
-		default:
-			hover = ""
+		if button["skip"].Hover(cursor) && inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
+			g.State = "meta"
+			g.Page = "login"
 		}
-
-		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
-			switch hover {
-			case "play":
-				g.State = "story"
-			case "controls":
-				g.State = "infoControls"
-			}
-		}
-		// TODO
-		// set a count-down to display transition
 	}
 	if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
 		// TODO: dialogue to confirm player wants to exit game
@@ -263,6 +247,45 @@ func (g *Game) Update() error {
 
 func (g *Game) Draw(screen *ebiten.Image) {
 	if g.State == "load" {
+		op := &ebiten.DrawImageOptions{}
+		screen.DrawImage(theBuilding, op)
+	} else if g.State == "title" {
+		op := &ebiten.DrawImageOptions{}
+		screen.DrawImage(theBuilding, op)
+
+		g.Text.SetTarget(screen)
+
+		g.SetTextProfile(textProfile["title-button"])
+		vector.DrawFilledRect(
+			screen,
+			float32(button["start"].UpperLeft[0]),
+			float32(button["start"].UpperLeft[1]),
+			float32(button["start"].Width),
+			float32(button["start"].Height),
+			whiteScreen,
+			false,
+		)
+		g.Text.Draw(
+			"Start",
+			button["start"].Width/2+button["start"].UpperLeft[0],
+			button["start"].Height/2+button["start"].UpperLeft[1],
+		)
+
+		g.SetTextProfile(textProfile["title-button"])
+		vector.DrawFilledRect(
+			screen,
+			float32(button["skip"].UpperLeft[0]),
+			float32(button["skip"].UpperLeft[1]),
+			float32(button["skip"].Width),
+			float32(button["skip"].Height),
+			whiteScreen,
+			false,
+		)
+		g.Text.Draw(
+			"Skip Story",
+			button["skip"].Width/2+button["skip"].UpperLeft[0],
+			button["skip"].Height/2+button["skip"].UpperLeft[1],
+		)
 	} else if g.State == "story" {
 		g.IntroStory(screen)
 	} else if g.State == "meta" {

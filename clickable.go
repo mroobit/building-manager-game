@@ -48,20 +48,21 @@ func (c *Clickable) Hover(cursor [2]int) bool {
 func initializeClickables() {
 	// TODO: load from json/csv/whatever later
 	button = make(map[string]*Clickable)
-	cPlay := NewClickable(
+
+	cStart := NewClickable(
 		[2]int{100, 300},
 		[2]int{400, 360},
-		"play",
+		"start",
 		"Start Game",
 	)
-	button["play"] = cPlay
-	cControls := NewClickable(
+	button["start"] = cStart
+	cSkip := NewClickable(
 		[2]int{100, 400},
 		[2]int{400, 465},
-		"controls",
-		"Display Control Info",
+		"skip",
+		"Skip story and go to login",
 	)
-	button["controls"] = cControls
+	button["skip"] = cSkip
 
 	// Login Buttons
 	cLoginPlay := NewClickable(

@@ -280,6 +280,14 @@
 	"color": [ 10, 10, 10, 255 ]
 },
 {
+	"name": "title-button",
+	"font": "Comfortaa Regular",
+	"aligny": "YCenter",
+	"alignx": "XCenter",
+	"size": 32,
+	"color": [ 10, 10, 10, 255 ]
+},
+{
 	"name": "about",
 	"font": "Comfortaa Regular",
 	"aligny": "YCenter",
