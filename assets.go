@@ -16,9 +16,11 @@ import (
 )
 
 var (
-	fonts            *etxt.FontLibrary
-	titleBackground  *ebiten.Image
-	portalBackground *ebiten.Image
+	fonts           *etxt.FontLibrary
+	titleBackground *ebiten.Image
+	theBuilding     *ebiten.Image
+	buildingLight   *ebiten.Image
+	portalLogo      *ebiten.Image
 
 	background  map[string]*ebiten.Image
 	textProfile map[string]*TextProfile
@@ -35,11 +37,12 @@ func loadAssets() {
 func loadImages() {
 	log.Printf("Loading images...")
 	titleBackground = loadImage(FileSystem, "images/title-background.png")
-	portalBackground = loadImage(FileSystem, "images/maintenance-portal.png")
+	theBuilding = loadImage(FileSystem, "images/building-rect.png")
+	buildingLight = loadImage(FileSystem, "images/building-rect-big-lightened.png")
+	portalLogo = loadImage(FileSystem, "images/building-square-200px.png")
 
 	background = make(map[string]*ebiten.Image)
 	background["title"] = titleBackground
-	background["play"] = portalBackground
 }
 
 // This is taken directly from https://github.com/mroobit/untitled-sidescroller/blob/main/helper.go#L120
@@ -154,6 +157,6 @@ func loadAudioPlayer(path string) *audio.Player {
 
 func (g *Game) ConfigureAudio() {
 	_ = audio.NewContext(SampleRate)
-	audioPlayer := loadAudioPlayer("audio/minimum-viable-audio.ogg")
-	g.AudioPlayer = audioPlayer
+	auntJosLetter := loadAudioPlayer("audio/aunt-jos-letter.ogg")
+	g.AudioPlayer = auntJosLetter
 }

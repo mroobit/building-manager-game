@@ -76,12 +76,10 @@ func (g *Game) Update() error {
 		g.ConfigureTextRenderer()
 		g.ConfigureAudio()
 		loadLetter(FileSystem)
-		if len(background) == 2 {
-			g.State = "title"
-		}
+		g.State = "title"
 	} else if g.State == "story" {
-		// g.AudioPlayer = auntJosLetter
-		// g.AudioPlayer.Play()
+		//g.AudioPlayer = auntJosLetter
+		g.AudioPlayer.Play()
 		if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
 			g.State = "meta"
 			g.Page = "login"
@@ -276,8 +274,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 		g.DrawMonthEndReport(screen)
 	} else {
 		op := &ebiten.DrawImageOptions{}
-		op.GeoM.Scale(0.4, 0.4)
-		screen.DrawImage(background["title"], op)
+		screen.DrawImage(theBuilding, op)
 		if g.State == "infoControls" {
 			ebitenutil.DrawRect(
 				screen,

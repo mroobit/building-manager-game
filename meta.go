@@ -93,10 +93,17 @@ func (g *Game) DrawLogin(screen *ebiten.Image) {
 	// Background
 	vector.DrawFilledRect(screen, 0, 0, float32(g.Width), float32(g.Height), white, false)
 	vector.DrawFilledRect(screen, 0, 0, float32(g.Width), float32(g.Height), portalPurpleSecondary, false)
+	op := &ebiten.DrawImageOptions{}
+	op.GeoM.Translate(0, float64(-200))
+	screen.DrawImage(buildingLight, op)
 
 	// Dropshadow, then Central White Rectangle
 	vector.DrawFilledRect(screen, 398, 161, 484.0, 661.0, portalPurpleSecondary, false)
 	vector.DrawFilledRect(screen, 400, 160, 480.0, 660.0, white, false)
+	//op := &ebiten.DrawImageOptions{}
+	op.GeoM.Scale(0.6, 0.6)
+	op.GeoM.Translate(float64(g.Width/2-60), float64(330))
+	screen.DrawImage(portalLogo, op)
 	g.SetTextProfile(textProfile["portal-page-title"])
 	g.Text.Draw("Building\nManagement\nPortal", 640, 430)
 
