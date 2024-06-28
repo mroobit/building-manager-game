@@ -83,11 +83,6 @@ func (g *Game) initializeTenants() {
 	g.Building.Tenants = tenants
 }
 
-// TODO: func (t *Tenant)Renew {}
-// TODO: func (t *Tenant)UpdateMonthsRemaining(months int) {}
-// This method's parameters can be positive or negative: positive for new lease, negative for time passing, early moveout, eviction
-// TODO: func (t *Tenant).MoveOut(b *Building) & MoveInto
-
 func (t *Tenant) Impact(i int) {
 	t.Satisfaction += i
 	switch {
@@ -101,19 +96,3 @@ func (t *Tenant) Impact(i int) {
 		t.WillRenew = true
 	}
 }
-
-func (t *Tenant) Needed() bool {
-	return t.Name == ""
-}
-
-func (t *Tenant) MoveOut() {
-	t.Name = ""
-	// increase rent for listing price
-}
-
-func (t *Tenant) MoveIn() {
-	// TODO: pull tenant from tenant pool
-	// if tenant.MaxRent < unit rent, assign to the empty unit
-}
-
-// TODO loadTenantPool from json

@@ -123,7 +123,6 @@ func (b *Building) Renew(t int) {
 			Unit: b.Tenants[t].Unit,
 		}
 	} else if b.Tenants[t].Satisfaction < 6 {
-		// function of satisfaction, maxRent willing to pay
 		if newRent-b.Tenants[t].Rent <= (b.Tenants[t].MaxRent-b.Tenants[t].Rent)*b.Tenants[t].Satisfaction/10 {
 			b.Tenants[t].MonthsRemaining = 12
 		} else {

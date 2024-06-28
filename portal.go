@@ -466,10 +466,10 @@ func (g *Game) DrawOutcome(screen *ebiten.Image) {
 	)
 	vector.DrawFilledRect(
 		screen,
-		float32(g.Width/6),
-		float32(g.Height/4),
-		float32(2*g.Width/3),
-		float32(g.Height/2),
+		float32(g.Width/7),
+		float32(g.Height/5),
+		float32(5*g.Width/7),
+		float32(3*g.Height/5),
 		white,
 		false,
 	)

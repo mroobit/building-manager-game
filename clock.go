@@ -77,9 +77,9 @@ func (g *Game) MonthEndReport(screen *ebiten.Image) {
 }
 
 func (g *Game) AdvanceDay(t int) {
-	day := -g.Clock.Days / 3
+	day := -g.Clock.Days / 2
 	g.Clock.Days += t
-	day += (g.Clock.Days / 3)
+	day += (g.Clock.Days / 2)
 	for _, r := range g.Building.Requests {
 		r.DaysOpen += day
 		if r.Closed && !r.Resolved {
@@ -109,7 +109,7 @@ func (g *Game) AdvanceDay(t int) {
 			r.LastOpened += t / 3
 		}
 	}
-	if g.Clock.Days >= 90 {
+	if g.Clock.Days >= 60 {
 		g.State = "monthReport"
 	}
 }
