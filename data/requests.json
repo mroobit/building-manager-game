@@ -11,7 +11,7 @@
 			"outcome": "The plumber deftly unclogs the sink. She remarks that the pipes were lined with a glistening, almost-glowing material, but they're in good condition. The clog itself was typical build-up.",
 			"cost": 200,
 			"efficacy": 10,
-			"time": 1,
+			"time": 2,
 			"impact": 1
 		},
 		{
@@ -19,7 +19,7 @@
 			"outcome": "After leaving drano in the sink for several hours and coming back to plunge it, you successfully clear the drain. It's still a little slow, but you tell the tenant it will speed up in the next week.",
 			"cost": 40,
 			"efficacy": 7,
-			"time": 3,
+			"time": 5,
 			"impact": 1
 		},
 		{
@@ -27,7 +27,7 @@
 			"outcome": "You pick up some drano at the hardware store and pour it in the tenant's sink, then leave.",
 			"cost": 15,
 			"efficacy": 5,
-			"time": 2,
+			"time": 4,
 			"impact": 0
 		},
 		{
@@ -35,14 +35,14 @@
 			"outcome": "The tenant acknowledges your text message.",
 			"cost": 0,
 		        "efficacy": 3,
-			"time": 1,
+			"time": 2,
 			"impact": -1
 		},
 		{
 			"action": "Improvise",
 			"cost": 0,
 			"efficacy": -1,
-			"time": 2,
+			"time": 3,
 			"impact": -1
 		}
 	]
@@ -59,7 +59,7 @@
 			"outcome": "The fixture on the tub was pretty old so you aren't able to find an exact replacement, but the new one fits in its place perfectly and it seems to work fine. The tenant thanks you.",
 			"cost": 75,
 			"efficacy": 10,
-			"time": 4,
+			"time": 6,
 			"impact": 1
 		},
 		{
@@ -67,7 +67,7 @@
 			"outcome": "This fits perfectly! No one will be able to tell the difference.",
 			"cost": 0,
 			"efficacy": -1,
-			"time": 2,
+			"time": 3,
 			"impact": -1
 		}
 	]
@@ -84,7 +84,7 @@
 			"outcome": "TODO",
 			"cost": 1000,
 			"efficacy": 10,
-			"time": 2,
+			"time": 3,
 			"impact": 1
 		},
 		{
@@ -122,27 +122,27 @@
 	"solutions": [
 		{
 			"action": "Call HappyWash to service the machine",
-			"outcome": "TODO",
-			"cost": 0,
-			"efficacy": 8,
-			"time": 1,
+			"outcome": "It takes several calls across a few days, but finally you get through. When they fix the machine they ask if you have bells somewhere in the basement. You're not sure why.",
+			"cost": 100,
+			"efficacy": 10,
+			"time": 4,
 			"impact": 1
 		},
 		{
 			"action": "Put an \"Out of Order\" sign on the machine",
-			"outcome": "TODO",
-			"cost": 0,
-			"efficacy": -1,
+			"outcome": "You hastily scrawl out an \"Out of Order\" note and tape it to the broken machine. The tenant sends you a few more texts, mentioning the sign and asking for an update.",
+			"cost": 1,
+			"efficacy": 0,
 			"time": 1,
-			"impact": 0
+			"impact": -1
 		},
 		{
 			"action": "Tell tenant to call HappyWash to service the machine",
-			"outcome": "TODO",
+			"outcome": "The tenant sends you an update every time they try calling HappyWash. Eventually they get through and apparently they don't respond to tenant requests.",
 			"cost": 0,
 			"efficacy": 1,
-			"time": 1,
-			"impact": -1
+			"time": 2,
+			"impact": -2
 		}
 	]
 },
@@ -327,7 +327,7 @@
 		},
 		{
 			"action": "Observe the fridge until it eats again",
-			"outcome": "After 3 days of occasional low grumbles and growls emanating from the fridge, it finally happens: the plastic mashing builds up, getting louder and louder. You open the door. Half-eaten food and liquid oozes onto the floor. The fridgewhines.",
+			"outcome": "After 3 days of occasional low grumbles and growls emanating from the fridge, it finally happens: the plastic mashing builds up, getting louder and louder. You open the door. Half-eaten food and liquid oozes onto the floor. The fridge whines.",
 			"cost": 0,
 			"efficacy": 4,
 			"time": 11,
@@ -449,6 +449,39 @@
 			"efficacy": 5,
 			"time": 3,
 			"impact": 0
+		}
+	]
+},
+{
+	"title": "Neighbor hosting yoga classes in her unit",
+	"description": "My neighbor is teaching 3-4 yoga classes per day in her apartment! A ton of people are coming and going and it's actually pretty loud. It also just makes it difficult to bring in my groceries or park near the building.",
+	"location": "unit",
+	"urgent": true,
+	"cooldown": 8,
+	"solutions": [
+		{
+			"action": "Give the tenant notice to stop hosting classes",
+			"outcome": "You write up a formal letter informing the tenant that they must stop hosting classes. In the letter you mention that there will be a fine to pay if they don't stop immediately. The tenant doesn't acknowledge the note.",
+			"cost": 3,
+			"efficacy": 8, 
+			"time": 5,
+			"impact": 1
+		},
+		{
+			"action": "Attend a class",
+			"outcome": "You went in expecting to shut down the class afterwards, but the tenant is a great teacher! You consider whether it's in your budget to attend weekly - you did buy nice yoga pants for this, after all.",
+			"cost": 135,
+			"efficacy": 2,
+			"time": 4,
+			"impact": 0
+		},
+		{
+			"action": "Attend a class while in disguise",
+			"outcome": "You buy an expensive yoga outfit and a cheap wig to wear to the class. The class was excellent, but on the way out you run into the tenant who reported the class while they carry in groceries. They recognize you.",
+			"cost": 180,
+			"efficacy": 0,
+			"time": 8,
+			"impact": -2
 		}
 	]
 }
