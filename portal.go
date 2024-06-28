@@ -367,7 +367,7 @@ func (g *Game) DrawRequestList(screen *ebiten.Image) {
 				received = strconv.Itoa(n) + " months ago"
 			}
 			g.Text.Draw(r.Title, issueCol, y)
-			g.Text.Draw(received, receivedCol, y) // TODO: increment r.DaysOpen when g.Clock.Days does
+			g.Text.Draw(received, receivedCol, y)
 			g.Text.Draw(r.Location, locationCol, y)
 			g.Text.Draw(r.Tenant.Name, nameCol, y)
 		}

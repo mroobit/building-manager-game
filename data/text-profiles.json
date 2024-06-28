@@ -264,6 +264,14 @@
 	"color": [ 10, 10, 10, 255 ]
 },
 {
+	"name": "month-end",
+	"font": "Comfortaa Regular",
+	"aligny": "YCenter",
+	"alignx": "XCenter",
+	"size": 28,
+	"color": [ 10, 10, 10, 255 ]
+},
+{
 	"name": "ending",
 	"font": "Comfortaa Regular",
 	"aligny": "YCenter",

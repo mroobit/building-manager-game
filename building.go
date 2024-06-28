@@ -1,9 +1,7 @@
 package main
 
 import (
-	"fmt"
 	"math/rand/v2"
-	"strconv"
 
 	"github.com/google/uuid"
 )
@@ -26,12 +24,25 @@ type Building struct {
 	RequestsAddressed int
 	FixedCosts        int // monthly cost, will increase over time
 	Inspection        int // months until next inspection
+	LastMonth         MonthEnd
+}
+
+type MonthEnd struct {
+	RequestsAddressed int
+	Renewals          int
+	MoveOuts          int
+	RentCollected     int
+	PayingCount       int
+	NonPayingCount    int
+	CCPayment         int
+	// TODO: add rent withholding
 }
 
 func (g *Game) initializeBuilding() {
 	r := make([]*Request, 0, 30)
 	m := make(map[uuid.UUID]*Request)
 	t := make([]*Tenant, 10, 10)
+	l := MonthEnd{}
 
 	initialMoney := 10 * (rand.IntN(50) + 30)
 	initialReputation := rand.IntN(4) + 4
@@ -49,6 +60,7 @@ func (g *Game) initializeBuilding() {
 		RequestMap:   m,
 		FixedCosts:   initialFixedCosts,
 		Inspection:   10,
+		LastMonth:    l,
 	}
 }
 
@@ -86,13 +98,10 @@ func (b *Building) OpenIndices() []int {
 func (b *Building) Vacancies() int {
 	count := 0
 	for _, t := range b.Tenants {
-		fmt.Println("Tenant - name, unit: " + t.Name + ", " + t.Unit)
 		if t.Name == "" {
-			fmt.Println("Name not empty!")
 			count += 1
 		}
 	}
-	fmt.Println("Count: " + strconv.Itoa(count))
 	return count
 }
 
@@ -108,29 +117,42 @@ func (b *Building) VacanciesList() []int {
 }
 
 func (b *Building) DecrementLeases() {
+	renewed := 0
+	moved := 0
 	for i, t := range b.Tenants {
 		t.MonthsRemaining--
 		if t.MonthsRemaining == 0 {
-			b.Renew(i)
+			r, m := b.Renew(i)
+			renewed += r
+			moved += m
 		}
 	}
+	b.LastMonth.Renewals = renewed
+	b.LastMonth.MoveOuts = moved
 }
 
-func (b *Building) Renew(t int) {
+func (b *Building) Renew(t int) (renewed, moved int) {
 	newRent := int(float32(b.Tenants[t].Rent) * (1.00 + b.RentIncrease))
+	r := 0
+	m := 0
 	if b.Tenants[t].Satisfaction < 3 || b.Tenants[t].MaxRent < newRent {
 		b.Tenants[t] = &Tenant{
 			Unit: b.Tenants[t].Unit,
 		}
+		m = 1
 	} else if b.Tenants[t].Satisfaction < 6 {
 		if newRent-b.Tenants[t].Rent <= (b.Tenants[t].MaxRent-b.Tenants[t].Rent)*b.Tenants[t].Satisfaction/10 {
 			b.Tenants[t].MonthsRemaining = 12
+			r = 1
 		} else {
 			b.Tenants[t] = &Tenant{
 				Unit: b.Tenants[t].Unit,
 			}
+			m = 1
 		}
 	} else {
 		b.Tenants[t].MonthsRemaining = 12
+		r = 1
 	}
+	return r, m
 }

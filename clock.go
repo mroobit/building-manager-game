@@ -29,6 +29,7 @@ func (g *Game) initializeClock() {
 }
 
 func (g *Game) IncrementMonth() {
+	g.Building.LastMonth = MonthEnd{} // reset
 	g.Clock.Month += 1
 	for key, value := range g.Clock.Recurring {
 		update := value
@@ -37,13 +38,14 @@ func (g *Game) IncrementMonth() {
 	}
 	g.ProcessPayments()
 	g.Building.DecrementLeases()
+	g.Building.LastMonth.RequestsAddressed = g.Building.RequestsAddressed
+	g.Building.RequestsAddressed = 0
 	g.Clock.CheckEvents()
 	g.Clock.Days = 0
 	g.Clock.Tick = 0
-	g.Building.RequestsAddressed = 0
 }
 
-func (g *Game) MonthEndReport(screen *ebiten.Image) {
+func (g *Game) DrawMonthEndReport(screen *ebiten.Image) {
 	vector.DrawFilledRect(
 		screen,
 		0,
@@ -54,12 +56,21 @@ func (g *Game) MonthEndReport(screen *ebiten.Image) {
 		false,
 	)
 
+	y := 200
+	yIncr := 50
 	g.Text.SetTarget(screen)
 
 	g.SetTextProfile(textProfile["portal-page-title"])
-	g.Text.Draw("Month End Report", 640, 200)
-	g.SetTextProfile(textProfile["request-description"])
-	g.Text.Draw("This month you addressed "+strconv.Itoa(g.Building.RequestsAddressed)+" tenant requests!", 300, 230)
+	g.Text.Draw("Month End Report", g.Width/2, y)
+
+	y += yIncr
+
+	g.SetTextProfile(textProfile["month-end"])
+	g.Text.Draw(wrapText("This month you addressed "+strconv.Itoa(g.Building.LastMonth.RequestsAddressed)+" tenant requests!", 50), g.Width/2, y)
+	y += yIncr
+	g.Text.Draw(wrapText("You collected $"+strconv.Itoa(g.Building.LastMonth.RentCollected)+" from "+strconv.Itoa(g.Building.LastMonth.PayingCount)+" tenants", 50), g.Width/2, y)
+	y += yIncr
+	g.Text.Draw(wrapText("You paid $"+strconv.Itoa(g.Building.LastMonth.CCPayment)+" off on your credit card and have $"+strconv.Itoa(g.Building.Money)+" in your building bank account", 50), g.Width/2, y)
 
 	// TODO: either IncrementMonth() will have to come before this and output numbers
 	// or it will have to be broken apart so that non-payment of rent can be mentioned
@@ -110,6 +121,7 @@ func (g *Game) AdvanceDay(t int) {
 		}
 	}
 	if g.Clock.Days >= 60 {
+		g.IncrementMonth()
 		g.State = "monthReport"
 	}
 }

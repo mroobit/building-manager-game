@@ -25,22 +25,32 @@ func (g *Game) UpcomingPayments() int {
 
 // ProcessPayments add rent income to building money and subtracts fixed costs and CC payment (until money reaches zero)
 func (g *Game) ProcessPayments() {
-	g.Building.Money += g.CollectRent()
+	g.CollectRent()
+	g.Building.Money += g.Building.LastMonth.RentCollected
 	g.Building.Money -= g.Building.FixedCosts
 	if g.Building.Money < g.Building.CreditBalance {
 		g.Building.CreditBalance -= g.Building.Money
+		g.Building.LastMonth.CCPayment = g.Building.Money
 		g.Building.Money = 0
 	} else {
 		g.Building.Money -= g.Building.CreditBalance
+		g.Building.LastMonth.CCPayment = g.Building.CreditBalance
 		g.Building.CreditBalance = 0
 	}
 }
 
 // TODO: logic to have tenants occasionally unable (eg tenant death) or unwilling (withholding to to lack of repair) rent
-func (g *Game) CollectRent() int {
+func (g *Game) CollectRent() {
 	income := 0
+	paying := 0
+	nonPaying := 0
 	for _, t := range g.Building.Tenants {
-		income += t.Rent
+		if t.Name != "" {
+			income += t.Rent
+			paying++
+		}
 	}
-	return income
+	g.Building.LastMonth.RentCollected = income
+	g.Building.LastMonth.PayingCount = paying
+	g.Building.LastMonth.NonPayingCount = nonPaying
 }

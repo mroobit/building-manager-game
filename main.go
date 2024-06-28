@@ -140,6 +140,9 @@ func (g *Game) Update() error {
 			g.Page = "ending"
 			g.State = "meta"
 		}
+		if inpututil.IsKeyJustPressed(ebiten.KeyH) {
+			g.Clock.Days = 50
+		}
 
 		switch {
 		case button["overview"].Hover(cursor):
@@ -217,8 +220,8 @@ func (g *Game) Update() error {
 	} else if g.State == "monthReport" {
 		// TODO play a little reaction sound, or some music?
 		// add a clickable?
+
 		if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
-			g.IncrementMonth()
 			g.State = "play"
 		}
 	} else if g.State == "infoControls" {
@@ -263,7 +266,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 		g.DrawPortal(screen)
 		g.DrawPortalPage(screen)
 	} else if g.State == "monthReport" {
-		g.MonthEndReport(screen)
+		g.DrawMonthEndReport(screen)
 	} else {
 		op := &ebiten.DrawImageOptions{}
 		op.GeoM.Scale(0.4, 0.4)
