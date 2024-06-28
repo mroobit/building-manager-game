@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"math/rand/v2"
 )
 
@@ -14,15 +13,12 @@ func (g *Game) CreateProblems() {
 }
 
 func (g *Game) GenerateRequest() {
-	fmt.Println("Attempting to generate request")
 	if g.Building.Vacancies() == len(g.Building.Tenants) {
-		fmt.Println("Empty building")
 		return
 	}
 	t := NewTenant("", "", 0, 0, 0)
 	for t.Name == "" {
 		t = g.Building.Tenants[rand.IntN(len(g.Building.Tenants))]
-		fmt.Println("Attempting to assign tenant to request")
 	}
 	blankRequest := &Request{
 		Cooldown:   1,
@@ -71,18 +67,3 @@ func (g *Game) GenerateRequest() {
 	r.Tenant = t
 	g.Building.ReceiveRequest(&r)
 }
-
-/*
-func (g *Game) RentRenew() (nonpaying, moving []*Tenant) {
-	// iterate tenants
-	//	- add rent to player money
-	// 		- populate non-payment group (or on-Tenant set "paid" to false)
-	// 	- renewals/move-outs
-	//		- update unit vacancies
-
-	// for _, t := range g.Complex.Tenants {
-	//	(unless obstructive reason) g.Player.Money += t.Rent
-	//
-	return
-}
-*/
