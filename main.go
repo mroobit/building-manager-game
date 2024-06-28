@@ -226,11 +226,11 @@ func (g *Game) Update() error {
 		}
 	} else if g.State == "monthReport" {
 		// TODO play a little reaction sound, or some music?
-		// add a clickable?
-
-		if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
+		if button["back"].Hover(cursor) && inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
+			g.Page = "request-list"
 			g.State = "play"
 		}
+
 	} else if g.State == "infoControls" {
 		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 			g.State = ""
