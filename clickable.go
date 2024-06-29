@@ -12,7 +12,7 @@ const (
 var (
 	button map[string]*Clickable
 
-	sidebarButtonLeftY  = 100
+	sidebarButtonLeftY  = 80
 	sidebarButtonRightY = sidebarButtonLeftY + 40
 )
 

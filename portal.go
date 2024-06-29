@@ -61,9 +61,9 @@ func (g *Game) DrawPortal(screen *ebiten.Image) {
 		alertColor = alertRed
 	}
 
-	vector.DrawFilledCircle(screen, 290.0, 180.0, 22.0, alertColor, false)
+	vector.DrawFilledCircle(screen, 290.0, 160.0, 22.0, alertColor, false)
 	g.SetTextProfile(textProfile["alert-button"])
-	g.Text.Draw(strconv.Itoa(g.Building.OpenRequestCount()), 290, 180)
+	g.Text.Draw(strconv.Itoa(g.Building.OpenRequestCount()), 290, 160)
 
 	g.SetTextProfile(textProfile["portal-button"])
 	g.Text.Draw("Tenants", 30, button["tenants"].UpperLeft[1])
@@ -71,6 +71,10 @@ func (g *Game) DrawPortal(screen *ebiten.Image) {
 
 	g.SetTextProfile(textProfile["portal-header-footer"])
 	g.Text.Draw("2406 Ebiten Ln", 1100, 30)
+
+	op := &ebiten.DrawImageOptions{}
+	op.GeoM.Translate(float64(75), float64(330))
+	screen.DrawImage(portalLogo, op)
 
 	moneyLeftX := 42
 	moneyRightX := 310
