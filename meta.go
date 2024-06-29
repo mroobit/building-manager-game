@@ -38,14 +38,28 @@ func (g *Game) DrawMeta(screen *ebiten.Image) {
 
 		g.DrawBackButton(screen, "go back")
 	case "settings":
-		// TODO
 		g.SetTextProfile(textProfile["portal-page-title"])
-		g.Text.Draw("This is the Settings Page", 400, 400)
-		g.SetTextProfile(textProfile["ending"])
-		g.Text.Draw("Unfortunately, there are no settings controls yet", 550, 500)
+		g.Text.Draw("Music Volume", g.Width/2, 200)
 		g.Text.Draw("x", g.Width-40, 40)
 		g.SetTextProfile(textProfile["portal-page-title"])
 		g.DrawBackButton(screen, "go back")
+
+		rangeOffset := float32(300)
+		rangeWidth := float32(g.Width) - 2*rangeOffset
+		rangeHeight := float32(6)
+		indicator := rangeOffset + float32(musicVolume)*rangeWidth
+		rangeY := float32(400)
+		percentIncr := button["volume"].Width / 4
+
+		vector.DrawFilledRect(screen, rangeOffset, rangeY, rangeWidth, rangeHeight, black, false)
+		vector.DrawFilledCircle(screen, indicator, rangeY+rangeHeight/2, 20, portalPurple, false)
+
+		g.Text.Draw("0%", int(rangeOffset), 500)
+		g.Text.Draw("25%", int(rangeOffset)+percentIncr, 500)
+		g.Text.Draw("50%", int(rangeOffset)+percentIncr*2, 500)
+		g.Text.Draw("75%", int(rangeOffset)+percentIncr*3, 500)
+		g.Text.Draw("100%", int(rangeOffset)+percentIncr*4, 500)
+
 	case "ending":
 		g.SetTextProfile(textProfile["ending"])
 		if g.Building.Money > 0 {

@@ -63,6 +63,13 @@ func initializeClickables() {
 		"Skip story and go to login",
 	)
 	button["skip"] = cSkip
+	cVolume := NewClickable(
+		[2]int{300, 370},
+		[2]int{980, 430},
+		"volume",
+		"Adjust volume setting",
+	)
+	button["volume"] = cVolume
 
 	// Login Buttons
 	cLoginPlay := NewClickable(

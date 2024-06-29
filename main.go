@@ -109,6 +109,11 @@ func (g *Game) Update() error {
 				hover = "back"
 			}
 		}
+		if g.Page == "settings" {
+			if button["volume"].Hover(cursor) {
+				hover = "volume"
+			}
+		}
 		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) && hover != "" {
 			switch hover {
 			case "login-play":
@@ -119,6 +124,22 @@ func (g *Game) Update() error {
 				g.Page = "how-to-play"
 			case "settings":
 				g.Page = "settings"
+			case "volume":
+				switch {
+				case cursor[0] < button["volume"].UpperLeft[0]+button["volume"].Width/8:
+					musicVolume = 0
+				case cursor[0] < button["volume"].UpperLeft[0]+3*button["volume"].Width/8:
+					musicVolume = 0.25
+				case cursor[0] < button["volume"].UpperLeft[0]+5*button["volume"].Width/8:
+					musicVolume = 0.5
+				case cursor[0] < button["volume"].UpperLeft[0]+7*button["volume"].Width/8:
+					musicVolume = 0.75
+				default:
+					musicVolume = 1
+				}
+				loop0.SetVolume(musicVolume)
+				loop1.SetVolume(musicVolume)
+				loop2.SetVolume(musicVolume)
 			case "about":
 				g.Page = "about"
 			case "upper-x":
