@@ -462,7 +462,6 @@ func (g *Game) DrawSolutions(screen *ebiten.Image) {
 }
 
 func (g *Game) DrawOutcome(screen *ebiten.Image) {
-	// TODO display story text for the outcome of the solution selected
 	vector.DrawFilledRect(
 		screen,
 		0,

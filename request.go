@@ -104,5 +104,4 @@ func (r *Request) AvailableSolutionsCount() int {
 	return count
 }
 
-// TODO unmarshal JSON into array of all possible requests
 // TODO second JSON for consequences/escalations?

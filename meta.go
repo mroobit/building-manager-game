@@ -14,7 +14,6 @@ func (g *Game) DrawMeta(screen *ebiten.Image) {
 	case "login":
 		g.DrawLogin(screen)
 	case "how-to-play":
-		// TODO
 		g.DrawPortal(screen)
 		vector.DrawFilledRect(screen, 0, 0, float32(g.Width), float32(g.Height), whiteScreen, false)
 

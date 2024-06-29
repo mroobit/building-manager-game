@@ -156,15 +156,7 @@ func (g *Game) Update() error {
 		g.CreateProblems()
 		g.CheckEndOfMonth()
 
-		// TODO remove this, it is just for diagnostic purposes
-		if inpututil.IsKeyJustPressed(ebiten.KeySpace) {
-			loop1.Pause()
-			loop2.Pause()
-			g.Page = "ending"
-			g.State = "meta"
-		}
-
-		if (g.Building.Money == 0 && g.Building.CreditBalance > 6000 && g.UpcomingPayments() < 0) || g.Building.Vacancies() == len(g.Building.Tenants) || (g.Building.Money > 10000) {
+		if (g.Building.Money == 0 && g.Building.CreditBalance > 3000 && g.UpcomingPayments() < 0) || g.Building.Vacancies() == len(g.Building.Tenants) || (g.Building.Money > 10000) {
 			loop1.Pause()
 			loop2.Pause()
 			g.Page = "ending"

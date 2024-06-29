@@ -13,7 +13,6 @@ var (
 )
 
 type Tenant struct {
-	// TODO: add max rent a tenant is willing to pay before they'll move out
 	Name            string
 	Satisfaction    int
 	Unit            string

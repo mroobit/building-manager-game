@@ -18,13 +18,11 @@ import (
 const SampleRate = 44100
 
 var (
-	fonts           *etxt.FontLibrary
-	titleBackground *ebiten.Image
-	theBuilding     *ebiten.Image
-	buildingLight   *ebiten.Image
-	portalLogo      *ebiten.Image
+	fonts         *etxt.FontLibrary
+	theBuilding   *ebiten.Image
+	buildingLight *ebiten.Image
+	portalLogo    *ebiten.Image
 
-	background  map[string]*ebiten.Image
 	textProfile map[string]*TextProfile
 
 	audioContext = audio.NewContext(SampleRate)
@@ -47,13 +45,9 @@ func loadAssets() {
 
 func loadImages() {
 	log.Printf("Loading images...")
-	titleBackground = loadImage(FileSystem, "images/title-background.png")
 	theBuilding = loadImage(FileSystem, "images/building-rect.png")
 	buildingLight = loadImage(FileSystem, "images/building-rect-big-lightened.png")
 	portalLogo = loadImage(FileSystem, "images/building-square-200px.png")
-
-	background = make(map[string]*ebiten.Image)
-	background["title"] = titleBackground
 }
 
 // This is taken directly from https://github.com/mroobit/untitled-sidescroller/blob/main/helper.go#L120
@@ -142,7 +136,6 @@ func loadTextProfiles() {
 }
 
 func loadAudio() {
-	// TODO: load each audio file into its own audioPlayer
 	auntJosLetter = loadAudioPlayer("audio/aunt-jos-letter.ogg", "single-play")
 	loop0 = loadAudioPlayer("audio/loop-0.ogg", "loop")
 	loop1 = loadAudioPlayer("audio/loop-1.ogg", "loop")
