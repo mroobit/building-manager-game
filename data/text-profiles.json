@@ -294,5 +294,13 @@
 	"alignx": "XCenter",
 	"size": 28,
 	"color": [ 10, 10, 10, 255 ]
+},
+{
+	"name": "how-to-play",
+	"font": "Comfortaa Regular",
+	"aligny": "Top",
+	"alignx": "Left",
+	"size": 28,
+	"color": [ 30, 30, 70, 255 ]
 }
 ]

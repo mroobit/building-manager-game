@@ -17,17 +17,13 @@ func (g *Game) DrawMeta(screen *ebiten.Image) {
 		// TODO
 		g.DrawPortal(screen)
 		vector.DrawFilledRect(screen, 0, 0, float32(g.Width), float32(g.Height), whiteScreen, false)
-		vector.DrawFilledRect(
-			screen,
-			float32(button["upper-x"].UpperLeft[0]),
-			float32(button["upper-x"].UpperLeft[1]),
-			float32(button["upper-x"].Width),
-			float32(button["upper-x"].Height),
-			white,
-			false,
+
+		g.SetTextProfile(textProfile["how-to-play"])
+		g.Text.Draw(
+			wrapText("You have just inherited an apartment building with tenants.\n Check the Requests tab to find out what problems they're encountering. The approach you take in addressing their needs is up to you, but they may reach out again if the issues aren't resolved. Click on individual requests in the list to either try to solve them or close them without addressing them.\n \nKeep track of your cashflow on the Financial Picture tab or by glancing at the summary in the lower corner.\n \nEach month you'll get a summary of how you're doing and whether any tenants have moved in or out of the building.\n \nThe game ends when you have accrued too much debt, achieved some level of success, or have had all your tenants move out.", 50),
+			370,
+			100,
 		)
-		g.SetTextProfile(textProfile["portal-page-title"])
-		g.Text.Draw("x", g.Width-40, 40)
 
 		g.DrawBackButton(screen, "go back")
 	case "about":
