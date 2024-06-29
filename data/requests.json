@@ -37,13 +37,6 @@
 		        "efficacy": 4,
 			"time": 2,
 			"impact": -1
-		},
-		{
-			"action": "Improvise",
-			"cost": 0,
-			"efficacy": -1,
-			"time": 3,
-			"impact": -1
 		}
 	]
 },
@@ -559,8 +552,8 @@
 	"cooldown": 6,
 	"solutions": [
 		{
-			"action": "Tell the tenant there's nothing you can do, the dumpsters are the city's jurisdiction",
-			"outcome": "The tenant doesn't reply",
+			"action": "Tell the tenant there's nothing you can do",
+			"outcome": "You send the tenant a note that you can't do anything about the squirrels because the dumpster are under the city's jurisdiction. The tenant doesn't reply.",
 			"cost": 0,
 			"efficacy": 4, 
 			"time": 2,

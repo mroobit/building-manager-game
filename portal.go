@@ -19,9 +19,9 @@ const (
 )
 
 var (
-	portalPurple          = color.RGBA{170, 130, 200, 255}
-	portalPurpleSecondary = color.RGBA{70, 30, 100, 95}
-	portalTertiary        = color.RGBA{200, 200, 200, 255}
+	portalPurple          = color.RGBA{150, 115, 200, 225}
+	portalPurpleSecondary = color.RGBA{185, 145, 245, 225}
+	portalTertiary        = color.RGBA{220, 205, 235, 255}
 	white                 = color.RGBA{255, 255, 255, 255}
 	whiteScreen           = color.RGBA{75, 75, 75, 95}
 	whiteTranslucent      = color.RGBA{205, 205, 205, 205}
@@ -29,7 +29,7 @@ var (
 	transparentPurple     = color.RGBA{40, 0, 60, 30}
 	rowColor              = []color.Color{portalPurple, portalPurpleSecondary}
 
-	alertGreen  = color.RGBA{20, 200, 20, 205}
+	alertGreen  = color.RGBA{160, 235, 90, 255}
 	alertYellow = color.RGBA{255, 190, 75, 205}
 	alertRed    = color.RGBA{250, 105, 90, 205}
 	diffRed     = color.RGBA{250, 130, 130, 255}

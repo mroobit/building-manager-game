@@ -156,7 +156,7 @@ func (g *Game) Update() error {
 		g.CreateProblems()
 		g.CheckEndOfMonth()
 
-		if (g.Building.Money == 0 && g.Building.CreditBalance > 3000 && g.UpcomingPayments() < 0) || g.Building.Vacancies() == len(g.Building.Tenants) || (g.Building.Money > 10000) {
+		if (g.Building.Money == 0 && g.Building.CreditBalance > 3000 && g.UpcomingPayments() < 0) || g.Building.Vacancies() == len(g.Building.Tenants) || (g.Building.Money > 100000) {
 			loop1.Pause()
 			loop2.Pause()
 			g.Page = "ending"
@@ -308,25 +308,5 @@ func (g *Game) Draw(screen *ebiten.Image) {
 		g.DrawPortalPage(screen)
 	} else if g.State == "monthReport" {
 		g.DrawMonthEndReport(screen)
-	} else {
-		op := &ebiten.DrawImageOptions{}
-		screen.DrawImage(theBuilding, op)
-		if g.State == "infoControls" {
-			ebitenutil.DrawRect(
-				screen,
-				400,
-				350,
-				480,
-				260,
-				color.Black,
-			)
-		}
 	}
-	/*
-		ebitenutil.DebugPrintAt(screen, "Clock.Tick: "+strconv.Itoa(g.Clock.Tick), 20, 100)
-		ebitenutil.DebugPrintAt(screen, "Clock.Month: "+strconv.Itoa(g.Clock.Month), 20, 120)
-		ebitenutil.DebugPrintAt(screen, "Clock.Days: "+strconv.Itoa(g.Clock.Days), 20, 140)
-		ebitenutil.DebugPrintAt(screen, "Cursor X: "+strconv.Itoa(cursor[0]), 30, 45)
-	*/
-	ebitenutil.DebugPrintAt(screen, "Cursor Y: "+strconv.Itoa(cursor[1]), 30, 65)
 }
