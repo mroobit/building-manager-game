@@ -302,7 +302,7 @@
 	"cooldown": 18,
 	"solutions": [
 		{
-			"action": "Tell the tenant to go out to eat for a few weeks to starve the fridge",
+			"action": "Tell the tenant to go out to eat for a while to starve the fridge",
 			"outcome": "The tenant is reluctant at first, but agrees after learning that their renter's insurance covers the food loss and meals out. They stop bringing groceries home and eventually the refrigerator quiets down.",
 			"cost": 0,
 			"efficacy": 6, 
@@ -453,7 +453,7 @@
 	]
 },
 {
-	"title": "Neighbor teaching yoga in her unit",
+	"title": "Neighbor teaching yoga in apt",
 	"description": "My neighbor is hosting 3-4 yoga classes per day in her apartment! A ton of people are coming and going and it's actually pretty loud. It also just makes it difficult to bring in my groceries or park near the building.",
 	"location": "unit",
 	"urgent": true,
@@ -509,7 +509,7 @@
 			"impact": 0
 		},
 		{
-			"action": "Offer to set up timed sprinklers in front of the building", 
+			"action": "Offer to set up timed sprinklers on the lawn",
 			"outcome": "It takes far longer than you could have anticipated to set up timed sprinklers, but the effect is magnificent. The tenant had been skeptical at first, but seems satisfied.",
 			"cost": 120,
 			"efficacy": 10,
@@ -542,7 +542,7 @@
 			"impact": 1
 		},
 		{
-			"action": "Assure the tenant that those are just palmetto bugs - nothing to worry about", 
+			"action": "Assure the tenant that those are just palmetto bugs",
 			"outcome": "The tenant is skeptical",
 			"cost": 0,
 			"efficacy": 4,
