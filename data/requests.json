@@ -180,7 +180,7 @@
 	]
 },
 {
-	"title": "Broken window (golfball)",
+	"title": "Broken window (golf ball)",
 	"description": "A golfball smashed through the window, shattering most of the pane.",
 	"location": "unit",
 	"urgent": true,
@@ -188,7 +188,7 @@
 	"solutions": [
 		{
 			"action": "Hire a contractor to replace the window pane",
-			"outcome": "TODO",
+			"outcome": "The new window looks great! When you notice the contractor pocketing the golf ball she invites you to come to the driving range sometime.",
 			"cost": 400,
 			"efficacy": 10,
 			"time": 3,
@@ -196,7 +196,7 @@
 		},
 		{
 			"action": "Remove remainder of broken pane and replace it with a new one",
-			"outcome": "TODO",
+			"outcome": "You probably should have worn protective gloves for this...",
 			"cost": 60,
 			"efficacy": 10,
 			"time": 8,
