@@ -71,6 +71,8 @@ func (g *Game) DrawPortal(screen *ebiten.Image) {
 
 	g.SetTextProfile(textProfile["portal-header-footer"])
 	g.Text.Draw("2406 Ebiten Ln", 1100, 30)
+	g.Text.Draw("Building Management Portal", 30, 30)
+	g.Text.Draw("Talking Tree Policy", 1070, 930)
 
 	op := &ebiten.DrawImageOptions{}
 	op.GeoM.Translate(float64(75), float64(330))
