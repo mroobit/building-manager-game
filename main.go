@@ -107,6 +107,8 @@ func (g *Game) Update() error {
 				hover = "upper-x"
 			case button["back"].Hover(cursor):
 				hover = "back"
+			default:
+				hover = ""
 			}
 		}
 		if g.Page == "settings" {
