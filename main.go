@@ -147,6 +147,7 @@ func (g *Game) Update() error {
 			case "back":
 				g.Page = "login"
 			}
+			hover = ""
 		}
 	} else if g.State == "play" {
 		loop1.Play()
